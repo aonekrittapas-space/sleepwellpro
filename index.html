@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.1h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.3h - by Aone Krittapas</title>
+    <link rel="icon" type="image/png" href="./assets/app-icons/favicon.png">
+    <link rel="apple-touch-icon" href="./assets/app-icons/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -210,6 +212,28 @@
         }
         .affiliate-action-btn:hover::before { transform: translateX(120%); }
 
+
+
+        /* (- New Feature v9.6.3h -) Brand Logo Integration */
+        .brand-unlock-logo {
+            width: 88px;
+            height: 88px;
+            object-fit: contain;
+            border-radius: 24px;
+            box-shadow: 0 0 24px rgba(6,182,212,.30), 0 12px 28px rgba(0,0,0,.25);
+        }
+        .app-title-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 9999px;
+            filter: drop-shadow(0 0 10px rgba(6,182,212,.45));
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .app-title-logo { width: 36px; height: 36px; }
+        }
+
         /* (- New Feature v9.6g -) ซ่อนปุ่มทางเข้าแผงควบคุมแอดมินลับแบบล่องหนที่มุมขวาล่าง */
         #v96gAdminInvisibleTrigger {
             position: fixed;
@@ -229,8 +253,8 @@
 
     <div id="leadMagnetOverlay">
         <div class="text-center w-full max-w-md p-8 glass-card mx-4 border border-cyan-500/20">
-            <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/20">
-                <i class="fas fa-gift text-white text-2xl"></i>
+            <div class="mx-auto mb-5 flex items-center justify-center">
+                <img src="./assets/app-icons/sleep-well-pro-logo.png" alt="Sleep Well Pro" class="brand-unlock-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/20&quot;><i class=&quot;fas fa-gift text-white text-2xl&quot;></i></div>'">
             </div>
             <h2 class="text-2xl font-bold tracking-tight text-white">ปลดล็อกระบบวิเคราะห์การนอนฟรี</h2>
             <p class="text-slate-400 text-xs mt-2 mb-6 leading-relaxed">กรอกข้อมูลเพื่อลงทะเบียนรับสิทธิ์เข้าใช้งานระบบประมวลผลอัจฉริยะ และรับคำแนะนำการดูแลสุขภาพการนอนเชิงลึกฟรีตลอดใช้งาน</p>
@@ -275,8 +299,13 @@
     <div class="max-w-[1400px] mx-auto" id="mainAppContent">
         <header class="flex flex-col md:flex-row justify-between items-start mb-10 gap-4">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.2h PRO</span></h1>
-                <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
+                <div class="flex items-center gap-3">
+                    <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.3h PRO</span></h1>
+                        <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
+                    </div>
+                </div>
             </div>
             <div class="flex flex-wrap gap-3 items-center justify-end w-full md:w-auto">
                 <button onclick="exportData()" class="bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2">
@@ -431,8 +460,8 @@
                     <div class="affiliate-section-kicker"><i class="fas fa-sparkles mr-1"></i> Smart Sleep Picks</div>
                     <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
                     <div class="affiliate-choice-guide">
-                        เลือกตัวช่วยกับปัญหาการนอนของคุณจากด้านล่าง 👇
-                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้ตัดสินใจง่ายขึ้น</span>
+                        เลือกตัวช่วยที่ตรงกับปัญหาการนอนของคุณจากด้านล่าง 👇
+                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้การตัดสินใจง่ายขึ้น</span>
                     </div>
                     <div id="affiliateContainer" class="space-y-4">
                     </div>
@@ -440,7 +469,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.2h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.3h • BY AONE KRITTAPAS
         </footer>
     </div>
 
