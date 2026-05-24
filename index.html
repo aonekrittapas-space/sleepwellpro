@@ -99,6 +99,117 @@
             filter: drop-shadow(0 6px 10px rgba(0,0,0,0.42));
         }
 
+
+        /* (- New Feature v9.6.2h -) Premium Affiliate Recommendation Panel */
+        .affiliate-premium-section {
+            position: relative;
+            padding: 18px;
+            border-radius: 24px;
+            border: 1px solid rgba(6, 182, 212, 0.28);
+            background:
+                radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.13), transparent 32%),
+                radial-gradient(circle at 90% 12%, rgba(236, 72, 153, 0.10), transparent 32%),
+                linear-gradient(180deg, rgba(30,41,59,.68), rgba(15,23,42,.72));
+            box-shadow: 0 18px 42px rgba(0,0,0,.28), 0 0 26px rgba(6,182,212,.07), inset 0 1px 0 rgba(255,255,255,.05);
+            overflow: hidden;
+        }
+        .affiliate-premium-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.06) 42%, transparent 60%);
+            opacity: .38;
+            pointer-events: none;
+        }
+        .affiliate-section-kicker {
+            width: fit-content;
+            margin: 0 auto 8px auto;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(6,182,212,.12);
+            border: 1px solid rgba(6,182,212,.24);
+            color: #67e8f9;
+            font-size: 9px;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            box-shadow: 0 0 14px rgba(6,182,212,.10);
+        }
+        .affiliate-choice-guide {
+            margin: -6px 0 16px 0;
+            padding: 12px 13px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(6,182,212,.12), rgba(15,23,42,.42));
+            border: 1px solid rgba(6,182,212,.22);
+            color: #dbeafe;
+            font-size: 11px;
+            line-height: 1.65;
+            text-align: center;
+        }
+        .affiliate-choice-guide b { color: #22d3ee; }
+        .affiliate-choice-guide .mini-note { display:block; color:#94a3b8; font-size:9px; margin-top:2px; }
+        .affiliate-card-premium {
+            position: relative;
+            border-radius: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(15,23,42,.96), rgba(30,41,59,.70));
+            border: 1px solid rgba(148,163,184,.14);
+            box-shadow: 0 12px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+            overflow: hidden;
+            transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+        }
+        .affiliate-card-premium::after {
+            content: "";
+            position: absolute;
+            top: -30%;
+            right: -28%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(6,182,212,.16), transparent 65%);
+            pointer-events: none;
+        }
+        .affiliate-card-premium:hover {
+            transform: translateY(-3px);
+            border-color: rgba(34,211,238,.44);
+            box-shadow: 0 18px 36px rgba(0,0,0,.30), 0 0 22px rgba(6,182,212,.12);
+        }
+        .affiliate-card-premium.is-highlight {
+            border-color: rgba(34,211,238,.45);
+            box-shadow: 0 16px 34px rgba(0,0,0,.28), 0 0 28px rgba(6,182,212,.13);
+        }
+        .affiliate-product-icon {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            border-radius: 18px;
+            background: radial-gradient(circle at 30% 18%, rgba(255,255,255,0.18), rgba(15,23,42,0.88));
+            border: 1px solid rgba(34,211,238,0.16);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 22px rgba(0,0,0,0.28), 0 0 18px rgba(6,182,212,.08);
+            transition: transform .22s ease, box-shadow .22s ease;
+        }
+        .affiliate-card-premium:hover .affiliate-product-icon { transform: scale(1.05) rotate(-1deg); }
+        .affiliate-product-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
+            filter: drop-shadow(0 4px 7px rgba(0,0,0,0.42));
+        }
+        .affiliate-action-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .affiliate-action-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.16), transparent);
+            transform: translateX(-120%);
+            transition: transform .55s ease;
+        }
+        .affiliate-action-btn:hover::before { transform: translateX(120%); }
+
         /* (- New Feature v9.6g -) ซ่อนปุ่มทางเข้าแผงควบคุมแอดมินลับแบบล่องหนที่มุมขวาล่าง */
         #v96gAdminInvisibleTrigger {
             position: fixed;
@@ -164,7 +275,7 @@
     <div class="max-w-[1400px] mx-auto" id="mainAppContent">
         <header class="flex flex-col md:flex-row justify-between items-start mb-10 gap-4">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.1h PRO</span></h1>
+                <h1 class="text-3xl font-bold tracking-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.2h PRO</span></h1>
                 <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
             </div>
             <div class="flex flex-wrap gap-3 items-center justify-end w-full md:w-auto">
@@ -316,15 +427,20 @@
                     </div>
                 </section>
 
-                <section class="glass-card p-6 border-t border-slate-800">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
+                <section class="affiliate-premium-section">
+                    <div class="affiliate-section-kicker"><i class="fas fa-sparkles mr-1"></i> Smart Sleep Picks</div>
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
+                    <div class="affiliate-choice-guide">
+                        เลือกตัวช่วยที่ตรงกับปัญหาการนอนของคุณที่สุดจากด้านล่าง 👇
+                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้ตัดสินใจง่ายขึ้น</span>
+                    </div>
                     <div id="affiliateContainer" class="space-y-4">
                     </div>
                 </section>
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.1h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.2h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -860,25 +976,25 @@
             
             const renderList = AFFILIATE_CATALOG.filter(p => targetIds.includes(p.id));
             
-            container.innerHTML = renderList.map(p => `
-                <div class="bg-slate-900/60 p-4 rounded-2xl border ${p.highlight ? 'border-cyan-500/40 shadow-md shadow-cyan-950/20' : 'border-slate-800'} flex flex-col relative overflow-hidden">
-                    ${p.badge ? `<span class="absolute top-2 right-2 text-[8px] px-2 py-0.5 rounded font-bold bg-cyan-900 text-cyan-300 tracking-wider uppercase">${p.badge}</span>` : ''}
-                    <div class="flex items-center gap-3 mb-2">
+            container.innerHTML = renderList.map((p, index) => `
+                <div class="affiliate-card-premium ${p.highlight ? 'is-highlight' : ''}">
+                    ${p.badge ? `<span class="absolute top-2 right-2 text-[8px] px-2 py-0.5 rounded-full font-bold bg-cyan-500/15 border border-cyan-400/20 text-cyan-200 tracking-wider uppercase shadow-[0_0_12px_rgba(6,182,212,.16)]">${p.badge}</span>` : ''}
+                    <div class="flex items-center gap-3 mb-3 pr-16 relative z-10">
                         ${renderProductIconv961h(p, 'card')}
-                        <div class="flex-1">
-                            <h4 class="text-xs font-bold text-slate-200">${p.name}</h4>
-                            <p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">${p.desc}</p>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-[12px] font-bold text-white leading-snug line-clamp-2">${p.name}</h4>
+                            <p class="text-[10px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">${p.desc}</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2 mt-2">
-                        <a href="${p.shopeeUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'shopee')" class="text-center py-2 bg-orange-600/20 hover:bg-orange-600 text-orange-400 hover:text-white text-[10px] font-bold rounded-lg transition-all duration-200">
+                    <div class="grid grid-cols-2 gap-2 mt-2 relative z-10">
+                        <a href="${p.shopeeUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'shopee')" class="affiliate-action-btn text-center py-2.5 bg-orange-600/25 hover:bg-orange-600 text-orange-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-orange-500/10">
                             <i class="fas fa-shopping-bag mr-1"></i> SHOPEE
                         </a>
-                        <a href="${p.tiktokUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="text-center py-2 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-white text-[10px] font-bold rounded-lg transition-all duration-200">
+                        <a href="${p.tiktokUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="affiliate-action-btn text-center py-2.5 bg-pink-600/25 hover:bg-pink-600 text-pink-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-pink-500/10">
                             <i class="fab fa-tiktok mr-1"></i> TIKTOK
                         </a>
                     </div>
-                    <button onclick="trackProductClickv96g('${p.id}', 'detail'); openAffiliateDetail('${p.id}')" class="text-[9px] text-slate-500 hover:text-cyan-400 transition text-center mt-2.5 block w-full border-t border-slate-800/60 pt-2">
+                    <button onclick="trackProductClickv96g('${p.id}', 'detail'); openAffiliateDetail('${p.id}')" class="text-[9px] text-slate-500 hover:text-cyan-300 transition text-center mt-3 block w-full border-t border-slate-700/50 pt-2.5 relative z-10">
                         ดูคุณสมบัติและราคาพิเศษ <i class="fas fa-chevron-right ml-0.5"></i>
                     </button>
                 </div>
