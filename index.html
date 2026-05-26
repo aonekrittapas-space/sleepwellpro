@@ -257,7 +257,7 @@
                 <img src="./assets/app-icons/sleep-well-pro-logo.png" alt="Sleep Well Pro" class="brand-unlock-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/20&quot;><i class=&quot;fas fa-gift text-white text-2xl&quot;></i></div>'">
             </div>
             <h2 class="text-2xl font-bold tracking-tight text-white">ปลดล็อกระบบวิเคราะห์การนอนฟรี</h2>
-            <p class="text-slate-400 text-xs mt-2 mb-6 leading-relaxed">ใส่ข้อมูลเพื่อลงทะเบียนรับสิทธิ์เข้าใช้งานระบบประมวลผลอัจฉริยะ และคำแนะนำการดูแลสุขภาพการนอนเชิงลึกฟรีตลอดการใช้งาน</p>
+            <p class="text-slate-400 text-xs mt-2 mb-6 leading-relaxed">ใส่ข้อมูลเพื่อลงทะเบียนรับสิทธิ์เข้าใช้งานระบบประมวลผลอัจฉริยะ และรับคำแนะนำการดูแลสุขภาพการนอนเชิงลึกฟรี</p>
             <form onsubmit="submitLeadMagnet(event)" class="space-y-4 text-left">
                 <div>
                     <label class="text-[11px] text-slate-400 font-medium ml-1">ชื่อ-นามสกุลของคุณ</label>
@@ -302,7 +302,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.3h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.4h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -460,8 +460,8 @@
                     <div class="affiliate-section-kicker"><i class="fas fa-sparkles mr-1"></i> Smart Sleep Picks</div>
                     <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
                     <div class="affiliate-choice-guide">
-                        เลือกตัวช่วยที่ตรงกับปัญหาการนอนของคุณจากด้านล่าง 👇
-                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้การตัดสินใจง่ายขึ้น</span>
+                        เลือกตัวช่วยที่ตรงกับปัญหาการนอนของคุณที่สุดจากด้านล่าง 👇
+                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้ตัดสินใจง่ายขึ้น</span>
                     </div>
                     <div id="affiliateContainer" class="space-y-4">
                     </div>
@@ -469,7 +469,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.3h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.4h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -523,12 +523,30 @@
             lead: null,
             leadData: null,
             clickTracking: {},
-            googleSheetsUrl: ""
+            googleSheetsUrl: "",
+            deviceId: "",
+            lastCloudSync: 0,
+            dataVersion: Date.now()
         };
 
         if (!db.clickTracking) db.clickTracking = {};
         if (!db.leadData || !Array.isArray(db.leadData)) db.leadData = db.lead ? [db.lead] : [];
         if (!db.googleSheetsUrl) db.googleSheetsUrl = "";
+        if (!db.deviceId) db.deviceId = `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
+        if (!db.dataVersion) db.dataVersion = Date.now();
+
+        // v9.6.4h: ใส่ Google Apps Script Web App URL ตรงนี้ 1 ครั้ง เพื่อให้ข้อมูลผู้ใช้ Sync ข้ามมือถือ/Tablet/Notebook ได้
+        // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
+        const DEFAULT_CLOUD_SYNC_ENDPOINT = "";
+
+        function getCloudEndpointv964h() {
+            return (db.googleSheetsUrl || DEFAULT_CLOUD_SYNC_ENDPOINT || "").trim();
+        }
+
+        function getUserKeyv964h() {
+            const email = (db.userEmail || (db.lead && db.lead.email) || "").trim().toLowerCase();
+            return email || (db.profile && db.profile.name ? db.profile.name.trim().toLowerCase() : "local_user");
+        }
 
         // Multi-Platform Affiliate E-Commerce Product Catalog Structured Matrix (v9.6c Original Content)
         const AFFILIATE_CATALOG = [{"id":"smartwatch-01","name":"Banala Lite อุปกรณ์ช่วยนอนหลับ","icon":"🎟️","iconImg":"./assets/product-icons/banala-lite.png","badge":"AI RECOMMENDED","desc":"นวัตกรรมคลื่นเสียงไอโซโคนิค ช่วยให้นอนหลับได้ง่ายและสนิทมากขึ้น","shopeeUrl":"https://s.shopee.co.th/9pbFaeKHLB","tiktokUrl":"https://vt.tiktok.com/ZS9Y2KhBjKyYt-pM4yJ/","price":"คลิ๊กดูเลย!","highlight":true},{"id":"pillow-01","name":"หมอนหนุน Clover ช่วยหลับสบาย","icon":"🛌","iconImg":"./assets/product-icons/clover-pillow.png","badge":"BEST SELLER","desc":"ลดอาการปวดคอ บ่า ไหล่ บรรเทาอาการนอนกรน ช่วยให้หลับง่ายและสนิทมากขึ้น","shopeeUrl":"https://s.shopee.co.th/10zr4VY1P3","tiktokUrl":"https://vt.tiktok.com/ZS9Yf57YPmnDN-5YjVO/","price":"คลิ๊กดูเลย!","highlight":false},{"id":"blue-glasses-01","name":"แว่นกรองแสง LUSEEN รุ่น AG2244","icon":"👓","iconImg":"./assets/product-icons/luseen-ag2244.png","badge":"SCREEN DEFENDER","desc":"ลดความล้าของดวงตา ลดปวดกระบอกตาและศีรษะ เพิ่มการหลั่งเมลาโทนินธรรมชาติ","shopeeUrl":"https://s.shopee.co.th/6VKndCzibZ","tiktokUrl":"https://vt.tiktok.com/ZS9Yj1TuA2hwH-ijOZ1/","price":"คลิ๊กดูเลย!","highlight":false},{"id":"herbal-tea-01","name":"สเปรย์ MENTE Natural Calming and Refreshing","icon":"🧴","iconImg":"./assets/product-icons/mente-spray.png","badge":"STRESS RELIEF","desc":"สร้างความผ่อนคลาย ลดความเครียดสะสมก่อนนอน สารสกัดจากธรรมชาติ 100% ","shopeeUrl":"https://s.shopee.co.th/7fWkTpXzX7","tiktokUrl":"https://vt.tiktok.com/ZS9Y2WXFuULAr-JyalG/","price":"คลิ๊กดูเลย!","highlight":false},{"id":"supplement-mag-01","name":"Biovitt NITE แคปซูลปรับสมดุลในการนอน ","icon":"💊","iconImg":"./assets/product-icons/biovitt-nite.png","badge":"DEEP SLEEP BOOSTER","desc":"กระตุ้นสร้างเมลาโทนิน ช่วยปรับคลื่นสมอง ช่วยให้นอนหลับได้ลึกตลอดคืน","shopeeUrl":"https://s.shopee.co.th/3B4L9RTMiW","tiktokUrl":"https://vt.tiktok.com/ZS9Yjefeqy6Lc-c6Oee/","price":"คลิ๊กดูเลย!","highlight":true}];
@@ -560,31 +578,110 @@
         }
 
         // (- New Feature v9.6h -) ฟังก์ชันจัดการเซฟข้อมูลส่วนกลางลงฐานข้อมูลสากล
-        function saveToStoragev96g() {
+        function saveToStoragev96g(options = {}) {
+            if (!options.skipVersion) db.dataVersion = Date.now();
             localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
         }
 
-        // (- New Feature v9.6h -) ระบบตรวจจับเครือข่ายก่อนส่งข้อมูลขึ้น Cloud (Cloud Sync & Offline Robustness Wrapper)
-        function dispatchCloudSyncv96g(actionType, extraData = {}) {
-            if (!navigator.onLine) {
-                console.warn("[Offline Alert] อุปกรณ์ออฟไลน์อยู่ ระบบบันทึกลง Localฐานข้อมูลเรียบร้อย คลาวด์สแตนด์บายทำงานต่อเมื่อต่อเน็ต");
-                return;
-            }
-            if (!db.googleSheetsUrl) return;
-            const payload = {
+        function buildCloudPayloadv964h(actionType, extraData = {}) {
+            return {
                 action: actionType,
-                uuid: db.profile.name || "Aone_User",
+                appVersion: "9.6.4h",
+                userKey: getUserKeyv964h(),
+                uuid: getUserKeyv964h(),
+                deviceId: db.deviceId,
                 timestamp: Date.now(),
+                dataVersion: db.dataVersion || Date.now(),
                 profile: db.profile,
-                logs: db.logs,
+                logs: db.logs || [],
+                security: db.security || { pin: "1234" },
+                lead: db.lead || null,
+                leadData: db.leadData || [],
+                clickTracking: db.clickTracking || {},
                 ...extraData
             };
-            fetch(db.googleSheetsUrl, {
+        }
+
+        // v9.6.4h Cloud Sync: ส่งข้อมูลขึ้นกลาง เพื่อให้ข้อมูลข้ามอุปกรณ์เหมือนกัน
+        function dispatchCloudSyncv96g(actionType, extraData = {}) {
+            if (!navigator.onLine) {
+                console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
+                return;
+            }
+            const endpoint = getCloudEndpointv964h();
+            if (!endpoint) return;
+            const payload = buildCloudPayloadv964h(actionType, extraData);
+            fetch(endpoint, {
                 method: "POST",
                 mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
-            }).catch(err => console.log("Cloud backup buffering active."));
+            }).catch(err => console.log("Cloud backup buffering active.", err));
+        }
+
+        function mergeCloudDatav964h(remote) {
+            if (!remote || !remote.ok || !remote.data) return false;
+            const r = remote.data;
+            const localLogs = Array.isArray(db.logs) ? db.logs : [];
+            const remoteLogs = Array.isArray(r.logs) ? r.logs : [];
+            const byId = new Map();
+            [...localLogs, ...remoteLogs].forEach(log => {
+                if (!log) return;
+                const key = log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}`;
+                byId.set(key, { ...byId.get(key), ...log });
+            });
+            db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
+            if (r.profile) db.profile = { ...db.profile, ...r.profile };
+            if (r.security && r.security.pin) db.security = { ...db.security, ...r.security };
+            if (r.lead) db.lead = { ...db.lead, ...r.lead };
+            if (r.leadData && Array.isArray(r.leadData)) {
+                const leadMap = new Map();
+                [...(db.leadData || []), ...r.leadData].forEach(l => {
+                    if (l && l.email) leadMap.set(l.email.toLowerCase(), l);
+                });
+                db.leadData = Array.from(leadMap.values());
+            }
+            if (r.clickTracking) db.clickTracking = { ...(db.clickTracking || {}), ...r.clickTracking };
+            db.leadSaved = true;
+            db.lastCloudSync = Date.now();
+            saveToStoragev96g({ skipVersion: true });
+            return true;
+        }
+
+        function syncFromCloudv964h({ render = true } = {}) {
+            return new Promise((resolve) => {
+                const endpoint = getCloudEndpointv964h();
+                if (!endpoint || !navigator.onLine) return resolve(false);
+                const callbackName = `swpSync_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const script = document.createElement('script');
+                const sep = endpoint.includes('?') ? '&' : '?';
+                window[callbackName] = function(response) {
+                    try {
+                        const changed = mergeCloudDatav964h(response);
+                        if (changed && render && typeof renderDashboard === 'function') {
+                            initProfileFormv964h();
+                            renderDashboard();
+                        }
+                        resolve(changed);
+                    } catch (err) {
+                        console.warn('Cloud sync merge failed', err);
+                        resolve(false);
+                    } finally {
+                        delete window[callbackName];
+                        script.remove();
+                    }
+                };
+                script.onerror = () => { delete window[callbackName]; script.remove(); resolve(false); };
+                script.src = `${endpoint}${sep}action=getUserData&userKey=${encodeURIComponent(getUserKeyv964h())}&callback=${callbackName}&_=${Date.now()}`;
+                document.body.appendChild(script);
+                setTimeout(() => {
+                    if (window[callbackName]) { delete window[callbackName]; script.remove(); resolve(false); }
+                }, 8000);
+            });
+        }
+
+        function initProfileFormv964h() {
+            initProfileFormv964h();
         }
 
         // (- New Feature v9.6g -) ฟังก์ชันวิเคราะห์ Tracking Click บันทึกและดึงข้อมูลยอดความสนใจสินค้า
@@ -689,7 +786,7 @@
                     <div class="mb-5 p-4 rounded-xl bg-slate-900/80 border border-slate-800">
                         <label class="block text-xs font-bold text-cyan-400 mb-1.5 uppercase tracking-wide"><i class="fas fa-link mr-1"></i> ปลายทางฐานข้อมูลระบบคลาวด์ (Google Apps Script Web App Endpoint URL)</label>
                         <div class="flex gap-2">
-                            <input type="url" id="sheetsCloudUrlInput" value="${db.googleSheetsUrl || ''}" class="flex-1 p-2.5 input-dark text-xs outline-none focus:border-cyan-500" placeholder="https://script.google.com/macros/s/.../exec">
+                            <input type="url" id="sheetsCloudUrlInput" value="${getCloudEndpointv964h()}" class="flex-1 p-2.5 input-dark text-xs outline-none focus:border-cyan-500" placeholder="https://script.google.com/macros/s/.../exec">
                             <button onclick="saveCloudUrlv96g()" class="px-4 py-2 bg-cyan-700 hover:bg-cyan-600 rounded-xl text-xs font-bold transition">บันทึกเชื่อมต่อ</button>
                         </div>
                     </div>
@@ -808,6 +905,7 @@
             
             // ส่งชุดข้อมูลสมาชิกข้ามไปบันทึกบน Google Sheets Cloud รวมศูนย์
             dispatchCloudSyncv96g("submitLead", { name: name, email: email });
+            syncFromCloudv964h({ render: false });
             
             const leadOverlay = document.getElementById('leadMagnetOverlay');
             const pinOverlay = document.getElementById('pinOverlay');
@@ -1387,12 +1485,7 @@
         }
 
         function initApp() {
-            document.getElementById('pName').value = db.profile.name || '';
-            document.getElementById('pAge').value = db.profile.age || '';
-            document.getElementById('pWeight').value = db.profile.weight || '';
-            document.getElementById('pHeight').value = db.profile.height || '';
-            document.getElementById('pGoal').value = db.profile.goal || '';
-            document.getElementById('pGender').value = db.profile.gender || 'ชาย';
+            initProfileFormv964h();
             
             const today = new Date();
             const lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
@@ -1403,10 +1496,9 @@
             document.getElementById('shareEnd').addEventListener('change', renderDashboard);
             
             renderDashboard();
-            
-            if(db.logs && db.logs.length > 0) {
-                dispatchCloudSyncv96g("syncStorage");
-            }
+            syncFromCloudv964h({ render: true }).then(() => {
+                if(db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
+            });
         }
 
         // Global Bootloader System Initialization
