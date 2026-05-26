@@ -609,7 +609,7 @@
 
         // v9.6.4h: ใส่ Google Apps Script Web App URL ตรงนี้ 1 ครั้ง เพื่อให้ข้อมูลผู้ใช้ Sync ข้ามมือถือ/Tablet/Notebook ได้
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
-        const DEFAULT_CLOUD_SYNC_ENDPOINT = "";
+        const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
 
         function getCloudEndpointv964h() {
             return (db.googleSheetsUrl || DEFAULT_CLOUD_SYNC_ENDPOINT || "").trim();
