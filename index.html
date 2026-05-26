@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.3h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.5h - by Aone Krittapas</title>
     <link rel="icon" type="image/png" href="./assets/app-icons/favicon.png">
     <link rel="apple-touch-icon" href="./assets/app-icons/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,6 +52,26 @@
         .log-table tr:hover { background: rgba(6, 182, 212, 0.05); }
         .benchmark-label { font-size: 10px; color: #64748b; margin-top: 4px; font-weight: 300; }
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
+
+
+        /* (- New Feature v9.6.5h -) Cloud Sync Status + Auto Backup UX */
+        .sync-status-pill {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 12px; border-radius: 999px;
+            background: rgba(15, 23, 42, .72);
+            border: 1px solid rgba(148, 163, 184, .18);
+            color: #94a3b8; font-size: 11px; font-weight: 600;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+            transition: all .25s ease;
+            white-space: nowrap;
+        }
+        .sync-status-pill.syncing { color: #22d3ee; border-color: rgba(34,211,238,.45); box-shadow: 0 0 14px rgba(34,211,238,.18); }
+        .sync-status-pill.synced { color: #34d399; border-color: rgba(52,211,153,.35); }
+        .sync-status-pill.offline { color: #f59e0b; border-color: rgba(245,158,11,.35); }
+        .sync-status-pill.error { color: #fb7185; border-color: rgba(251,113,133,.35); }
+        .sync-status-dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; box-shadow: 0 0 10px currentColor; }
+        .sync-status-pill.syncing .sync-status-dot { animation: pulseSyncv965h 1s infinite ease-in-out; }
+        @keyframes pulseSyncv965h { 0%,100% { transform: scale(.8); opacity:.45; } 50% { transform: scale(1.18); opacity:1; } }
 
 
 
@@ -302,12 +322,16 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.4h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.5h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
             </div>
             <div class="flex flex-wrap gap-3 items-center justify-end w-full md:w-auto">
+                <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
+                    <span class="sync-status-dot"></span>
+                    <span id="syncStatusText">พร้อม Sync</span>
+                </div>
                 <button onclick="exportData()" class="bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2">
                     <i class="fas fa-download text-cyan-400"></i> สำรองข้อมูล
                 </button>
@@ -460,7 +484,7 @@
                     <div class="affiliate-section-kicker"><i class="fas fa-sparkles mr-1"></i> Smart Sleep Picks</div>
                     <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
                     <div class="affiliate-choice-guide">
-                        เลือกตัวช่วยที่ตรงกับปัญหาการนอนของคุณที่สุดจากด้านล่าง 👇
+                        เลือกตัวช่วยกับปัญหาการนอนของคุณจากด้านล่าง 👇
                         <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้ตัดสินใจง่ายขึ้น</span>
                     </div>
                     <div id="affiliateContainer" class="space-y-4">
@@ -469,7 +493,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.4h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.5h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -514,6 +538,11 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
+        // (- New Feature v9.6.5h -) Version Control Configuration
+        const APP_VERSION = "9.6.5h";
+        const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
+        const AUTO_BACKUP_LIMIT = 15;
+
         // ดึงชุดข้อมูลสากลมาเป็นโครงสร้างหลักของสถาปัตยกรรมตัวแอป v9.6h
         let db = JSON.parse(localStorage.getItem('sleep_well_pro_db')) || {
             logs: [],
@@ -526,7 +555,10 @@
             googleSheetsUrl: "",
             deviceId: "",
             lastCloudSync: 0,
-            dataVersion: Date.now()
+            dataVersion: Date.now(),
+            dataSchemaVersion: DATA_SCHEMA_VERSION,
+            appVersion: APP_VERSION,
+            backups: []
         };
 
         if (!db.clickTracking) db.clickTracking = {};
@@ -534,6 +566,46 @@
         if (!db.googleSheetsUrl) db.googleSheetsUrl = "";
         if (!db.deviceId) db.deviceId = `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
         if (!db.dataVersion) db.dataVersion = Date.now();
+        if (!Array.isArray(db.backups)) db.backups = [];
+        db.appVersion = APP_VERSION;
+        db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+
+        function setSyncStatusv965h(state = 'idle', message = 'พร้อม Sync') {
+            const pill = document.getElementById('syncStatus');
+            const text = document.getElementById('syncStatusText');
+            if (!pill || !text) return;
+            pill.className = `sync-status-pill ${state}`.trim();
+            text.textContent = message;
+        }
+
+        function getSafeBackupSnapshotv965h(actionType = 'manual') {
+            return {
+                backupId: `bk_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+                appVersion: APP_VERSION,
+                dataSchemaVersion: DATA_SCHEMA_VERSION,
+                actionType,
+                deviceId: db.deviceId,
+                userKey: getUserKeyv964h ? getUserKeyv964h() : 'local_user',
+                timestamp: Date.now(),
+                dataVersion: db.dataVersion || Date.now(),
+                profile: db.profile || {},
+                logs: db.logs || [],
+                lead: db.lead || null,
+                leadData: db.leadData || [],
+                clickTracking: db.clickTracking || {}
+            };
+        }
+
+        function createAutoBackupv965h(actionType = 'save') {
+            try {
+                if (!Array.isArray(db.backups)) db.backups = [];
+                db.backups.unshift(getSafeBackupSnapshotv965h(actionType));
+                db.backups = db.backups.slice(0, AUTO_BACKUP_LIMIT);
+                localStorage.setItem('sleep_well_pro_auto_backups', JSON.stringify(db.backups));
+            } catch (err) {
+                console.warn('Auto backup failed', err);
+            }
+        }
 
         // v9.6.4h: ใส่ Google Apps Script Web App URL ตรงนี้ 1 ครั้ง เพื่อให้ข้อมูลผู้ใช้ Sync ข้ามมือถือ/Tablet/Notebook ได้
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
@@ -579,14 +651,20 @@
 
         // (- New Feature v9.6h -) ฟังก์ชันจัดการเซฟข้อมูลส่วนกลางลงฐานข้อมูลสากล
         function saveToStoragev96g(options = {}) {
-            if (!options.skipVersion) db.dataVersion = Date.now();
+            if (!options.skipVersion) {
+                db.dataVersion = Date.now();
+                db.appVersion = APP_VERSION;
+                db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+                createAutoBackupv965h(options.actionType || 'save');
+            }
             localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
         }
 
         function buildCloudPayloadv964h(actionType, extraData = {}) {
             return {
                 action: actionType,
-                appVersion: "9.6.4h",
+                appVersion: APP_VERSION,
+                dataSchemaVersion: DATA_SCHEMA_VERSION,
                 userKey: getUserKeyv964h(),
                 uuid: getUserKeyv964h(),
                 deviceId: db.deviceId,
@@ -598,6 +676,7 @@
                 lead: db.lead || null,
                 leadData: db.leadData || [],
                 clickTracking: db.clickTracking || {},
+                backupSnapshot: getSafeBackupSnapshotv965h(actionType),
                 ...extraData
             };
         }
@@ -606,17 +685,29 @@
         function dispatchCloudSyncv96g(actionType, extraData = {}) {
             if (!navigator.onLine) {
                 console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
+                setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว');
                 return;
             }
             const endpoint = getCloudEndpointv964h();
-            if (!endpoint) return;
+            if (!endpoint) {
+                setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud');
+                return;
+            }
+            setSyncStatusv965h('syncing', 'กำลัง Sync...');
             const payload = buildCloudPayloadv964h(actionType, extraData);
             fetch(endpoint, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
-            }).catch(err => console.log("Cloud backup buffering active.", err));
+            }).then(() => {
+                db.lastCloudSync = Date.now();
+                localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+                setSyncStatusv965h('synced', 'Sync แล้ว');
+            }).catch(err => {
+                console.log("Cloud backup buffering active.", err);
+                setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
+            });
         }
 
         function mergeCloudDatav964h(remote) {
@@ -642,6 +733,8 @@
                 db.leadData = Array.from(leadMap.values());
             }
             if (r.clickTracking) db.clickTracking = { ...(db.clickTracking || {}), ...r.clickTracking };
+            if (r.appVersion) db.remoteAppVersion = r.appVersion;
+            if (r.dataSchemaVersion) db.remoteDataSchemaVersion = r.dataSchemaVersion;
             db.leadSaved = true;
             db.lastCloudSync = Date.now();
             saveToStoragev96g({ skipVersion: true });
@@ -651,7 +744,9 @@
         function syncFromCloudv964h({ render = true } = {}) {
             return new Promise((resolve) => {
                 const endpoint = getCloudEndpointv964h();
-                if (!endpoint || !navigator.onLine) return resolve(false);
+                if (!navigator.onLine) { setSyncStatusv965h('offline', 'ออฟไลน์: ใช้ข้อมูลในเครื่อง'); return resolve(false); }
+                if (!endpoint) { setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud'); return resolve(false); }
+                setSyncStatusv965h('syncing', 'กำลัง Sync...');
                 const callbackName = `swpSync_${Date.now()}_${Math.random().toString(36).slice(2)}`;
                 const script = document.createElement('script');
                 const sep = endpoint.includes('?') ? '&' : '?';
@@ -662,6 +757,7 @@
                             initProfileFormv964h();
                             renderDashboard();
                         }
+                        setSyncStatusv965h('synced', changed ? 'Sync แล้ว' : 'ข้อมูลล่าสุดแล้ว');
                         resolve(changed);
                     } catch (err) {
                         console.warn('Cloud sync merge failed', err);
@@ -671,11 +767,11 @@
                         script.remove();
                     }
                 };
-                script.onerror = () => { delete window[callbackName]; script.remove(); resolve(false); };
+                script.onerror = () => { setSyncStatusv965h('error', 'Sync ไม่สำเร็จ'); delete window[callbackName]; script.remove(); resolve(false); };
                 script.src = `${endpoint}${sep}action=getUserData&userKey=${encodeURIComponent(getUserKeyv964h())}&callback=${callbackName}&_=${Date.now()}`;
                 document.body.appendChild(script);
                 setTimeout(() => {
-                    if (window[callbackName]) { delete window[callbackName]; script.remove(); resolve(false); }
+                    if (window[callbackName]) { setSyncStatusv965h('error', 'Sync timeout'); delete window[callbackName]; script.remove(); resolve(false); }
                 }, 8000);
             });
         }
@@ -901,7 +997,7 @@
             db.leadData.push(db.lead);
             db.leadSaved = true;
             
-            saveToStoragev96g();
+            saveToStoragev96g({ actionType: 'submitLead' });
             
             // ส่งชุดข้อมูลสมาชิกข้ามไปบันทึกบน Google Sheets Cloud รวมศูนย์
             dispatchCloudSyncv96g("submitLead", { name: name, email: email });
@@ -968,7 +1064,7 @@
                 gender: document.getElementById('pGender').value,
                 goal: parseFloat(document.getElementById('pGoal').value) || 8
             };
-            saveToStoragev96g();
+            saveToStoragev96g({ actionType: 'saveProfile' });
             renderDashboard();
             dispatchCloudSyncv96g("syncStorage");
         }
@@ -1012,7 +1108,7 @@
                 }
             });
             
-            saveToStoragev96g();
+            saveToStoragev96g({ actionType: 'addSleepLog' });
             dispatchCloudSyncv96g("syncStorage");
             
             renderDashboard();
@@ -1156,7 +1252,7 @@
         function deleteLog(id) {
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบประวัติบันทึกข้อมูลการนอนของวันนี้ออก?")) {
                 db.logs = db.logs.filter(l => l.id !== id);
-                saveToStoragev96g();
+                saveToStoragev96g({ actionType: 'deleteLog' });
                 dispatchCloudSyncv96g("syncStorage");
                 renderDashboard();
             }
@@ -1478,7 +1574,7 @@
         function confirmClear() { 
             if(confirm("คุณต้องการล้างฐานข้อมูลประวัติการนอนทั้งหมดทิ้งใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้")) { 
                 db.logs = []; 
-                saveToStoragev96g();
+                saveToStoragev96g({ actionType: 'deleteLog' });
                 dispatchCloudSyncv96g("syncStorage");
                 renderDashboard(); 
             } 
@@ -1500,6 +1596,13 @@
                 if(db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
             });
         }
+
+        window.addEventListener('online', () => {
+            setSyncStatusv965h('syncing', 'กลับมาออนไลน์ กำลัง Sync...');
+            dispatchCloudSyncv96g('syncStorage');
+            syncFromCloudv964h({ render: true });
+        });
+        window.addEventListener('offline', () => setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว'));
 
         // Global Bootloader System Initialization
         window.onload = () => {
