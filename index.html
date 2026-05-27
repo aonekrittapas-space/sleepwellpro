@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.9h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.10h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -57,7 +57,7 @@
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
 
 
-        /* (- New Feature v9.6.9h -) Cloud Sync Status + Auto Backup UX */
+        /* (- New Feature v9.6.10h -) Cloud Sync Status + Auto Backup UX */
         .sync-status-pill {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 8px 12px; border-radius: 999px;
@@ -259,7 +259,7 @@
 
 
 
-        /* (- Production v9.6.9h -) Identity Lock + Sync Trust UI */
+        /* (- Production v9.6.10h -) Identity Lock + Sync Trust UI */
         .identity-lock-note {
             margin-top: 10px;
             padding: 10px 12px;
@@ -341,7 +341,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.9h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.10h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -557,8 +557,8 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
-        // (- New Feature v9.6.9h -) Version Control Configuration
-        const APP_VERSION = "9.6.9h";
+        // (- New Feature v9.6.10h -) Version Control Configuration
+        const APP_VERSION = "9.6.10h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -591,7 +591,7 @@
         db.appVersion = APP_VERSION;
         db.dataSchemaVersion = DATA_SCHEMA_VERSION;
 
-        // (- Production v9.6.9h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
+        // (- Production v9.6.10h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
         function normalizeEmailv968h(email) {
             return String(email || '').trim().toLowerCase();
         }
@@ -672,7 +672,7 @@
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
         const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
 
-        // v9.6.9h: Cloud endpoint self-healing
+        // v9.6.10h: Cloud endpoint self-healing
         // ปัญหาที่เจอบน Notebook มักเกิดจาก localStorage เก็บ URL เก่าหรือ URL ผิดไว้ใน db.googleSheetsUrl
         // จึงตรวจรูปแบบ URL ก่อนใช้งาน และ fallback กลับ DEFAULT_CLOUD_SYNC_ENDPOINT อัตโนมัติ
         function isValidCloudEndpointv967h(url) {
@@ -810,7 +810,7 @@
             }).then(() => {
                 db.lastCloudSync = Date.now();
                 localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
-                setSyncStatusv965h('synced', 'Sync แล้ว');
+                setSyncStatusv965h('synced', 'อัปโหลดแล้ว');
             }).catch(err => {
                 console.log("Cloud backup buffering active.", err);
                 setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
@@ -1150,7 +1150,7 @@
             if (!existsLead) db.leadData.push(db.lead);
             saveToStoragev96g({ actionType: 'submitLead' });
             
-            // v9.6.9h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
+            // v9.6.10h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
             syncFromCloudv964h({ render: false }).then(() => {
                 lockIdentityEmailv968h(email, name);
                 saveToStoragev96g({ skipVersion: true });
@@ -1754,10 +1754,17 @@
             }
 
             renderDashboard();
+            // v9.6.10h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
             syncFromCloudv964h({ render: true }).then((changed) => {
                 initProfileFormv964h();
                 renderDashboard();
                 if(changed && db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
+                setTimeout(() => {
+                    syncFromCloudv964h({ render: true }).then(() => {
+                        initProfileFormv964h();
+                        renderDashboard();
+                    });
+                }, 1800);
             });
         }
 
@@ -1769,7 +1776,7 @@
         window.addEventListener('offline', () => setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว'));
 
 
-        // (- Production v9.6.9h -) Browser Cache / Device Identity Recovery Toolkit
+        // (- Production v9.6.10h -) Browser Cache / Device Identity Recovery Toolkit
         function clearSleepWellLocalDevicev969h({ hard = false } = {}) {
             try {
                 const keys = [];
@@ -1822,7 +1829,8 @@
                 clearDevice: () => { clearSleepWellLocalDevicev969h({ hard: false }); location.reload(); },
                 hardReset: () => { clearSleepWellLocalDevicev969h({ hard: true }); location.reload(); },
                 syncNow: () => syncFromCloudv964h({ render: true }).then(() => dispatchCloudSyncv96g('syncStorage')),
-                inspect: () => ({ version: APP_VERSION, userKey: getUserKeyv964h(), identityEmail: getIdentityEmailv968h(), logs: (db.logs||[]).length, profile: db.profile, endpoint: getCloudEndpointv964h(), dataVersion: db.dataVersion })
+                forcePull: () => syncFromCloudv964h({ render: true }),
+                inspect: () => ({ version: APP_VERSION, userKey: getUserKeyv964h(), identityEmail: getIdentityEmailv968h(), logs: (db.logs||[]).length, logIds: (db.logs||[]).map(l=>l.id), profile: db.profile, endpoint: getCloudEndpointv964h(), dataVersion: db.dataVersion, lead: db.lead })
             };
         }
 
