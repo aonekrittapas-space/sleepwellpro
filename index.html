@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.7h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.8h - by Aone Krittapas</title>
     <link rel="icon" type="image/png" href="./assets/app-icons/favicon.png">
     <link rel="apple-touch-icon" href="./assets/app-icons/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
 
 
-        /* (- New Feature v9.6.7h -) Cloud Sync Status + Auto Backup UX */
+        /* (- New Feature v9.6.8h -) Cloud Sync Status + Auto Backup UX */
         .sync-status-pill {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 8px 12px; border-radius: 999px;
@@ -254,6 +254,21 @@
             .app-title-logo { width: 36px; height: 36px; }
         }
 
+
+
+        /* (- Production v9.6.8h -) Identity Lock + Sync Trust UI */
+        .identity-lock-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(34, 211, 238, .08);
+            border: 1px solid rgba(34, 211, 238, .18);
+            color: #93c5fd;
+            font-size: 10px;
+            line-height: 1.55;
+            text-align: left;
+        }
+
         /* (- New Feature v9.6g -) ซ่อนปุ่มทางเข้าแผงควบคุมแอดมินลับแบบล่องหนที่มุมขวาล่าง */
         #v96gAdminInvisibleTrigger {
             position: fixed;
@@ -290,6 +305,7 @@
                 <button type="submit" class="w-full py-3.5 mt-2 rounded-xl btn-cyan font-bold text-white tracking-wider text-xs uppercase shadow-lg shadow-cyan-950/20">ลงทะเบียนและเข้าใช้งานแอปพลิเคชัน</button>
             </form>
             <p class="text-[9px] text-slate-500 mt-4"><i class="fas fa-lock mr-1"></i> Privacy Secured: ข้อมูลของคุณจะถูกเก็บรักษาไว้ภายใต้มาตรฐานความปลอดภัยสูงสุด</p>
+            <div class="identity-lock-note"><i class="fas fa-id-card mr-1 text-cyan-400"></i> ใช้อีเมลนี้เป็นรหัสประจำตัวหลักสำหรับ Sync ข้อมูลทุกอุปกรณ์ โปรดใช้อีเมลเดียวกันทุกครั้งเพื่อให้ข้อมูลตรงกัน</div>
         </div>
     </div>
 
@@ -322,7 +338,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.7h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.8h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -538,8 +554,8 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
-        // (- New Feature v9.6.7h -) Version Control Configuration
-        const APP_VERSION = "9.6.7h";
+        // (- New Feature v9.6.8h -) Version Control Configuration
+        const APP_VERSION = "9.6.8h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -553,6 +569,8 @@
             leadData: null,
             clickTracking: {},
             googleSheetsUrl: "",
+            userId: "",
+            identityEmail: "",
             deviceId: "",
             lastCloudSync: 0,
             dataVersion: Date.now(),
@@ -569,6 +587,46 @@
         if (!Array.isArray(db.backups)) db.backups = [];
         db.appVersion = APP_VERSION;
         db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+
+        // (- Production v9.6.8h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
+        function normalizeEmailv968h(email) {
+            return String(email || '').trim().toLowerCase();
+        }
+        function isValidIdentityEmailv968h(email) {
+            return isValidEmailv96h ? isValidEmailv96h(normalizeEmailv968h(email)) : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmailv968h(email));
+        }
+        function getIdentityEmailv968h() {
+            const candidates = [db.userId, db.identityEmail, db.userEmail, db.lead && db.lead.email];
+            for (const item of candidates) {
+                const email = normalizeEmailv968h(item);
+                if (isValidIdentityEmailv968h(email)) return email;
+            }
+            return '';
+        }
+        function lockIdentityEmailv968h(email, name = '') {
+            const normalized = normalizeEmailv968h(email);
+            if (!isValidIdentityEmailv968h(normalized)) return false;
+            db.userId = normalized;
+            db.identityEmail = normalized;
+            db.userEmail = normalized;
+            if (!db.lead) db.lead = { name: name || (db.profile && db.profile.name) || '', email: normalized, registeredAt: Date.now() };
+            db.lead.email = normalized;
+            if (name) db.lead.name = name;
+            if (!db.lead.registeredAt) db.lead.registeredAt = Date.now();
+            db.leadSaved = true;
+            return true;
+        }
+        function ensureIdentityOrShowLeadv968h() {
+            const email = getIdentityEmailv968h();
+            if (email) {
+                lockIdentityEmailv968h(email, (db.lead && db.lead.name) || (db.profile && db.profile.name) || '');
+                saveToStoragev96g({ skipVersion: true });
+                return true;
+            }
+            db.leadSaved = false;
+            saveToStoragev96g({ skipVersion: true });
+            return false;
+        }
 
         function setSyncStatusv965h(state = 'idle', message = 'พร้อม Sync') {
             const pill = document.getElementById('syncStatus');
@@ -611,7 +669,7 @@
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
         const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
 
-        // v9.6.7h: Cloud endpoint self-healing
+        // v9.6.8h: Cloud endpoint self-healing
         // ปัญหาที่เจอบน Notebook มักเกิดจาก localStorage เก็บ URL เก่าหรือ URL ผิดไว้ใน db.googleSheetsUrl
         // จึงตรวจรูปแบบ URL ก่อนใช้งาน และ fallback กลับ DEFAULT_CLOUD_SYNC_ENDPOINT อัตโนมัติ
         function isValidCloudEndpointv967h(url) {
@@ -648,8 +706,12 @@
         }
 
         function getUserKeyv964h() {
-            const email = (db.userEmail || (db.lead && db.lead.email) || "").trim().toLowerCase();
-            return email || (db.profile && db.profile.name ? db.profile.name.trim().toLowerCase() : "local_user");
+            const email = getIdentityEmailv968h();
+            if (!email) {
+                console.warn("[Cloud Sync] ไม่พบ Identity Email จึงหยุด Sync เพื่อป้องกันข้อมูลคนละชุด");
+                return null;
+            }
+            return email;
         }
 
         // Multi-Platform Affiliate E-Commerce Product Catalog Structured Matrix (v9.6c Original Content)
@@ -693,12 +755,16 @@
         }
 
         function buildCloudPayloadv964h(actionType, extraData = {}) {
+            const userKey = getUserKeyv964h();
+            if (!userKey) return null;
             return {
                 action: actionType,
                 appVersion: APP_VERSION,
                 dataSchemaVersion: DATA_SCHEMA_VERSION,
-                userKey: getUserKeyv964h(),
-                uuid: getUserKeyv964h(),
+                userKey,
+                userEmail: userKey,
+                identityEmail: userKey,
+                uuid: userKey,
                 deviceId: db.deviceId,
                 timestamp: Date.now(),
                 dataVersion: db.dataVersion || Date.now(),
@@ -725,8 +791,14 @@
                 setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud');
                 return;
             }
+            const userKey = getUserKeyv964h();
+            if (!userKey) {
+                setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync');
+                return;
+            }
             setSyncStatusv965h('syncing', 'กำลัง Sync...');
             const payload = buildCloudPayloadv964h(actionType, extraData);
+            if (!payload) return;
             fetch(endpoint, {
                 method: "POST",
                 mode: "no-cors",
@@ -745,22 +817,25 @@
         function mergeCloudDatav964h(remote) {
             if (!remote || !remote.ok || !remote.data) return false;
             const r = remote.data;
+            const remoteVersion = Number(r.dataVersion || 0);
+            const localVersion = Number(db.dataVersion || 0);
             const localLogs = Array.isArray(db.logs) ? db.logs : [];
             const remoteLogs = Array.isArray(r.logs) ? r.logs : [];
             const byId = new Map();
-            [...localLogs, ...remoteLogs].forEach(log => {
+            [...remoteLogs, ...localLogs].forEach(log => {
                 if (!log) return;
-                const key = log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}`;
-                byId.set(key, { ...byId.get(key), ...log });
+                const key = log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}_${log.duration || ''}`;
+                const existing = byId.get(key) || {};
+                byId.set(key, { ...existing, ...log });
             });
             db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
-            if (r.profile) db.profile = { ...db.profile, ...r.profile };
-            if (r.security && r.security.pin) db.security = { ...db.security, ...r.security };
-            if (r.lead) db.lead = { ...db.lead, ...r.lead };
+            if (r.profile && remoteVersion >= localVersion) db.profile = { ...db.profile, ...r.profile };
+            if (r.security && r.security.pin && remoteVersion >= localVersion) db.security = { ...db.security, ...r.security };
+            if (r.lead && r.lead.email) lockIdentityEmailv968h(r.lead.email, r.lead.name || '');
             if (r.leadData && Array.isArray(r.leadData)) {
                 const leadMap = new Map();
                 [...(db.leadData || []), ...r.leadData].forEach(l => {
-                    if (l && l.email) leadMap.set(l.email.toLowerCase(), l);
+                    if (l && l.email) leadMap.set(normalizeEmailv968h(l.email), l);
                 });
                 db.leadData = Array.from(leadMap.values());
             }
@@ -769,6 +844,7 @@
             if (r.dataSchemaVersion) db.remoteDataSchemaVersion = r.dataSchemaVersion;
             db.leadSaved = true;
             db.lastCloudSync = Date.now();
+            db.dataVersion = Math.max(localVersion, remoteVersion, Date.now());
             saveToStoragev96g({ skipVersion: true });
             return true;
         }
@@ -779,6 +855,7 @@
                 const endpoints = getCloudEndpointCandidatesv967h();
                 if (!endpoints.length) { setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud'); return resolve(false); }
                 const userKey = getUserKeyv964h();
+                if (!userKey) { setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync'); return resolve(false); }
                 let attemptIndex = 0;
                 const tryEndpoint = () => {
                     const endpoint = endpoints[attemptIndex];
@@ -814,7 +891,7 @@
                             db.googleSheetsUrl = endpoint === DEFAULT_CLOUD_SYNC_ENDPOINT ? "" : endpoint;
                             db.lastCloudSync = Date.now();
                             saveToStoragev96g({ skipVersion: true });
-                            setSyncStatusv965h('synced', changed ? 'Sync แล้ว' : 'ข้อมูลล่าสุดแล้ว');
+                            setSyncStatusv965h('synced', changed ? 'Sync แล้ว' : (response && response.ok ? 'Sync แล้ว' : 'ข้อมูลล่าสุดแล้ว'));
                             resolve(changed);
                         } catch (err) {
                             console.warn('Cloud sync merge failed', err);
@@ -1064,19 +1141,17 @@
                 return;
             }
             
-            db.lead = { name: name, email: email, registeredAt: Date.now() };
-            db.userName = name;
-            db.userEmail = email;
+            lockIdentityEmailv968h(email, name);
             if (!db.leadData) db.leadData = [];
-            db.leadData.push(db.lead);
-            db.leadSaved = true;
-            
+            const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
+            if (!existsLead) db.leadData.push(db.lead);
             saveToStoragev96g({ actionType: 'submitLead' });
             
-            // v9.6.6h: ดึงข้อมูลเดิมจาก Cloud ก่อน แล้วค่อยส่งชุดข้อมูลที่ merge แล้วกลับไป
-            // ป้องกันเครื่องใหม่ที่ยังไม่มี log ไปเขียนทับข้อมูลเดิมบน Cloud ด้วยฐานข้อมูลว่าง
+            // v9.6.8h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
             syncFromCloudv964h({ render: false }).then(() => {
-                dispatchCloudSyncv96g("submitLead", { name: name, email: email });
+                lockIdentityEmailv968h(email, name);
+                saveToStoragev96g({ skipVersion: true });
+                dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
             });
             
             const leadOverlay = document.getElementById('leadMagnetOverlay');
@@ -1692,7 +1767,8 @@
 
         // Global Bootloader System Initialization
         window.onload = () => {
-            if (db.leadSaved) {
+            const hasIdentity = ensureIdentityOrShowLeadv968h();
+            if (db.leadSaved && hasIdentity) {
                 document.getElementById('leadMagnetOverlay').classList.add('hidden');
                 document.getElementById('leadMagnetOverlay').style.display = 'none';
                 document.getElementById('pinOverlay').classList.remove('hidden');
