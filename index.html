@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.11h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.12h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -57,7 +57,7 @@
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
 
 
-        /* (- New Feature v9.6.11h -) Cloud Sync Status + Multi-Transport Cloud Sync UX */
+        /* (- New Feature v9.6.12h -) Cloud Sync Status + Multi-Transport Cloud Sync UX */
         .sync-status-pill {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 8px 12px; border-radius: 999px;
@@ -259,7 +259,7 @@
 
 
 
-        /* (- Production v9.6.11h -) Identity Lock + Sync Trust UI */
+        /* (- Production v9.6.12h -) Identity Lock + Sync Trust UI */
         .identity-lock-note {
             margin-top: 10px;
             padding: 10px 12px;
@@ -270,6 +270,75 @@
             font-size: 10px;
             line-height: 1.55;
             text-align: left;
+        }
+
+
+
+        /* (- Admin Control Center Lite v9.6.12h -) Admin-only system console */
+        .admin-tab-btn {
+            padding: 10px 12px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, .14);
+            background: rgba(15, 23, 42, .70);
+            transition: all .2s ease;
+            white-space: nowrap;
+        }
+        .admin-tab-btn:hover {
+            color: #e2e8f0;
+            border-color: rgba(34, 211, 238, .28);
+            background: rgba(30, 41, 59, .78);
+        }
+        .admin-tab-btn.active {
+            color: #22d3ee;
+            border-color: rgba(34, 211, 238, .52);
+            box-shadow: 0 0 18px rgba(34, 211, 238, .12);
+            background: linear-gradient(135deg, rgba(8, 145, 178, .18), rgba(15, 23, 42, .84));
+        }
+        .admin-metric-card {
+            border: 1px solid rgba(148, 163, 184, .14);
+            background: rgba(15, 23, 42, .62);
+            border-radius: 18px;
+            padding: 14px;
+            min-height: 86px;
+        }
+        .admin-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 13px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            border: 1px solid rgba(148, 163, 184, .16);
+            background: rgba(30, 41, 59, .72);
+            color: #e2e8f0;
+            transition: all .2s ease;
+        }
+        .admin-action-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(34, 211, 238, .35);
+            box-shadow: 0 0 16px rgba(34, 211, 238, .10);
+        }
+        .admin-action-btn.danger { color: #fb7185; border-color: rgba(251, 113, 133, .28); }
+        .admin-action-btn.success { color: #34d399; border-color: rgba(52, 211, 153, .28); }
+        .admin-action-btn.cyan { color: #22d3ee; border-color: rgba(34, 211, 238, .28); }
+        .admin-codebox {
+            background: rgba(2, 6, 23, .80);
+            border: 1px solid rgba(148, 163, 184, .15);
+            border-radius: 16px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.55;
+            color: #cbd5e1;
+            overflow: auto;
+            max-height: 240px;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
         /* (- New Feature v9.6g -) ซ่อนปุ่มทางเข้าแผงควบคุมแอดมินลับแบบล่องหนที่มุมขวาล่าง */
@@ -341,7 +410,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.11h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.12h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -512,7 +581,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.11h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.12h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -557,8 +626,8 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
-        // (- New Feature v9.6.10h -) Version Control Configuration
-        const APP_VERSION = "9.6.11h";
+        // (- New Feature v9.6.12h -) Version Control Configuration
+        const APP_VERSION = "9.6.12h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -591,7 +660,7 @@
         db.appVersion = APP_VERSION;
         db.dataSchemaVersion = DATA_SCHEMA_VERSION;
 
-        // (- Production v9.6.10h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
+        // (- Production v9.6.12h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
         function normalizeEmailv968h(email) {
             return String(email || '').trim().toLowerCase();
         }
@@ -672,7 +741,7 @@
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
         const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
 
-        // v9.6.10h: Cloud endpoint self-healing
+        // v9.6.12h: Cloud endpoint self-healing
         // ปัญหาที่เจอบน Notebook มักเกิดจาก localStorage เก็บ URL เก่าหรือ URL ผิดไว้ใน db.googleSheetsUrl
         // จึงตรวจรูปแบบ URL ก่อนใช้งาน และ fallback กลับ DEFAULT_CLOUD_SYNC_ENDPOINT อัตโนมัติ
         function isValidCloudEndpointv967h(url) {
@@ -853,7 +922,7 @@
         }
 
         
-        // (- Production v9.6.11h -) Multi-transport Cloud Pull Engine
+        // (- Production v9.6.12h -) Multi-transport Cloud Pull Engine
         // แก้เคส Browser Profile บางตัวโหลด JSONP จาก Apps Script ไม่ได้ ทั้งที่ backend ปกติ
         // Strategy: JSONP -> hidden iframe postMessage fallback -> retry 3 รอบ
         const CLOUD_SYNC_TIMEOUT_MS_V9611H = 25000;
@@ -1046,19 +1115,74 @@ function initProfileFormv964h() {
             });
         }
 
-        // (- New Feature v9.6g -) ฟังก์ชันตรวจสอบสิทธิ์ประตูป้องกันความปลอดภัย (Admin Security Gate & Hotkeys)
+        
+        // (- Admin Control Center Lite v9.6.12h -) Admin-only Security Gate + Control Center
+        const ADMIN_EMAILS_V9612H = [
+            "kudsangoods.th@gmail.com"
+        ];
+
+        function getAdminEmailv9612h() {
+            return normalizeEmailv968h ? normalizeEmailv968h(getIdentityEmailv968h ? getIdentityEmailv968h() : (db.userEmail || "")) : String(db.userEmail || "").trim().toLowerCase();
+        }
+
+        function isCurrentAdminv9612h() {
+            const email = getAdminEmailv9612h();
+            return ADMIN_EMAILS_V9612H.map(e => String(e).trim().toLowerCase()).includes(email);
+        }
+
+        function adminReadableTimev9612h(ts) {
+            if (!ts) return "-";
+            try { return new Date(ts).toLocaleString("th-TH"); } catch(e) { return "-"; }
+        }
+
+        function getAdminStatev9612h() {
+            const logs = Array.isArray(db.logs) ? db.logs : [];
+            const leads = Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            const clicks = db.clickTracking || {};
+            const totalClicks = Object.values(clicks).reduce((sum, item) => sum + Number((item && item.total) || 0), 0);
+            const lastLog = logs.length ? [...logs].sort((a,b)=>Number(b.timestamp||0)-Number(a.timestamp||0))[0] : null;
+            return {
+                appVersion: APP_VERSION,
+                schemaVersion: DATA_SCHEMA_VERSION,
+                isAdmin: isCurrentAdminv9612h(),
+                adminEmail: getAdminEmailv9612h(),
+                userKey: getUserKeyv964h ? getUserKeyv964h() : "",
+                endpoint: getCloudEndpointv964h ? getCloudEndpointv964h() : "",
+                deviceId: db.deviceId || "",
+                localLogs: logs.length,
+                leadCount: leads.length,
+                totalClicks,
+                lastLogDate: lastLog ? (lastLog.fullDate || lastLog.date || adminReadableTimev9612h(lastLog.timestamp)) : "-",
+                lastSync: db.lastCloudSync || 0,
+                dataVersion: db.dataVersion || 0,
+                diagnosticsCount: (window.__SWP_SYNC_DIAG__ || []).length
+            };
+        }
+
+        function setAdminStatusv9612h(message, type = "cyan") {
+            const el = document.getElementById("adminStatusLine");
+            if (!el) return;
+            const color = type === "success" ? "text-emerald-400" : type === "danger" ? "text-rose-400" : type === "warn" ? "text-amber-400" : "text-cyan-400";
+            el.className = `text-[11px] font-bold ${color}`;
+            el.textContent = message;
+        }
+
         function checkAdminSecurityGate() {
+            if (!isCurrentAdminv9612h()) {
+                alert("⛔ Admin only\nบัญชีนี้ไม่ได้รับสิทธิ์เข้าหน้า Admin Control Center");
+                return;
+            }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Security Access Gate v9.6h]\nกรุณาระบุรหัส PIN ของผู้ดูแลระบบเพื่อเปิดรายงานหลังบ้าน:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.12h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
             } else {
-                alert("❌ รหัส PIN ไม่ถูกต้อง! ระบบปฏิเสธสิทธิ์การเข้าใช้งานเชิงพาณิชย์");
+                alert("❌ รหัส PIN ไม่ถูกต้อง! ระบบปฏิเสธสิทธิ์การเข้าใช้งาน Admin");
             }
         }
 
-        // ลงทะเบียนดักจับแป้นพิมพ์ปุ่มลัด Hotkey (Shift + Alt + A หรือ Ctrl + Shift + A)
+        // Hotkey: Shift + Alt + A หรือ Ctrl + Shift + A เปิดได้เฉพาะ Admin email เท่านั้น
         window.addEventListener('keydown', function (e) {
             if ((e.shiftKey && e.altKey && (e.key === 'A' || e.key === 'a')) || 
                 (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a'))) {
@@ -1067,8 +1191,224 @@ function initProfileFormv964h() {
             }
         });
 
-        // (- New Feature v9.6g -) ฟังก์ชันสร้างแผงควบคุมแอดมินจำลองดึงรายงานสรุปข้อมูลแบบอินเตอร์แอคทีฟ
+        function buildAdminAffiliateHtmlv9612h() {
+            return AFFILIATE_CATALOG.map(p => {
+                const stat = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
+                const total = Number(stat.total || (Number(stat.shopee||0) + Number(stat.tiktok||0) + Number(stat.detail||0)) || 0);
+                return `
+                    <div class="py-3 border-b border-slate-800/70 text-xs">
+                        <div class="flex justify-between gap-3 text-slate-200 font-semibold">
+                            <span class="truncate">${p.iconImg ? "🖼️" : p.icon} ${p.name}</span>
+                            <span class="text-cyan-400 font-bold whitespace-nowrap">${total} คลิก</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-[10px] text-slate-400 mt-1">
+                            <div>Shopee: <span class="text-orange-400 font-bold">${stat.shopee || 0}</span></div>
+                            <div>TikTok: <span class="text-pink-400 font-bold">${stat.tiktok || 0}</span></div>
+                            <div>รายละเอียด: <span class="text-slate-200 font-bold">${stat.detail || 0}</span></div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function buildAdminLeadsHtmlv9612h() {
+            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            if (!leads.length) return `<div class="text-center opacity-40 text-xs py-8 italic">ยังไม่มี Lead ในเครื่องนี้</div>`;
+            return leads.map((l, idx) => `
+                <div class="p-3 bg-slate-950/50 rounded-2xl border border-slate-800 text-[11px] mb-2">
+                    <div class="flex justify-between gap-3 font-bold text-slate-300">
+                        <span>${idx + 1}. ${l.name || "-"}</span>
+                        <span class="text-slate-500 font-normal text-[10px]">${adminReadableTimev9612h(l.registeredAt)}</span>
+                    </div>
+                    <div class="text-cyan-400 font-mono mt-1 select-all">${l.email || "-"}</div>
+                </div>
+            `).join("");
+        }
+
+        function buildAdminDebugReportv9612h() {
+            const state = getAdminStatev9612h();
+            return {
+                generatedAt: new Date().toISOString(),
+                appVersion: APP_VERSION,
+                schemaVersion: DATA_SCHEMA_VERSION,
+                adminEmail: state.adminEmail,
+                userKey: state.userKey,
+                endpoint: state.endpoint ? state.endpoint.replace(/\/s\/([^/]+)\//, "/s/***masked***/") : "",
+                deviceId: state.deviceId,
+                localLogs: state.localLogs,
+                logIds: (db.logs || []).map(l => l.id || `${l.fullDate || l.date}_${l.sleepTime || ""}_${l.wakeTime || ""}`),
+                leadCount: state.leadCount,
+                totalClicks: state.totalClicks,
+                lastSync: state.lastSync ? new Date(state.lastSync).toISOString() : null,
+                dataVersion: state.dataVersion,
+                navigator: {
+                    online: navigator.onLine,
+                    userAgent: navigator.userAgent,
+                    language: navigator.language
+                },
+                diagnosticsTail: (window.__SWP_SYNC_DIAG__ || []).slice(-20)
+            };
+        }
+
+        function renderAdminControlCenterv9612h(activeTab = "overview") {
+            const state = getAdminStatev9612h();
+            const tabs = [
+                ["overview", "Overview", "fa-gauge-high"],
+                ["debug", "Debug & Sync", "fa-screwdriver-wrench"],
+                ["affiliate", "Affiliate", "fa-mouse-pointer"],
+                ["leads", "Leads", "fa-users"],
+                ["export", "Export", "fa-file-export"],
+                ["settings", "Settings", "fa-gear"]
+            ];
+            const tabButtons = tabs.map(([id, label, icon]) => `
+                <button class="admin-tab-btn ${activeTab === id ? "active" : ""}" onclick="switchAdminTabv9612h('${id}')">
+                    <i class="fas ${icon} mr-1"></i>${label}
+                </button>
+            `).join("");
+
+            let content = "";
+            if (activeTab === "overview") {
+                content = `
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">App Version</div><div class="text-xl text-cyan-400 font-black mt-2">${state.appVersion}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Local Logs</div><div class="text-xl text-emerald-400 font-black mt-2">${state.localLogs}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Affiliate Clicks</div><div class="text-xl text-orange-400 font-black mt-2">${state.totalClicks}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Leads</div><div class="text-xl text-pink-400 font-black mt-2">${state.leadCount}</div></div>
+                    </div>
+                    <div class="mt-4 admin-codebox">${JSON.stringify({
+                        userKey: state.userKey,
+                        identityEmail: state.adminEmail,
+                        lastLogDate: state.lastLogDate,
+                        lastSync: adminReadableTimev9612h(state.lastSync),
+                        dataVersion: state.dataVersion,
+                        deviceId: state.deviceId
+                    }, null, 2)}</div>
+                `;
+            }
+
+            if (activeTab === "debug") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-2">Sync Health</div>
+                            <div class="text-[11px] text-slate-300 space-y-1">
+                                <div>Online: <b class="${navigator.onLine ? "text-emerald-400" : "text-rose-400"}">${navigator.onLine ? "YES" : "NO"}</b></div>
+                                <div>UserKey: <span class="text-cyan-300 font-mono">${state.userKey || "-"}</span></div>
+                                <div>Local Logs: <b class="text-emerald-400">${state.localLogs}</b></div>
+                                <div>Diagnostics: <b class="text-amber-400">${state.diagnosticsCount}</b></div>
+                            </div>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-2">Safe Actions</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn cyan" onclick="adminTestCloudv9612h()"><i class="fas fa-signal"></i>Test Cloud</button>
+                                <button class="admin-action-btn success" onclick="adminForcePullv9612h()"><i class="fas fa-cloud-arrow-down"></i>Force Pull</button>
+                                <button class="admin-action-btn" onclick="adminForcePushv9612h()"><i class="fas fa-cloud-arrow-up"></i>Backup Push</button>
+                                <button class="admin-action-btn" onclick="adminCopyDebugReportv9612h()"><i class="fas fa-copy"></i>Copy Report</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="text-[11px] text-slate-500 font-bold uppercase mb-2">Diagnostics Tail</div>
+                        <div class="admin-codebox">${JSON.stringify((window.__SWP_SYNC_DIAG__ || []).slice(-12), null, 2)}</div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "affiliate") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card md:col-span-2">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="text-orange-400 font-bold text-xs uppercase"><i class="fas fa-mouse-pointer mr-1"></i>Affiliate Tracking</div>
+                                <button onclick="clearTrackingStatsv96g()" class="text-[10px] text-rose-400 hover:underline">ล้างเฉพาะสถิติในเครื่องนี้</button>
+                            </div>
+                            <div class="max-h-[340px] overflow-y-auto pr-2">${buildAdminAffiliateHtmlv9612h()}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "leads") {
+                content = `
+                    <div class="admin-metric-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="text-emerald-400 font-bold text-xs uppercase"><i class="fas fa-users mr-1"></i>Lead Magnet System</div>
+                            <span class="bg-emerald-950 text-emerald-400 px-2 py-1 rounded-lg text-[10px] font-black">${state.leadCount} คน</span>
+                        </div>
+                        <div class="max-h-[360px] overflow-y-auto pr-2">${buildAdminLeadsHtmlv9612h()}</div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "export") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-3">Export / Backup</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn success" onclick="exportData()"><i class="fas fa-download"></i>Export User Data</button>
+                                <button class="admin-action-btn success" onclick="exportLeadsToExcelv96g()"><i class="fas fa-file-csv"></i>Export Leads CSV</button>
+                                <button class="admin-action-btn cyan" onclick="adminExportDebugJsonv9612h()"><i class="fas fa-bug"></i>Export Debug JSON</button>
+                            </div>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="text-amber-400 font-bold text-xs uppercase mb-3">Recovery Tools</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn" onclick="adminForcePullv9612h()"><i class="fas fa-rotate"></i>Rehydrate From Cloud</button>
+                                <button class="admin-action-btn danger" onclick="adminResetLocalDevicev9612h()"><i class="fas fa-triangle-exclamation"></i>Reset Local Device</button>
+                            </div>
+                            <p class="text-[10px] text-slate-500 mt-3 leading-relaxed">Reset Local Device จะลบเฉพาะข้อมูลใน browser นี้ หลังจากเปิดใหม่ให้ login email เดิมเพื่อดึง Cloud กลับมา ไม่ลบ Cloud</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "settings") {
+                content = `
+                    <div class="admin-metric-card">
+                        <label class="block text-xs font-bold text-cyan-400 mb-2 uppercase tracking-wide"><i class="fas fa-link mr-1"></i>Cloud Endpoint URL</label>
+                        <div class="flex flex-col md:flex-row gap-2">
+                            <input type="url" id="sheetsCloudUrlInput" value="${state.endpoint}" class="flex-1 p-3 input-dark text-xs outline-none focus:border-cyan-500" placeholder="https://script.google.com/macros/s/.../exec">
+                            <button onclick="saveCloudUrlv96g(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn cyan"><i class="fas fa-save"></i>บันทึก</button>
+                            <button onclick="resetCloudEndpointToDefaultv967h(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn"><i class="fas fa-rotate-left"></i>Default</button>
+                        </div>
+                        <div class="mt-4 admin-codebox">${JSON.stringify({
+                            endpointMasked: state.endpoint ? state.endpoint.replace(/\/s\/([^/]+)\//, "/s/***masked***/") : "",
+                            schemaVersion: state.schemaVersion,
+                            autoBackupLimit: AUTO_BACKUP_LIMIT,
+                            adminEmails: ADMIN_EMAILS_V9612H
+                        }, null, 2)}</div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="glass-card max-w-6xl w-full p-6 relative max-h-[92vh] overflow-y-auto border border-cyan-500/30 bg-slate-950/95 shadow-2xl text-slate-200">
+                    <button onclick="document.getElementById('v96gAdminDashboardModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.12h</span></h2>
+                            <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
+                        </div>
+                        <div class="text-right">
+                            <div id="adminStatusLine" class="text-[11px] font-bold text-cyan-400">พร้อมตรวจสอบระบบ</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Last Sync: ${adminReadableTimev9612h(state.lastSync)}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-5">${tabButtons}</div>
+                    <div id="adminTabContent">${content}</div>
+                </div>
+            `;
+        }
+
         function openAdminDashboardPanelUI() {
+            if (!isCurrentAdminv9612h()) {
+                alert("⛔ Admin only");
+                return;
+            }
             let adminModal = document.getElementById("v96gAdminDashboardModal");
             if (!adminModal) {
                 adminModal = document.createElement("div");
@@ -1076,100 +1416,80 @@ function initProfileFormv964h() {
                 adminModal.className = "fixed inset-0 bg-black/80 z-[100005] hidden items-center justify-center p-4 backdrop-blur-sm";
                 document.body.appendChild(adminModal);
             }
-            
-            let clickStatsHtml = "";
-            let maxClickCount = -1;
-            let popularProductName = "ยังไม่มีข้อมูล";
-
-            AFFILIATE_CATALOG.forEach(p => {
-                const stat = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
-                const total = stat.total || (stat.shopee + stat.tiktok + stat.detail) || 0;
-                if (total > maxClickCount) {
-                    maxClickCount = total;
-                    popularProductName = p.name;
-                }
-                clickStatsHtml += `
-                    <div class="py-2.5 border-b border-slate-800/70 text-xs">
-                        <div class="flex justify-between text-slate-200 font-medium">
-                            <span>${p.iconImg ? "🖼️" : p.icon} ${p.name}</span>
-                            <span class="text-cyan-400 font-bold">${total} คลิก</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 text-[10px] text-slate-400 mt-1">
-                            <div>Shopee: <span class="text-orange-400 font-bold">${stat.shopee || 0}</span></div>
-                            <div>TikTok: <span class="text-pink-400 font-bold">${stat.tiktok || 0}</span></div>
-                            <div>ดูรายละเอียด: <span class="text-slate-300 font-bold">${stat.detail || 0}</span></div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            let leadListHtml = "";
-            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
-            leads.forEach((l, idx) => {
-                const dateText = l.registeredAt ? new Date(l.registeredAt).toLocaleString('th-TH') : 'ไม่ระบุเวลา';
-                leadListHtml += `
-                    <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 text-[11px] mb-1.5">
-                        <div class="flex justify-between font-bold text-slate-300">
-                            <span>${idx + 1}. ${l.name}</span>
-                            <span class="text-slate-500 font-normal text-[10px]">${dateText}</span>
-                        </div>
-                        <div class="text-cyan-500 font-mono mt-0.5 select-all">${l.email}</div>
-                    </div>
-                `;
-            });
-            if (leads.length === 0) leadListHtml = `<div class="text-center opacity-30 text-xs py-4 italic">ยังไม่มีผู้กรอกอีเมลสะสมในเครื่องนี้</div>`;
-
-            adminModal.innerHTML = `
-                <div class="glass-card max-w-4xl w-full p-6 relative max-h-[90vh] overflow-y-auto border border-cyan-500/30 bg-slate-950/95 shadow-2xl text-slate-200">
-                    <button onclick="document.getElementById('v96gAdminDashboardModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
-                        <i class="fas fa-times text-lg"></i>
-                    </button>
-                    <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2"><i class="fas fa-database"></i> แผงควบคุมและรายงานข้อมูลผู้บริหาร v9.6h</h2>
-                    
-                    <div class="mb-5 p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-                        <label class="block text-xs font-bold text-cyan-400 mb-1.5 uppercase tracking-wide"><i class="fas fa-link mr-1"></i> ปลายทางฐานข้อมูลระบบคลาวด์ (Google Apps Script Web App Endpoint URL)</label>
-                        <div class="flex gap-2">
-                            <input type="url" id="sheetsCloudUrlInput" value="${getCloudEndpointv964h()}" class="flex-1 p-2.5 input-dark text-xs outline-none focus:border-cyan-500" placeholder="https://script.google.com/macros/s/.../exec">
-                            <button onclick="saveCloudUrlv96g()" class="px-4 py-2 bg-cyan-700 hover:bg-cyan-600 rounded-xl text-xs font-bold transition">บันทึกเชื่อมต่อ</button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex flex-col">
-                            <h3 class="text-xs font-bold text-orange-400 uppercase tracking-wider mb-3 flex justify-between items-center">
-                                <span><i class="fas fa-mouse-pointer mr-1.5"></i> สถิติตรวจสอบยอดคลิกสินค้า (Tracking Click)</span>
-                                <button onclick="clearTrackingStatsv96g()" class="text-[10px] text-rose-500 hover:underline font-normal">ล้างประวัติ</button>
-                            </h3>
-                            <div class="mb-3 p-2 bg-amber-950/30 border border-amber-900/40 rounded-lg text-[11px] text-amber-300">
-                                🔥 ผลิตภัณฑ์ที่ผู้ใช้ชื่นชอบมากที่สุด: <span class="font-bold underline">${maxClickCount > 0 ? popularProductName : 'ไม่มีข้อมูล'}</span>
-                            </div>
-                            <div class="overflow-y-auto max-h-[240px] flex-1 pr-1">${clickStatsHtml}</div>
-                        </div>
-
-                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex flex-col">
-                            <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3 flex justify-between items-center">
-                                <span><i class="fas fa-users mr-1.5"></i> คลังฐานข้อมูลลูกค้า (Lead Magnet System)</span>
-                                <span class="bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">${leads.length} คน</span>
-                            </h3>
-                            <div class="overflow-y-auto max-h-[290px] flex-1 pr-1">${leadListHtml}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6 flex flex-wrap justify-end gap-3 border-t border-slate-800 pt-4">
-                        <button onclick="triggerWeeklyReportEmailv96g()" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2">
-                            <i class="fas fa-paper-plane"></i> ส่งรายงานสัปดาห์เข้าเมลคลังหลัก
-                        </button>
-                        <button onclick="exportLeadsToExcelv96g()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2">
-                            <i class="fas fa-file-excel"></i> ส่งออกรายชื่อเปิดบน Excel (CSV)
-                        </button>
-                    </div>
-                </div>
-            `;
-            adminModal.classList.remove('hidden');
-            adminModal.classList.add('flex');
+            adminModal.innerHTML = renderAdminControlCenterv9612h("overview");
+            adminModal.classList.remove("hidden");
+            adminModal.classList.add("flex");
         }
 
-        function saveCloudUrlv96g() {
+        function switchAdminTabv9612h(tabId) {
+            const modal = document.getElementById("v96gAdminDashboardModal");
+            if (!modal) return;
+            modal.innerHTML = renderAdminControlCenterv9612h(tabId);
+        }
+
+        async function adminTestCloudv9612h() {
+            setAdminStatusv9612h("กำลังทดสอบ Cloud...", "cyan");
+            try {
+                const before = (window.__SWP_SYNC_DIAG__ || []).length;
+                const changed = await syncFromCloudv964h({ render: true });
+                initProfileFormv964h();
+                renderDashboard();
+                const after = (window.__SWP_SYNC_DIAG__ || []).length;
+                setAdminStatusv9612h(`Test Cloud เสร็จ: ${changed ? "พบข้อมูลใหม่/merge แล้ว" : "เชื่อมต่อสำเร็จหรือข้อมูลล่าสุดแล้ว"} • diag +${after-before}`, "success");
+                setTimeout(() => switchAdminTabv9612h("debug"), 600);
+            } catch (err) {
+                setAdminStatusv9612h("Test Cloud ไม่สำเร็จ: " + (err && err.message ? err.message : err), "danger");
+            }
+        }
+
+        async function adminForcePullv9612h() {
+            if (!confirm("Force Pull จะดึงข้อมูลจาก Cloud มา merge กับข้อมูลในเครื่องนี้ ไม่ลบ Cloud ต้องการดำเนินการต่อหรือไม่?")) return;
+            setAdminStatusv9612h("กำลัง Force Pull จาก Cloud...", "cyan");
+            try {
+                await syncFromCloudv964h({ render: true });
+                initProfileFormv964h();
+                renderDashboard();
+                setAdminStatusv9612h("Force Pull เสร็จแล้ว", "success");
+                setTimeout(() => switchAdminTabv9612h("debug"), 600);
+            } catch (err) {
+                setAdminStatusv9612h("Force Pull ไม่สำเร็จ", "danger");
+            }
+        }
+
+        function adminForcePushv9612h() {
+            if (!confirm("Backup Push จะส่งข้อมูล local ปัจจุบันขึ้น Cloud เพื่อสำรอง/merge ต่อ ต้องการดำเนินการต่อหรือไม่?")) return;
+            dispatchCloudSyncv96g("adminBackupPush", { adminAction: true, debugReport: buildAdminDebugReportv9612h() });
+            setAdminStatusv9612h("ส่ง Backup Push แล้ว", "success");
+            setTimeout(() => switchAdminTabv9612h("debug"), 700);
+        }
+
+        function adminCopyDebugReportv9612h() {
+            const text = JSON.stringify(buildAdminDebugReportv9612h(), null, 2);
+            navigator.clipboard?.writeText(text).then(() => {
+                setAdminStatusv9612h("Copy Debug Report แล้ว", "success");
+            }).catch(() => {
+                prompt("Copy Debug Report", text);
+            });
+        }
+
+        function adminExportDebugJsonv9612h() {
+            const blob = new Blob([JSON.stringify(buildAdminDebugReportv9612h(), null, 2)], { type: "application/json;charset=utf-8" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `SleepWellPro_Debug_${APP_VERSION}_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function adminResetLocalDevicev9612h() {
+            const typed = prompt("พิมพ์ RESET เพื่อยืนยันการลบข้อมูลเฉพาะ browser นี้\nCloud จะไม่ถูกลบ และสามารถ login email เดิมเพื่อดึงกลับได้");
+            if (typed !== "RESET") return;
+            clearSleepWellLocalDevicev969h({ hard: true });
+            location.href = location.origin + location.pathname + "?v=" + encodeURIComponent(APP_VERSION) + "&t=" + Date.now();
+        }
+
+function saveCloudUrlv96g() {
             const inputUrl = document.getElementById("sheetsCloudUrlInput").value.trim();
             if (inputUrl && !isValidCloudEndpointv967h(inputUrl)) {
                 alert("❌ URL Cloud ไม่ถูกต้อง ต้องเป็นลิงก์ Google Apps Script Web App ที่ลงท้ายด้วย /exec เท่านั้น");
@@ -1247,8 +1567,9 @@ function initProfileFormv964h() {
             const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
             if (!existsLead) db.leadData.push(db.lead);
             saveToStoragev96g({ actionType: 'submitLead' });
+            refreshAdminTriggerVisibilityv9612h();
             
-            // v9.6.10h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
+            // v9.6.12h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
             syncFromCloudv964h({ render: false }).then(() => {
                 lockIdentityEmailv968h(email, name);
                 saveToStoragev96g({ skipVersion: true });
@@ -1852,7 +2173,7 @@ function initProfileFormv964h() {
             }
 
             renderDashboard();
-            // v9.6.10h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
+            // v9.6.12h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
             syncFromCloudv964h({ render: true }).then((changed) => {
                 initProfileFormv964h();
                 renderDashboard();
@@ -1874,7 +2195,7 @@ function initProfileFormv964h() {
         window.addEventListener('offline', () => setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว'));
 
 
-        // (- Production v9.6.10h -) Browser Cache / Device Identity Recovery Toolkit
+        // (- Production v9.6.12h -) Browser Cache / Device Identity Recovery Toolkit
         function clearSleepWellLocalDevicev969h({ hard = false } = {}) {
             try {
                 const keys = [];
@@ -1933,12 +2254,20 @@ function initProfileFormv964h() {
             };
         }
 
+
+        function refreshAdminTriggerVisibilityv9612h() {
+            const trigger = document.getElementById('v96gAdminInvisibleTrigger');
+            if (!trigger) return;
+            trigger.style.display = isCurrentAdminv9612h() ? 'block' : 'none';
+        }
+
         // Global Bootloader System Initialization
         window.onload = () => {
             if (handleRecoveryQueryv969h()) return;
             exposeRecoveryToolsv969h();
             clearBrowserAppCachesv969h();
             const hasIdentity = ensureIdentityOrShowLeadv968h();
+            refreshAdminTriggerVisibilityv9612h();
             if (db.leadSaved && hasIdentity) {
                 document.getElementById('leadMagnetOverlay').classList.add('hidden');
                 document.getElementById('leadMagnetOverlay').style.display = 'none';
