@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.5h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.6h - by Aone Krittapas</title>
     <link rel="icon" type="image/png" href="./assets/app-icons/favicon.png">
     <link rel="apple-touch-icon" href="./assets/app-icons/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
 
 
-        /* (- New Feature v9.6.5h -) Cloud Sync Status + Auto Backup UX */
+        /* (- New Feature v9.6.6h -) Cloud Sync Status + Auto Backup UX */
         .sync-status-pill {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 8px 12px; border-radius: 999px;
@@ -322,7 +322,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.5h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.6h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -493,7 +493,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.5h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.6h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -538,8 +538,8 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
-        // (- New Feature v9.6.5h -) Version Control Configuration
-        const APP_VERSION = "9.6.5h";
+        // (- New Feature v9.6.6h -) Version Control Configuration
+        const APP_VERSION = "9.6.6h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -777,7 +777,19 @@
         }
 
         function initProfileFormv964h() {
-            initProfileFormv964h();
+            if (!db.profile) db.profile = { name: '', weight: 69, height: 170, age: 55, gender: 'ชาย', goal: 8 };
+            const fieldMap = [
+                ['pName', db.profile.name || ''],
+                ['pAge', db.profile.age || ''],
+                ['pWeight', db.profile.weight || ''],
+                ['pHeight', db.profile.height || ''],
+                ['pGoal', db.profile.goal || ''],
+                ['pGender', db.profile.gender || 'ชาย']
+            ];
+            fieldMap.forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.value = value;
+            });
         }
 
         // (- New Feature v9.6g -) ฟังก์ชันวิเคราะห์ Tracking Click บันทึกและดึงข้อมูลยอดความสนใจสินค้า
@@ -999,9 +1011,11 @@
             
             saveToStoragev96g({ actionType: 'submitLead' });
             
-            // ส่งชุดข้อมูลสมาชิกข้ามไปบันทึกบน Google Sheets Cloud รวมศูนย์
-            dispatchCloudSyncv96g("submitLead", { name: name, email: email });
-            syncFromCloudv964h({ render: false });
+            // v9.6.6h: ดึงข้อมูลเดิมจาก Cloud ก่อน แล้วค่อยส่งชุดข้อมูลที่ merge แล้วกลับไป
+            // ป้องกันเครื่องใหม่ที่ยังไม่มี log ไปเขียนทับข้อมูลเดิมบน Cloud ด้วยฐานข้อมูลว่าง
+            syncFromCloudv964h({ render: false }).then(() => {
+                dispatchCloudSyncv96g("submitLead", { name: name, email: email });
+            });
             
             const leadOverlay = document.getElementById('leadMagnetOverlay');
             const pinOverlay = document.getElementById('pinOverlay');
@@ -1582,18 +1596,28 @@
 
         function initApp() {
             initProfileFormv964h();
-            
+
             const today = new Date();
             const lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
             document.getElementById('shareEnd').value = today.toISOString().slice(0,10);
             document.getElementById('shareStart').value = lastWeek.toISOString().slice(0,10);
-            
-            document.getElementById('shareStart').addEventListener('change', renderDashboard);
-            document.getElementById('shareEnd').addEventListener('change', renderDashboard);
-            
+
+            const shareStartEl = document.getElementById('shareStart');
+            const shareEndEl = document.getElementById('shareEnd');
+            if (!shareStartEl.dataset.bound) {
+                shareStartEl.addEventListener('change', renderDashboard);
+                shareStartEl.dataset.bound = '1';
+            }
+            if (!shareEndEl.dataset.bound) {
+                shareEndEl.addEventListener('change', renderDashboard);
+                shareEndEl.dataset.bound = '1';
+            }
+
             renderDashboard();
-            syncFromCloudv964h({ render: true }).then(() => {
-                if(db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
+            syncFromCloudv964h({ render: true }).then((changed) => {
+                initProfileFormv964h();
+                renderDashboard();
+                if(changed && db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
             });
         }
 
