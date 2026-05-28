@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.13h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.14h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -57,7 +57,7 @@
         .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
 
 
-        /* (- New Feature v9.6.13h -) Cloud Sync Status + Multi-Transport Cloud Sync UX */
+        /* (- New Feature v9.6.14h -) Cloud Sync Status + Multi-Transport Cloud Sync UX */
         .sync-status-pill {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 8px 12px; border-radius: 999px;
@@ -259,7 +259,7 @@
 
 
 
-        /* (- Production v9.6.13h -) Identity Lock + Sync Trust UI */
+        /* (- Production v9.6.14h -) Identity Lock + Sync Trust UI */
         .identity-lock-note {
             margin-top: 10px;
             padding: 10px 12px;
@@ -274,7 +274,7 @@
 
 
 
-        /* (- Admin Control Center Lite v9.6.13h -) Admin-only system console */
+        /* (- Admin Control Center Lite v9.6.14h -) Admin-only system console */
         .admin-tab-btn {
             padding: 10px 12px;
             border-radius: 14px;
@@ -410,7 +410,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.13h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.14h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -478,6 +478,7 @@
                             <label class="flex items-center gap-2"><input type="checkbox" id="fStr" class="accent-cyan-500"> ความเครียด</label>
                             <label class="flex items-center gap-2"><input type="checkbox" id="fExe" class="accent-cyan-500"> ออกกำลังกาย</label>
                             <label class="flex items-center gap-2"><input type="checkbox" id="fScr" class="accent-cyan-500"> ใช้หน้าจอ</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fRoom" class="accent-cyan-500"> ห้องนอน</label>
                             <label class="flex items-center gap-2 text-rose-400"><input type="checkbox" id="fAlc" class="accent-rose-500"> แอลกอฮอล์</label>
                         </div>
                         <button onclick="addSleepLog()" class="w-full py-4 rounded-xl btn-cyan font-bold text-white shadow-lg shadow-cyan-950/20 uppercase tracking-wider text-xs">วิเคราะห์ข้อมูลสุขภาพการนอน</button>
@@ -581,7 +582,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.13h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.14h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -626,8 +627,8 @@
         // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
         runDatabaseMigrationv96h();
 
-        // (- New Feature v9.6.13h -) Version Control Configuration
-        const APP_VERSION = "9.6.13h";
+        // (- New Feature v9.6.14h -) Version Control Configuration
+        const APP_VERSION = "9.6.14h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -657,7 +658,7 @@
         if (!db.deviceId) db.deviceId = `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
         if (!db.dataVersion) db.dataVersion = Date.now();
         if (!Array.isArray(db.backups)) db.backups = [];
-        // (- v9.6.13h -) Affiliate & Lead Intelligence: optional fields only, backward compatible
+        // (- v9.6.14h -) Affiliate & Lead Intelligence: optional fields only, backward compatible
         if (!db.analytics || typeof db.analytics !== 'object') db.analytics = {};
         if (!Array.isArray(db.events)) db.events = [];
         if (!db.leadMeta || typeof db.leadMeta !== 'object') db.leadMeta = {};
@@ -665,7 +666,7 @@
         db.appVersion = APP_VERSION;
         db.dataSchemaVersion = DATA_SCHEMA_VERSION;
 
-        // (- Production v9.6.13h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
+        // (- Production v9.6.14h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
         function normalizeEmailv968h(email) {
             return String(email || '').trim().toLowerCase();
         }
@@ -746,7 +747,7 @@
         // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
         const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
 
-        // v9.6.13h: Cloud endpoint self-healing
+        // v9.6.14h: Cloud endpoint self-healing
         // ปัญหาที่เจอบน Notebook มักเกิดจาก localStorage เก็บ URL เก่าหรือ URL ผิดไว้ใน db.googleSheetsUrl
         // จึงตรวจรูปแบบ URL ก่อนใช้งาน และ fallback กลับ DEFAULT_CLOUD_SYNC_ENDPOINT อัตโนมัติ
         function isValidCloudEndpointv967h(url) {
@@ -811,7 +812,7 @@
 
 
 
-        // (- v9.6.13h -) Lightweight Event + Lead Intelligence Layer (optional, backward compatible)
+        // (- v9.6.14h -) Lightweight Event + Lead Intelligence Layer (optional, backward compatible)
         function swpNowv9613h(){ return Date.now(); }
         function swpGetEventsv9613h(){ if(!Array.isArray(db.events)) db.events = []; return db.events; }
         function swpTrackEventv9613h(type, meta = {}) {
@@ -858,6 +859,8 @@
             if ((log.pct || 0) < 85) signals.push('low_success');
             if (f.screen || f.screenTime) signals.push('screen');
             if (f.stress || f.stressFactor) signals.push('stress');
+            if (f.room || f.roomIssue || f.environment) signals.push('environment', 'room');
+            if (f.caffeine) signals.push('caffeine');
             if (f.alcohol) signals.push('alcohol');
             if (f.exercise) signals.push('exercise');
             if (!signals.length) signals.push('maintenance');
@@ -868,12 +871,16 @@
             const tags = product.matchTags || [];
             let score = Number(product.priority || 50);
             signals.forEach(s => { if (tags.includes(s)) score += 18; });
-            if (product.highlight) score += 5;
-            if (signals.includes('screen') && product.id === 'blue-glasses-01') score += 25;
-            if (signals.includes('stress') && ['herbal-tea-01','weighted-blanket-01','breath-trainer-01','magnesium-01'].includes(product.id)) score += 16;
+            if (product.highlight) score += 3;
+            if (product.id === 'blue-glasses-01') score += signals.includes('screen') ? 35 : -95;
+            const roomRelated = ['pillow-01','eye-mask-01','earplug-01','humidifier-01','cooling-pad-01'];
+            if (signals.includes('environment') && roomRelated.includes(product.id)) score += 30;
+            if (signals.includes('stress') && ['herbal-tea-01','weighted-blanket-01','breath-trainer-01','magnesium-01'].includes(product.id)) score += 18;
             if (signals.includes('low_cycles') && product.id === 'supplement-mag-01') score += 18;
-            if (signals.includes('low_quality') && product.id === 'pillow-01') score += 10;
-            return score;
+            if (signals.includes('low_quality') && product.id === 'pillow-01') score += 12;
+            if (signals.includes('caffeine') && product.id === 'decaf-drink-01') score += 28;
+            if (signals.includes('alcohol') && ['supplement-mag-01','decaf-drink-01'].includes(product.id)) score += 12;
+            return Math.max(0, Math.round(score));
         }
         function getRankedAffiliateProductsv9613h(log = null, limit = 3) {
             const latest = log || (db.logs && db.logs.length ? db.logs[db.logs.length - 1] : null);
@@ -900,6 +907,21 @@
             const l = db.logs && db.logs.length ? db.logs[db.logs.length-1] : null;
             if(!l) return {signals: [], status:'no_data'};
             return {signals: getSleepSignalsv9613h(l), duration:l.duration, quality:l.quality, cycles:l.cycles, pct:l.pct};
+        }
+
+        function swpRepairClickTrackingv9614h() {
+            let changed = false;
+            if (!db.clickTracking) db.clickTracking = {};
+            Object.keys(db.clickTracking).forEach(pid => {
+                const s = db.clickTracking[pid] || {};
+                const shopee = swpSafeCountv9614h ? swpSafeCountv9614h(s.shopee) : Math.round(Number(s.shopee || 0));
+                const tiktok = swpSafeCountv9614h ? swpSafeCountv9614h(s.tiktok) : Math.round(Number(s.tiktok || 0));
+                const detail = swpSafeCountv9614h ? swpSafeCountv9614h(s.detail) : Math.round(Number(s.detail || 0));
+                const total = shopee + tiktok + detail;
+                if (s.shopee !== shopee || s.tiktok !== tiktok || s.detail !== detail || s.total !== total) changed = true;
+                db.clickTracking[pid] = { ...s, shopee, tiktok, detail, total };
+            });
+            return changed;
         }
 
         let currentPinInput = "";
@@ -948,6 +970,8 @@
                 events: db.events || [],
                 leadMeta: db.leadMeta || {},
                 recommendationState: db.recommendationState || {},
+                deletedLogIds: db.deletedLogIds || [],
+                replaceLogs: !!db.replaceLogsOnNextSync,
                 backupSnapshot: getSafeBackupSnapshotv965h(actionType),
                 ...extraData
             };
@@ -979,6 +1003,7 @@
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
             }).then(() => {
+                if (payload.replaceLogs) db.replaceLogsOnNextSync = false;
                 db.lastCloudSync = Date.now();
                 localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
                 setSyncStatusv965h('synced', 'อัปโหลดแล้ว');
@@ -995,14 +1020,17 @@
             const localVersion = Number(db.dataVersion || 0);
             const localLogs = Array.isArray(db.logs) ? db.logs : [];
             const remoteLogs = Array.isArray(r.logs) ? r.logs : [];
+            const deletedIds = new Set([...(db.deletedLogIds || []), ...((r.deletedLogIds || []))].map(String));
             const byId = new Map();
             [...remoteLogs, ...localLogs].forEach(log => {
                 if (!log) return;
-                const key = log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}_${log.duration || ''}`;
+                const key = String(log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}_${log.duration || ''}`);
+                if (deletedIds.has(key)) return;
                 const existing = byId.get(key) || {};
                 byId.set(key, { ...existing, ...log });
             });
             db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
+            db.deletedLogIds = Array.from(deletedIds).slice(-500);
             if (r.profile && remoteVersion >= localVersion) db.profile = { ...db.profile, ...r.profile };
             if (r.security && r.security.pin && remoteVersion >= localVersion) db.security = { ...db.security, ...r.security };
             if (r.lead && r.lead.email) lockIdentityEmailv968h(r.lead.email, r.lead.name || '');
@@ -1032,7 +1060,7 @@
         }
 
         
-        // (- Production v9.6.13h -) Multi-transport Cloud Pull Engine
+        // (- Production v9.6.14h -) Multi-transport Cloud Pull Engine
         // แก้เคส Browser Profile บางตัวโหลด JSONP จาก Apps Script ไม่ได้ ทั้งที่ backend ปกติ
         // Strategy: JSONP -> hidden iframe postMessage fallback -> retry 3 รอบ
         const CLOUD_SYNC_TIMEOUT_MS_V9611H = 25000;
@@ -1214,8 +1242,8 @@ function initProfileFormv964h() {
             if (!db.clickTracking[productId]) {
                 db.clickTracking[productId] = { shopee: 0, tiktok: 0, detail: 0, total: 0, lastClickAt: 0 };
             }
-            db.clickTracking[productId][platform] = (db.clickTracking[productId][platform] || 0) + 1;
-            db.clickTracking[productId].total = (db.clickTracking[productId].total || 0) + 1;
+            db.clickTracking[productId][platform] = swpSafeCountv9614h(db.clickTracking[productId][platform]) + 1;
+            db.clickTracking[productId].total = swpSafeCountv9614h(db.clickTracking[productId].shopee) + swpSafeCountv9614h(db.clickTracking[productId].tiktok) + swpSafeCountv9614h(db.clickTracking[productId].detail);
             db.clickTracking[productId].lastClickAt = Date.now();
             db.analytics.affiliate.total = Number(db.analytics.affiliate.total || 0) + 1;
             db.analytics.affiliate.byPlatform[platform] = Number(db.analytics.affiliate.byPlatform[platform] || 0) + 1;
@@ -1236,7 +1264,7 @@ function initProfileFormv964h() {
         }
 
         
-        // (- Admin Control Center Lite v9.6.13h -) Admin-only Security Gate + Control Center
+        // (- Admin Control Center Lite v9.6.14h -) Admin-only Security Gate + Control Center
         const ADMIN_EMAILS_V9612H = [
             "kudsangoods.th@gmail.com"
         ];
@@ -1295,7 +1323,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.6.13h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.14h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -1313,16 +1341,25 @@ function initProfileFormv964h() {
             }
         });
 
+        function swpSafeCountv9614h(value) {
+            const n = Number(value || 0);
+            if (!Number.isFinite(n) || n < 0 || n > 1000000) return 0;
+            return Math.round(n);
+        }
+        function swpFormatCountv9614h(value) {
+            return swpSafeCountv9614h(value).toLocaleString('th-TH');
+        }
         function buildAdminAffiliateHtmlv9612h() {
             return AFFILIATE_CATALOG.map(p => {
-                const stat = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
-                const total = Number(stat.total || (Number(stat.shopee||0) + Number(stat.tiktok||0) + Number(stat.detail||0)) || 0);
-                const split = total ? `S:${stat.shopee||0} / T:${stat.tiktok||0} / D:${stat.detail||0}` : 'ยังไม่มีคลิก';
+                const raw = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
+                const stat = { shopee: swpSafeCountv9614h(raw.shopee), tiktok: swpSafeCountv9614h(raw.tiktok), detail: swpSafeCountv9614h(raw.detail), lastClickAt: raw.lastClickAt || 0 };
+                const total = stat.shopee + stat.tiktok + stat.detail;
+                const split = total ? `Shopee: ${swpFormatCountv9614h(stat.shopee)} / TikTok: ${swpFormatCountv9614h(stat.tiktok)} / Detail: ${swpFormatCountv9614h(stat.detail)}` : 'ยังไม่มีคลิก';
                 return `
                     <div class="py-3 border-b border-slate-800/70 text-xs">
                         <div class="flex justify-between gap-3 text-slate-200 font-semibold">
                             <span class="truncate">${p.iconImg ? "🖼️" : p.icon} ${p.name}</span>
-                            <span class="text-cyan-400 font-bold whitespace-nowrap">${total} คลิก</span>
+                            <span class="text-cyan-400 font-bold whitespace-nowrap">${swpFormatCountv9614h(total)} คลิก</span>
                         </div>
                         <div class="flex flex-wrap gap-2 text-[10px] text-slate-400 mt-1">
                             <span class="text-cyan-300">${p.tier || '-'}</span><span>${split}</span><span>ล่าสุด: ${adminReadableTimev9612h(stat.lastClickAt)}</span>
@@ -1538,7 +1575,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.13h</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.14h</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -1718,7 +1755,7 @@ function saveCloudUrlv96g() {
             saveToStoragev96g({ actionType: 'submitLead' });
             refreshAdminTriggerVisibilityv9612h();
             
-            // v9.6.13h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
+            // v9.6.14h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
             syncFromCloudv964h({ render: false }).then(() => {
                 lockIdentityEmailv968h(email, name);
                 saveToStoragev96g({ skipVersion: true });
@@ -1768,7 +1805,9 @@ function saveCloudUrlv96g() {
                 const n1 = prompt("กรุณากรอกรหัส PIN ใหม่ความยาว 4 หลัก:");
                 if(n1 && n1.length === 4 && !isNaN(n1)) {
                     db.security.pin = n1;
-                    saveToStoragev96g();
+                    swpTrackEventv9613h('change_pin', {});
+                    saveToStoragev96g({ actionType: 'changePin' });
+                    dispatchCloudSyncv96g("syncStorage");
                     alert("เปลี่ยนรหัสผ่าน PIN สำเร็จเรียบร้อยแล้ว!");
                 } else {
                     alert("รูปแบบรหัสผ่านไม่ถูกต้อง! ต้องเป็นตัวเลข 4 หลัก");
@@ -1787,9 +1826,12 @@ function saveCloudUrlv96g() {
                 goal: parseFloat(document.getElementById('pGoal').value) || 8
             };
             swpTrackEventv9613h('save_profile', { profile: db.profile });
+            if (db.lead && db.profile.name) db.lead.name = db.profile.name;
             saveToStoragev96g({ actionType: 'saveProfile' });
-            renderDashboard();
             dispatchCloudSyncv96g("syncStorage");
+            initProfileFormv964h();
+            renderDashboard();
+            alert("บันทึกโปรไฟล์เรียบร้อยแล้ว");
         }
 
         // Medical Metric Analytical Calculator & Aggregator Core Logic 
@@ -1825,6 +1867,9 @@ function saveCloudUrlv96g() {
                     screen: document.getElementById('fScr').checked, 
                     stress: document.getElementById('fStr').checked,
                     exercise: document.getElementById('fExe').checked,
+                    caffeine: document.getElementById('fCaf').checked,
+                    room: document.getElementById('fRoom') ? document.getElementById('fRoom').checked : false,
+                    environment: document.getElementById('fRoom') ? document.getElementById('fRoom').checked : false,
                     screenTime: document.getElementById('fScr').checked,
                     stressFactor: document.getElementById('fStr').checked,
                     alcohol: document.getElementById('fAlc').checked 
@@ -1844,10 +1889,22 @@ function saveCloudUrlv96g() {
             document.getElementById('wTime').value = "";
         }
 
-        // [v9.6.13h] Advanced AI Deep Analysis: varied, signal-based, product-aligned narrative engine
+        // [v9.6.14h] Advanced AI Deep Analysis: varied, signal-based, product-aligned narrative engine
         function pickCopyv9613h(list, seed = 0) {
             if (!list || !list.length) return '';
             return list[Math.abs(seed) % list.length];
+        }
+        function sleepSignalLabelv9614h(signal) {
+            return ({
+                short_sleep:'เวลานอนน้อย', good_duration:'เวลานอนอยู่ในเกณฑ์', low_quality:'คุณภาพนอนต่ำ', low_cycles:'รอบการนอนไม่ครบ', low_success:'ยังไม่ถึงเป้าหมาย', screen:'ใช้หน้าจอก่อนนอน', stress:'ความเครียด/คิดงาน', alcohol:'แอลกอฮอล์', caffeine:'คาเฟอีน', exercise:'ออกกำลังกาย', environment:'ห้องนอนรบกวน', room:'ห้องนอนรบกวน', maintenance:'รักษา pattern'
+            })[signal] || signal;
+        }
+        function buildProductReasonv9614h(product, signals) {
+            if (product.id === 'blue-glasses-01') return signals.includes('screen') ? 'แนะนำเพราะคุณติ๊กใช้หน้าจอ แสงและคอนเทนต์ก่อนนอนอาจทำให้สมองตื่นตัว' : 'ไม่ดันขึ้นเป็นตัวหลัก เพราะคืนนี้ไม่มีสัญญาณใช้หน้าจอ';
+            if (['eye-mask-01','earplug-01','humidifier-01','cooling-pad-01','pillow-01'].includes(product.id) && (signals.includes('environment') || signals.includes('room'))) return 'แนะนำเพราะมีปัจจัยห้องนอน ควรแก้แสง เสียง อุณหภูมิ หรือความสบายของที่นอนก่อน';
+            if (['herbal-tea-01','weighted-blanket-01','breath-trainer-01','magnesium-01'].includes(product.id) && signals.includes('stress')) return 'แนะนำเพราะมีสัญญาณความเครียด ควรช่วยให้ร่างกายเปลี่ยนจากโหมดคิดงานเป็นโหมดพัก';
+            if (product.id === 'supplement-mag-01' && (signals.includes('low_cycles') || signals.includes('low_quality'))) return 'แนะนำเพราะรอบการนอน/คุณภาพยังต่ำ ใช้เป็นตัวช่วยเสริมหลังปรับพฤติกรรมพื้นฐานแล้ว';
+            return product.why || 'สัมพันธ์กับ pattern การนอนล่าสุดของคุณ';
         }
         function updateDeepAI(log) {
             const container = document.getElementById('aiAnalysis');
@@ -1856,47 +1913,34 @@ function saveCloudUrlv96g() {
             const signals = getSleepSignalsv9613h(log);
             const ranked = getRankedAffiliateProductsv9613h(log, 5);
             db.recommendationState = { lastSignals: signals, lastRecommendedIds: ranked.map(x=>x.id), lastUpdatedAt: Date.now() };
-            const seed = Number(log.id || log.timestamp || Date.now());
             const riskLevel = (p >= 85 && q >= 7 && d >= 7) ? 'green' : (d < 6 || q <= 4 || c < 4) ? 'red' : 'yellow';
-            const statusText = riskLevel === 'green' ? 'ฟื้นตัวดี' : riskLevel === 'red' ? 'ต้องแก้ pattern เร่งด่วน' : 'พอใช้ แต่ยัง optimize ได้';
-            const insightPools = {
-                duration: [
-                    `ระยะเวลานอน ${durationFormattedText} เมื่อเทียบกับเป้าหมาย ${db.profile.goal || 8} ชม. สะท้อน sleep opportunity ของคืนนี้`,
-                    `ชั่วโมงนอนจริง ${durationFormattedText} เป็นฐานของ recovery score เพราะถ้าเวลานอนไม่พอ วงจรหลับลึกจะถูกบีบให้สั้นลง`,
-                    `คืนนี้ร่างกายมีเวลาฟื้นตัว ${durationFormattedText} จุดสำคัญคือความต่อเนื่องและจังหวะตื่น ไม่ใช่แค่จำนวนชั่วโมงอย่างเดียว`
-                ],
-                cycle: [
-                    `จำนวนวงจรหลับประมาณ ${c} รอบ โดยเป้าหมายที่น่าเชื่อถือคือ 5–6 รอบต่อคืน`,
-                    `รอบการนอน ${c} รอบ บอกภาพรวมของการผ่าน stage หลับตื้น-หลับลึก-REM ได้ดีกว่าดูเวลานอนอย่างเดียว`,
-                    `ถ้ารอบนอนต่ำกว่า 5 รอบหลายคืนติดกัน มักสัมพันธ์กับ brain fog และความอยากหวาน/คาเฟอีนในวันถัดไป`
-                ],
-                behavior: [
-                    `ปัจจัยพฤติกรรมคืนนี้: ${signals.join(', ')} ระบบจึงแนะนำให้แก้ที่ trigger ก่อนเพิ่มตัวช่วย`,
-                    `สัญญาณเด่นที่พบคือ ${signals.join(' / ')} ควรเลือก intervention ที่ตรงสาเหตุ ไม่ใช่ซื้อของแบบสุ่ม`,
-                    `pattern คืนนี้ชี้ว่าควรปรับ routine + environment + product support พร้อมกัน เพื่อให้ผลลัพธ์นิ่งกว่าแก้ทีละจุด`
-                ]
-            };
+            const statusText = riskLevel === 'green' ? 'ฟื้นตัวดี' : riskLevel === 'red' ? 'ควรแก้คืนนี้ทันที' : 'พอใช้ แต่ยังดีขึ้นได้';
+            const durationAdvice = d >= 7 ? `ดี: เวลานอน ${durationFormattedText} อยู่ใกล้ช่วงที่ร่างกายมีเวลาซ่อมแซมตัวเองพอสมควร ควรรักษาเวลาเข้านอนและตื่นให้ใกล้เดิมอีก 3 คืน` : `ยังไม่ดี: เวลานอน ${durationFormattedText} ยังสั้น ร่างกายอาจฟื้นตัวไม่ทัน พรุ่งนี้ควรลดงาน/หน้าจอช่วงก่อนนอน และขยับเวลาเข้านอนเร็วขึ้น 30–45 นาที`;
+            const cycleAdvice = c >= 5 ? `ดี: รอบการนอนประมาณ ${c} รอบ ถือว่าใกล้เป้าหมาย 5–6 รอบ ควรรักษาความต่อเนื่องของการนอน` : `ยังไม่ดี: รอบการนอนประมาณ ${c} รอบ ต่ำกว่าเป้าหมาย 5–6 รอบ ควรลดสิ่งรบกวนช่วงกลางคืน เช่น แสง เสียง อุณหภูมิ และการตื่นมาเช็กมือถือ`;
+            const behaviorLabels = signals.filter(s=>!['good_duration','maintenance'].includes(s)).map(sleepSignalLabelv9614h);
+            const behaviorAdvice = behaviorLabels.length ? `คืนนี้พบปัจจัยที่อาจกดคุณภาพการนอน: ${behaviorLabels.join(' / ')} สิ่งที่ควรทำคือเลือกแก้ตัวที่ควบคุมง่ายที่สุดก่อน เช่น ห้องนอน หน้าจอ หรือความเครียด` : `คืนนี้ยังไม่พบ trigger ใหญ่ชัดเจน ควรรักษา routine เดิมและดูแนวโน้มต่อเนื่องอีก 2–3 คืน`;
             let html = `<div class="space-y-4">`;
             html += `<div class="p-3 rounded-2xl border ${riskLevel==='green'?'border-emerald-500/30 bg-emerald-950/20':riskLevel==='red'?'border-rose-500/30 bg-rose-950/20':'border-amber-500/30 bg-amber-950/20'}">
                 <div class="text-[11px] uppercase tracking-widest text-slate-400 font-bold">Sleep Intelligence Summary</div>
                 <div class="text-lg font-black mt-1 ${riskLevel==='green'?'text-emerald-300':riskLevel==='red'?'text-rose-300':'text-amber-300'}">${statusText}</div>
-                <div class="text-[11px] text-slate-300 mt-2 leading-relaxed">${pickCopyv9613h(insightPools.duration, seed)} คะแนนคุณภาพ ${q}/10 และความสำเร็จ ${p}%</div>
+                <div class="text-[11px] text-slate-300 mt-2 leading-relaxed">คะแนนรวม ${p}% จากคุณภาพ ${q}/10 และเวลานอน ${durationFormattedText} — ระบบมองว่านี่คือภาพรวมของ “พักพอไหม + ตื่นมาไหวไหม”</div>
             </div>`;
-            html += `<div><b class="text-cyan-400"><i class="fas fa-hourglass-half mr-1"></i> วิเคราะห์เวลานอน:</b> ${pickCopyv9613h(insightPools.duration, seed+1)}</div>`;
-            html += `<div><b class="text-orange-400"><i class="fas fa-fire mr-1"></i> Metabolic Recovery:</b> ระบบประเมินการเผาผลาญระหว่างหลับประมาณ ${cal} kcal ตัวเลขนี้ใช้ดูแนวโน้ม recovery ร่วมกับชั่วโมงนอน ไม่ใช่ใช้แทนการวัดทางการแพทย์</div>`;
-            html += `<div><b class="text-emerald-400"><i class="fas fa-sync-alt mr-1"></i> วงจรหลับ:</b> ${pickCopyv9613h(insightPools.cycle, seed+2)}</div>`;
-            html += `<div><b class="text-pink-400"><i class="fas fa-brain mr-1"></i> Behavioral Signal:</b> ${pickCopyv9613h(insightPools.behavior, seed+3)}</div>`;
-            if (signals.includes('screen')) html += `<div class="text-cyan-200"><b>Screen Hygiene:</b> คืนที่มีหน้าจอก่อนนอนควรลดแสง/ลด dopamine content ก่อนนอน 45–60 นาที และใช้แว่นกรองแสงเป็นตัวช่วยเฉพาะจุด</div>`;
-            if (signals.includes('stress')) html += `<div class="text-amber-200"><b>Stress Downshift:</b> แนะนำ ritual 5 นาที: หายใจ 4-6, กลิ่นผ่อนคลาย, เขียน brain dump 3 บรรทัด เพื่อปิดวงจรคิดงานก่อนนอน</div>`;
-            if (signals.includes('alcohol')) html += `<div class="text-rose-200"><b>Alcohol Recovery:</b> แอลกอฮอล์มักทำให้ REM fragment แม้หลับไว ควรเพิ่มน้ำ/แร่ธาตุและงดซ้ำในคืนถัดไปเพื่อดู rebound recovery</div>`;
-            html += `<div class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800"><b class="text-cyan-300">Product Logic:</b><div class="mt-2 space-y-1">${ranked.slice(0,3).map((p,i)=>`<div class="text-[11px] text-slate-300">${i+1}. <b>${p.name}</b> <span class="text-slate-500">(${p.tier})</span> — ${p.why}</div>`).join('')}</div></div>`;
-            html += `<div><b class="text-rose-400"><i class="fas fa-heart-beat mr-1"></i> Action Plan พรุ่งนี้:</b> ${riskLevel==='green'?'คงเวลานอน-ตื่นเดิม และรักษา routine เดิมอีก 3 คืนเพื่อยืนยัน pattern':'เลือกแก้ 1 trigger หลักคืนนี้ก่อน เช่น หน้าจอ/ความเครียด/ห้องนอน แล้วดูผลเทียบกับคะแนนวันถัดไป'}</div>`;
+            html += `<div><b class="text-cyan-400"><i class="fas fa-hourglass-half mr-1"></i> เวลานอน:</b> ${durationAdvice}</div>`;
+            html += `<div><b class="text-orange-400"><i class="fas fa-fire mr-1"></i> พลังงานระหว่างหลับ:</b> ประมาณ ${cal} kcal ใช้ดูแนวโน้มเท่านั้น ถ้าวันไหนนอนสั้น ตัวเลขมักต่ำตามไปด้วย สิ่งที่ควรดูจริงคือแนวโน้ม 3–7 วัน ไม่ใช่คืนเดียว</div>`;
+            html += `<div><b class="text-emerald-400"><i class="fas fa-sync-alt mr-1"></i> รอบการนอน:</b> ${cycleAdvice}</div>`;
+            html += `<div><b class="text-pink-400"><i class="fas fa-brain mr-1"></i> ปัจจัยรบกวน:</b> ${behaviorAdvice}</div>`;
+            if (signals.includes('screen')) html += `<div class="text-cyan-200"><b>ใช้หน้าจอ:</b> ควรหยุดคอนเทนต์กระตุ้นอารมณ์ก่อนนอน 45–60 นาที ลดแสงจอ และใช้ตัวช่วยกรองแสงเมื่อเลี่ยงหน้าจอไม่ได้</div>`;
+            if (signals.includes('stress')) html += `<div class="text-amber-200"><b>ความเครียด:</b> ไม่ควรนอนทั้งที่สมองยังค้างเรื่องงาน ให้ทำ ritual 5 นาที: หายใจช้า เขียนสิ่งที่ค้าง 3 บรรทัด แล้วค่อยขึ้นเตียง</div>`;
+            if (signals.includes('environment') || signals.includes('room')) html += `<div class="text-sky-200"><b>ห้องนอน:</b> ควรเช็ก 4 อย่าง: แสง เสียง อุณหภูมิ และหมอน/ที่นอน ถ้าห้องไม่พร้อม ต่อให้นอนนานก็อาจหลับไม่ลึก</div>`;
+            if (signals.includes('alcohol')) html += `<div class="text-rose-200"><b>แอลกอฮอล์:</b> อาจทำให้หลับไวแต่คุณภาพตกและตื่นไม่สดชื่น คืนถัดไปควรงดซ้ำ ดื่มน้ำให้พอ และนอนให้ตรงเวลา</div>`;
+            html += `<div class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800"><b class="text-cyan-300">Product Logic:</b><div class="mt-2 space-y-1">${ranked.slice(0,3).map((p,i)=>`<div class="text-[11px] text-slate-300">${i+1}. <b>${p.name}</b> <span class="text-slate-500">(${p.tier})</span> — ${buildProductReasonv9614h(p, signals)}</div>`).join('')}</div></div>`;
+            html += `<div><b class="text-rose-400"><i class="fas fa-heart-beat mr-1"></i> Action Plan คืนนี้:</b> ${riskLevel==='green'?'ทำเหมือนเดิมต่ออีก 3 คืนเพื่อยืนยันว่า pattern นี้เวิร์กจริง':'เลือกแก้ 1 trigger หลักก่อน เช่น ห้องนอน/หน้าจอ/ความเครียด แล้วดูคะแนนวันถัดไป ไม่ควรซื้อหรือเปลี่ยนหลายอย่างพร้อมกันจนวัดผลไม่ได้'}</div>`;
             html += `</div>`;
             container.innerHTML = html;
             triggerConditionalAffiliate(log);
         }
 
-        // [v9.6.13h] Product Matching Engine: chooses products by sleep signal + tier diversity
+        // [v9.6.14h] Product Matching Engine: chooses products by sleep signal + tier diversity
         function triggerConditionalAffiliate(log) {
             const finalSelection = getRankedAffiliateProductsv9613h(log, 3).map(p => p.id);
             renderAffiliateProducts(finalSelection);
@@ -1964,7 +2008,8 @@ function saveCloudUrlv96g() {
 
         function deleteLog(id) {
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบประวัติบันทึกข้อมูลการนอนของวันนี้ออก?")) {
-                db.logs = db.logs.filter(l => l.id !== id);
+                db.deletedLogIds = Array.from(new Set([...(db.deletedLogIds || []), String(id)]));
+                db.logs = db.logs.filter(l => String(l.id) !== String(id));
                 saveToStoragev96g({ actionType: 'deleteLog' });
                 dispatchCloudSyncv96g("syncStorage");
                 renderDashboard();
@@ -1997,10 +2042,28 @@ function saveCloudUrlv96g() {
                     try {
                         const imported = JSON.parse(event.target.result);
                         if (imported.logs && Array.isArray(imported.logs) && imported.profile) {
-                            if (confirm("คุณยืนยันการนำเข้าข้อมูลชุดนี้ใช่หรือไม่? ข้อมูลปัจจุบันภายในเครื่องทั้งหมดจะถูกเขียนทับทันที!")) {
-                                db = imported;
-                                saveToStoragev96g();
-                                location.reload();
+                            if (confirm("คุณยืนยันการนำเข้าข้อมูลชุดนี้ใช่หรือไม่? ระบบจะใช้ข้อมูลในไฟล์นี้แทนชุดปัจจุบัน และ Sync ขึ้น Cloud ทันที")) {
+                                const identityEmail = getIdentityEmailv968h();
+                                const keepIdentity = {
+                                    userId: identityEmail,
+                                    identityEmail,
+                                    userEmail: identityEmail,
+                                    googleSheetsUrl: db.googleSheetsUrl || '',
+                                    deviceId: db.deviceId || `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`,
+                                    lead: db.lead || imported.lead || null,
+                                    leadData: db.leadData || imported.leadData || []
+                                };
+                                const oldIds = (db.logs || []).map(l => String(l.id || `${l.fullDate || l.date || ''}_${l.sleepTime || ''}_${l.wakeTime || ''}_${l.duration || ''}`));
+                                db = { ...db, ...imported, ...keepIdentity };
+                                db.deletedLogIds = Array.from(new Set([...(db.deletedLogIds || []), ...oldIds]));
+                                db.replaceLogsOnNextSync = true;
+                                db.dataVersion = Date.now();
+                                db.appVersion = APP_VERSION;
+                                db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+                                saveToStoragev96g({ actionType: 'importReplace' });
+                                dispatchCloudSyncv96g("syncStorage");
+                                alert("นำเข้าข้อมูลและส่ง Sync แล้ว ระบบจะรีเฟรชหน้าเพื่อแสดงข้อมูลล่าสุด");
+                                setTimeout(()=>location.reload(), 900);
                             }
                         } else {
                             alert("รูปแบบไฟล์สำรองไม่ถูกต้อง! กรุณาใช้ไฟล์ JSON ที่ดาวน์โหลดออกจากระบบนี้เท่านั้น");
@@ -2286,14 +2349,17 @@ function saveCloudUrlv96g() {
 
         function confirmClear() { 
             if(confirm("คุณต้องการล้างฐานข้อมูลประวัติการนอนทั้งหมดทิ้งใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้")) { 
+                db.deletedLogIds = Array.from(new Set([...(db.deletedLogIds || []), ...(db.logs || []).map(l => String(l.id || `${l.fullDate || l.date || ''}_${l.sleepTime || ''}_${l.wakeTime || ''}_${l.duration || ''}`))]));
                 db.logs = []; 
-                saveToStoragev96g({ actionType: 'deleteLog' });
+                db.replaceLogsOnNextSync = true;
+                saveToStoragev96g({ actionType: 'clearLogs' });
                 dispatchCloudSyncv96g("syncStorage");
                 renderDashboard(); 
             } 
         }
 
         function initApp() {
+            if (typeof swpRepairClickTrackingv9614h === 'function' && swpRepairClickTrackingv9614h()) saveToStoragev96g({ actionType: 'repairClickTracking' });
             initProfileFormv964h();
 
             const today = new Date();
@@ -2313,7 +2379,7 @@ function saveCloudUrlv96g() {
             }
 
             renderDashboard();
-            // v9.6.13h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
+            // v9.6.14h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
             syncFromCloudv964h({ render: true }).then((changed) => {
                 initProfileFormv964h();
                 renderDashboard();
@@ -2335,7 +2401,7 @@ function saveCloudUrlv96g() {
         window.addEventListener('offline', () => setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว'));
 
 
-        // (- Production v9.6.13h -) Browser Cache / Device Identity Recovery Toolkit
+        // (- Production v9.6.14h -) Browser Cache / Device Identity Recovery Toolkit
         function clearSleepWellLocalDevicev969h({ hard = false } = {}) {
             try {
                 const keys = [];
