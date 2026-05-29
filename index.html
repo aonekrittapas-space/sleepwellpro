@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.16h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.17h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -419,7 +419,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.16h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.17h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.16h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.17h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -637,7 +637,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.16h";
+        const APP_VERSION = "9.6.17h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1448,17 +1448,58 @@ function initProfileFormv964h() {
             }).join('') || `<div class="text-center opacity-40 text-xs py-8 italic">ไม่พบข้อมูลตาม filter ที่เลือก</div>`;
             return `<div class="mb-2 text-[11px] text-slate-400">แสดง ${rows.length} รายการ • รวมตามมุมมองนี้ <b class="text-cyan-300">${swpFormatCountv9614h(summaryTotal)}</b> คลิก</div>${body}`;
         }
+        function swpSanitizeClickStatv9614h(value) {
+            return swpSafeCountv9614h(value);
+        }
+
         function exportAffiliateIntelCsvv9615h() {
-            const rows = getAffiliateStatsRowsv9615h();
-            let csv = "\uFEFFProduct,Tier,Price Range,Shopee,TikTok,Detail,Total,Last Click\n";
-            rows.forEach(({product:p, stat}) => {
-                csv += `"${p.name}","${p.commercialTier || ''}","${p.priceRange || ''}",${swpSanitizeClickStatv9614h(stat.shopee)},${swpSanitizeClickStatv9614h(stat.tiktok)},${swpSanitizeClickStatv9614h(stat.detail)},${swpSanitizeClickStatv9614h(stat.total)},"${adminReadableTimev9612h(stat.lastClickAt)}"\n`;
-            });
-            const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `SleepWellPro_Affiliate_Intel_${new Date().toISOString().slice(0,10)}.csv`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            try {
+                const state = getAdminAffiliateViewStatev9615h ? getAdminAffiliateViewStatev9615h() : {};
+                let rows = getAffiliateStatsRowsv9615h();
+                if (state.filterTier && state.filterTier !== 'all') rows = rows.filter(r => r.product.priceTierKey === state.filterTier);
+                const channel = state.channel || 'all';
+                rows = rows.map(r => ({...r, viewClicks: channel === 'all' ? r.stat.total : swpSafeCountv9614h(r.stat[channel])}));
+                const sortBy = state.sortBy || 'total_desc';
+                rows.sort((a,b) => {
+                    if (sortBy === 'total_asc') return a.viewClicks - b.viewClicks;
+                    if (sortBy === 'recent_desc') return Number(b.stat.lastClickAt||0) - Number(a.stat.lastClickAt||0);
+                    if (sortBy === 'name_asc') return String(a.product.name).localeCompare(String(b.product.name),'th');
+                    if (sortBy === 'price_high') return Number(b.product.approxPrice||0) - Number(a.product.approxPrice||0);
+                    if (sortBy === 'price_low') return Number(a.product.approxPrice||0) - Number(b.product.approxPrice||0);
+                    return b.viewClicks - a.viewClicks;
+                });
+                const safeCsv = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+                let csv = "\uFEFFProduct,Tier,Price Tier,Price Range,Approx Price,Shopee,TikTok,Detail,Total,Current View Clicks,Last Click\n";
+                rows.forEach(({product:p, stat, viewClicks}) => {
+                    csv += [
+                        safeCsv(p.name),
+                        safeCsv(p.tier || ''),
+                        safeCsv(p.commercialTier || ''),
+                        safeCsv(p.priceRange || ''),
+                        swpSafeCountv9614h(p.approxPrice),
+                        swpSafeCountv9614h(stat.shopee),
+                        swpSafeCountv9614h(stat.tiktok),
+                        swpSafeCountv9614h(stat.detail),
+                        swpSafeCountv9614h(stat.total),
+                        swpSafeCountv9614h(viewClicks),
+                        safeCsv(adminReadableTimev9612h(stat.lastClickAt))
+                    ].join(',') + "\n";
+                });
+                const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `SleepWellPro_Affiliate_Intel_${new Date().toISOString().slice(0,10)}.csv`;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => { try { URL.revokeObjectURL(url); a.remove(); } catch(e) {} }, 1200);
+                if (typeof pushEventv9613h === 'function') pushEventv9613h('export_affiliate_csv', { rows: rows.length, channel, sortBy, filterTier: state.filterTier || 'all' });
+                alert(`Export CSV สำเร็จ: ${rows.length} รายการ`);
+            } catch (err) {
+                console.error('Affiliate CSV export failed', err);
+                alert('Export CSV ไม่สำเร็จ: ' + (err && err.message ? err.message : err));
+            }
         }
 
         function buildAdminEventHtmlv9613h() {
@@ -1856,7 +1897,7 @@ function saveCloudUrlv96g() {
                     leadOverlay.style.display = 'none';
                 }, 250);
 
-                // v9.6.16h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
+                // v9.6.17h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
                 syncFromCloudv964h({ render: false }).then(() => {
                     lockIdentityEmailv968h(email, name);
                     saveToStoragev96g({ skipVersion: true });
