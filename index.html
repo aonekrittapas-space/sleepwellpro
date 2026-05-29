@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.15h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.16h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -419,7 +419,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.15h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.16h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.15h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.16h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -637,7 +637,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.15h";
+        const APP_VERSION = "9.6.16h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1450,11 +1450,9 @@ function initProfileFormv964h() {
         }
         function exportAffiliateIntelCsvv9615h() {
             const rows = getAffiliateStatsRowsv9615h();
-            let csv = "﻿Product,Tier,Price Range,Shopee,TikTok,Detail,Total,Last Click
-";
+            let csv = "\uFEFFProduct,Tier,Price Range,Shopee,TikTok,Detail,Total,Last Click\n";
             rows.forEach(({product:p, stat}) => {
-                csv += `"${p.name}","${p.commercialTier || ''}","${p.priceRange || ''}",${stat.shopee},${stat.tiktok},${stat.detail},${stat.total},"${adminReadableTimev9612h(stat.lastClickAt)}"
-`;
+                csv += `"${p.name}","${p.commercialTier || ''}","${p.priceRange || ''}",${swpSanitizeClickStatv9614h(stat.shopee)},${swpSanitizeClickStatv9614h(stat.tiktok)},${swpSanitizeClickStatv9614h(stat.detail)},${swpSanitizeClickStatv9614h(stat.total)},"${adminReadableTimev9612h(stat.lastClickAt)}"\n`;
             });
             const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
             const a = document.createElement('a');
@@ -1828,47 +1826,49 @@ function saveCloudUrlv96g() {
         // (- New Feature v9.6c -) Asynchronous Page Transition & Input Validation Implementation
         function submitLeadMagnet(event) {
             event.preventDefault();
-            const name = document.getElementById('leadName').value.trim();
-            const email = document.getElementById('leadEmail').value.trim();
-            
-            if (!name || !email) {
-                alert("กรุณาใส่ข้อมูลลงทะเบียนให้ครบถ้วนทุกช่อง");
-                return;
-            }
-
-            // (- New Feature v9.6h -) เรียกใช้งานระบบเช็คโครงสร้างความถูกต้องจริงของ Email ป้องกันข้อมูลหลุดเฟรม
-            if (!isValidEmailv96h(email)) {
-                alert("❌ รูปแบบอีเมลไม่ถูกต้อง! กรุณาตรวจสอบและกรอกอีเมลที่มีอยู่จริงเพื่อรับรายงานสรุปผล (เช่น name@domain.com)");
-                return;
-            }
-            
-            lockIdentityEmailv968h(email, name);
-            if (!db.leadData) db.leadData = [];
-            const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
-            if (!existsLead) db.leadData.push(db.lead);
-            swpTrackEventv9613h('register', { name, email: normalizeEmailv968h(email) });
-            saveToStoragev96g({ actionType: 'submitLead' });
-            refreshAdminTriggerVisibilityv9612h();
-            
-            // v9.6.15h Production: ยืนยันตัวตนด้วยอีเมลก่อน แล้วดึง Cloud → merge → ส่งกลับ
-            syncFromCloudv964h({ render: false }).then(() => {
+            try {
+                const name = document.getElementById('leadName').value.trim();
+                const email = document.getElementById('leadEmail').value.trim();
+                if (!name || !email) {
+                    alert("กรุณาใส่ข้อมูลลงทะเบียนให้ครบถ้วนทุกช่อง");
+                    return;
+                }
+                if (!isValidEmailv96h(email)) {
+                    alert("❌ รูปแบบอีเมลไม่ถูกต้อง! กรุณาตรวจสอบและกรอกอีเมลที่มีอยู่จริงเพื่อรับรายงานสรุปผล (เช่น name@domain.com)");
+                    return;
+                }
                 lockIdentityEmailv968h(email, name);
-                saveToStoragev96g({ skipVersion: true });
-                dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
-            });
-            
-            const leadOverlay = document.getElementById('leadMagnetOverlay');
-            const pinOverlay = document.getElementById('pinOverlay');
-            
-            pinOverlay.classList.remove('hidden');
-            pinOverlay.style.opacity = '1';
-            pinOverlay.style.display = 'flex';
-            
-            leadOverlay.style.opacity = '0';
-            setTimeout(() => {
-                leadOverlay.classList.add('hidden');
-                leadOverlay.style.display = 'none';
-            }, 500);
+                if (!db.leadData) db.leadData = [];
+                const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
+                if (!existsLead) db.leadData.push(db.lead);
+                swpTrackEventv9613h('register', { name, email: normalizeEmailv968h(email) });
+                saveToStoragev96g({ actionType: 'submitLead' });
+                refreshAdminTriggerVisibilityv9612h();
+
+                const leadOverlay = document.getElementById('leadMagnetOverlay');
+                const pinOverlay = document.getElementById('pinOverlay');
+                pinOverlay.classList.remove('hidden');
+                pinOverlay.style.opacity = '1';
+                pinOverlay.style.display = 'flex';
+                leadOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    leadOverlay.classList.add('hidden');
+                    leadOverlay.style.display = 'none';
+                }, 250);
+
+                // v9.6.16h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
+                syncFromCloudv964h({ render: false }).then(() => {
+                    lockIdentityEmailv968h(email, name);
+                    saveToStoragev96g({ skipVersion: true });
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
+                }).catch(err => {
+                    console.warn('[Lead] background sync failed but app can continue', err);
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
+                });
+            } catch (err) {
+                console.error('submitLeadMagnet failed', err);
+                alert('ระบบลงทะเบียนมีข้อผิดพลาด กรุณารีเฟรชหน้าแล้วลองใหม่อีกครั้ง');
+            }
         }
 
         // Security PIN Core Authentication Routine Flow
