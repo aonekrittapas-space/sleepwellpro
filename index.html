@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.18h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.19h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -419,7 +419,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.18h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.19h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.18h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.19h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -637,7 +637,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.18h";
+        const APP_VERSION = "9.6.19h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1901,14 +1901,14 @@ function saveCloudUrlv96g() {
                     leadOverlay.style.display = 'none';
                 }, 250);
 
-                // v9.6.18h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
+                // v9.6.19h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
                 syncFromCloudv964h({ render: false }).then(() => {
                     lockIdentityEmailv968h(email, name);
                     saveToStoragev96g({ skipVersion: true });
-                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
                 }).catch(err => {
                     console.warn('[Lead] background sync failed but app can continue', err);
-                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email) });
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
                 });
             } catch (err) {
                 console.error('submitLeadMagnet failed', err);
@@ -2226,7 +2226,7 @@ function saveCloudUrlv96g() {
                                 db.appVersion = APP_VERSION;
                                 db.dataSchemaVersion = DATA_SCHEMA_VERSION;
                                 saveToStoragev96g({ actionType: 'importReplace' });
-                                dispatchCloudSyncv96g("syncStorage", { replaceLogs: true, forceReplaceProfileSecurity: true, importCoreVersion: db.importCoreVersion });
+                                dispatchCloudSyncv96g("importReplace", { replaceLogs: true, forceReplaceProfileSecurity: true, importCoreVersion: db.importCoreVersion });
                                 setTimeout(()=>{ db.replaceLogsOnNextSync = false; db.forceReplaceProfileSecurityOnNextSync = false; saveToStoragev96g({ skipVersion: true }); }, 4500);
                                 alert("นำเข้าข้อมูลและส่ง Sync แล้ว ระบบจะรีเฟรชหน้าเพื่อแสดงข้อมูลล่าสุด");
                                 setTimeout(()=>location.reload(), 900);
