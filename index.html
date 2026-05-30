@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.20h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.21h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -419,7 +419,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.20h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.21h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.20h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.21h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -637,7 +637,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.20h";
+        const APP_VERSION = "9.6.21h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1003,40 +1003,104 @@
             };
         }
 
-        // v9.6.4h Cloud Sync: ส่งข้อมูลขึ้นกลาง เพื่อให้ข้อมูลข้ามอุปกรณ์เหมือนกัน
-        function dispatchCloudSyncv96g(actionType, extraData = {}) {
-            if (!navigator.onLine) {
-                console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
-                setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว');
-                return;
-            }
-            const endpoint = getCloudEndpointv964h();
-            if (!endpoint) {
-                setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud');
-                return;
-            }
-            const userKey = getUserKeyv964h();
-            if (!userKey) {
-                setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync');
-                return;
-            }
-            setSyncStatusv965h('syncing', 'กำลัง Sync...');
-            const payload = buildCloudPayloadv964h(actionType, extraData);
-            if (!payload) return;
-            fetch(endpoint, {
+        // v9.6.21h GO LIVE FINAL: verified JSONP write first, no-cors POST fallback second.
+        // เป้าหมาย: เครื่องหลักต้องเขียน Cloud ได้แบบรู้ผลจริง ก่อนให้อีก Profile ดึงข้อมูล
+        function encodePayloadForGetv9621h(payload) {
+            const json = JSON.stringify(payload || {});
+            return btoa(unescape(encodeURIComponent(json))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+        }
+
+        function dispatchCloudSyncVerifiedv9621h(endpoint, payload) {
+            return new Promise((resolve, reject) => {
+                const callbackName = `swpWrite_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                let done = false;
+                const script = document.createElement('script');
+                const sep = endpoint.includes('?') ? '&' : '?';
+                const encoded = encodePayloadForGetv9621h(payload);
+                const url = `${endpoint}${sep}action=verifiedPayloadUpdate&payload=${encodeURIComponent(encoded)}&callback=${callbackName}&_=${Date.now()}`;
+
+                // กัน URL ยาวเกินในอนาคต: ถ้ายาวมากให้ fallback ไป POST เดิม
+                if (url.length > 45000) return reject(new Error('verified_url_too_long'));
+
+                const timer = setTimeout(() => fail('verified_write_timeout'), 20000);
+                function cleanup() {
+                    clearTimeout(timer);
+                    try { delete window[callbackName]; } catch(e) { window[callbackName] = undefined; }
+                    try { script.remove(); } catch(e) {}
+                }
+                function fail(reason) {
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    reject(new Error(reason));
+                }
+                window[callbackName] = function(response) {
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    if (response && response.ok) resolve(response);
+                    else reject(new Error(response && response.error ? response.error : 'verified_write_not_ok'));
+                };
+                script.onerror = () => fail('verified_write_script_error');
+                script.async = true;
+                script.referrerPolicy = 'no-referrer';
+                script.src = url;
+                document.body.appendChild(script);
+            });
+        }
+
+        function dispatchCloudSyncPostFallbackv9621h(endpoint, payload) {
+            return fetch(endpoint, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
-            }).then(() => {
+            });
+        }
+
+        // v9.6.21h Cloud Sync: ส่งข้อมูลขึ้นกลางแบบยืนยันผลได้ก่อน เพื่อกัน Profile/PIN/Logs ไม่ตรงกันข้ามโปรไฟล์
+        function dispatchCloudSyncv96g(actionType, extraData = {}) {
+            if (!navigator.onLine) {
+                console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
+                setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว');
+                return Promise.resolve(false);
+            }
+            const endpoint = getCloudEndpointv964h();
+            if (!endpoint) {
+                setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud');
+                return Promise.resolve(false);
+            }
+            const userKey = getUserKeyv964h();
+            if (!userKey) {
+                setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync');
+                return Promise.resolve(false);
+            }
+            setSyncStatusv965h('syncing', 'กำลัง Sync...');
+            const payload = buildCloudPayloadv964h(actionType, extraData);
+            if (!payload) return Promise.resolve(false);
+
+            // Core/data actions ต้องเขียนแบบ verified ก่อนเสมอ ส่วน trackClick ถ้า fail ค่อย fallback
+            return dispatchCloudSyncVerifiedv9621h(endpoint, payload).then((res) => {
                 if (payload.replaceLogs) db.replaceLogsOnNextSync = false;
                 if (payload.forceReplaceProfileSecurity) db.forceReplaceProfileSecurityOnNextSync = false;
                 db.lastCloudSync = Date.now();
                 localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
-                setSyncStatusv965h('synced', 'อัปโหลดแล้ว');
-            }).catch(err => {
-                console.log("Cloud backup buffering active.", err);
-                setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
+                setSyncStatusv965h('synced', 'Sync แล้ว');
+                return true;
+            }).catch((err) => {
+                console.warn('[Cloud Sync] verified write failed, fallback to POST:', err && err.message ? err.message : err);
+                return dispatchCloudSyncPostFallbackv9621h(endpoint, payload).then(() => {
+                    if (payload.replaceLogs) db.replaceLogsOnNextSync = false;
+                    if (payload.forceReplaceProfileSecurity) db.forceReplaceProfileSecurityOnNextSync = false;
+                    db.lastCloudSync = Date.now();
+                    localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+                    setSyncStatusv965h('synced', 'อัปโหลดแล้ว');
+                    return true;
+                }).catch(postErr => {
+                    console.log("Cloud backup buffering active.", postErr);
+                    setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
+                    return false;
+                });
             });
         }
 
@@ -1059,7 +1123,7 @@
             db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
             db.deletedLogIds = Array.from(deletedIds).slice(-500);
             const protectLocalCore = Number(db.localProfileLockUntil || 0) > Date.now();
-            // v9.6.20h: Cloud is source-of-truth for Profile/PIN on pull.
+            // v9.6.21h: Cloud is source-of-truth for Profile/PIN on pull.
             // Do not compare dataVersion here because local dataVersion is bumped by render/merge/backup actions,
             // which previously blocked newer Cloud profile/security from reaching another browser profile.
             if (!protectLocalCore && r.profile) db.profile = { ...db.profile, ...r.profile };
@@ -1907,7 +1971,7 @@ function saveCloudUrlv96g() {
                     leadOverlay.style.display = 'none';
                 }, 250);
 
-                // v9.6.20h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
+                // v9.6.21h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
                 syncFromCloudv964h({ render: false }).then(() => {
                     lockIdentityEmailv968h(email, name);
                     saveToStoragev96g({ skipVersion: true });
@@ -1957,7 +2021,7 @@ function saveCloudUrlv96g() {
                     db.localProfileLockUntil = Date.now() + 60000;
                     swpTrackEventv9613h('change_pin', {});
                     saveToStoragev96g({ actionType: 'changePin' });
-                    dispatchCloudSyncv96g("changeSecurity", { forceReplaceProfileSecurity: true, coreUpdateKind: 'security' });
+                    dispatchCloudSyncv96g("changeSecurity", { forceReplaceProfileSecurity: true, coreUpdateKind: 'security' }).then(() => syncFromCloudv964h({ render: true }));
                     alert("เปลี่ยนรหัสผ่าน PIN สำเร็จเรียบร้อยแล้ว!");
                 } else {
                     alert("รูปแบบรหัสผ่านไม่ถูกต้อง! ต้องเป็นตัวเลข 4 หลัก");
@@ -1982,7 +2046,7 @@ function saveCloudUrlv96g() {
             swpTrackEventv9613h('save_profile', { profile: db.profile });
             if (db.lead && db.profile.name) db.lead.name = db.profile.name;
             saveToStoragev96g({ actionType: 'saveProfile' });
-            dispatchCloudSyncv96g("updateProfile", { forceReplaceProfileSecurity: true, coreUpdateKind: 'profile' });
+            dispatchCloudSyncv96g("updateProfile", { forceReplaceProfileSecurity: true, coreUpdateKind: 'profile' }).then(() => syncFromCloudv964h({ render: true }));
             initProfileFormv964h();
             renderDashboard();
             alert("บันทึกโปรไฟล์เรียบร้อยแล้ว");
