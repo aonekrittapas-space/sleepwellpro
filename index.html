@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Well Pro v9.6.20h - by Aone Krittapas</title>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="icon" type="image/png" href="./assets/app-icons/favicon.png">
+    <link rel="apple-touch-icon" href="./assets/app-icons/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght=200;300;400;500;600&display=swap');
+        :root { --blue-ocean: #0f172a; --turquoise-blue: #06b6d4; --bright-pearl: #f1f5f9; }
+        body { font-family: 'Kanit', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
+        
+        /* (- New Feature v9.6h -) ปรับแต่งกรอบกระจกเงาให้เป็นสไตล์ Neon Glowing Edge ปรับความพรีเมียมระดับสูง */
+        .glass-card { 
+            background: rgba(30, 41, 59, 0.45); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(6, 182, 212, 0.15); 
+            border-radius: 20px; 
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.03);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.08);
+        }
+        
+        .input-dark { background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; color: white; border-radius: 12px; }
+        .input-dark:focus { border-color: var(--turquoise-blue); box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); outline: none; }
+        
+        /* (- New Feature v9.6h -) อัปเกรดปุ่มสไตล์ Neon Glow Button */
+        .btn-cyan { 
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); 
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            transition: 0.3s; 
+        }
+        .btn-cyan:hover { 
+            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%); 
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+            transform: translateY(-2px); 
+        }
+        
+        /* (- New Feature v9.6c -) Sequential UI Layering Styles with Transition Configuration */
+        #leadMagnetOverlay { position: fixed; inset: 0; background: var(--blue-ocean); z-index: 10001; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+        #pinOverlay { position: fixed; inset: 0; background: var(--blue-ocean); z-index: 10000; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+        .pin-dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid var(--turquoise-blue); margin: 0 10px; transition: 0.3s; }
+        .pin-dot.active { background: var(--turquoise-blue); box-shadow: 0 0 15px var(--turquoise-blue); }
+        .log-table tr:hover { background: rgba(6, 182, 212, 0.05); }
+        .benchmark-label { font-size: 10px; color: #64748b; margin-top: 4px; font-weight: 300; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 4px; }
+
+
+        /* (- New Feature v9.6.15h -) Cloud Sync Status + Multi-Transport Cloud Sync UX */
+        .sync-status-pill {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 12px; border-radius: 999px;
+            background: rgba(15, 23, 42, .72);
+            border: 1px solid rgba(148, 163, 184, .18);
+            color: #94a3b8; font-size: 11px; font-weight: 600;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+            transition: all .25s ease;
+            white-space: nowrap;
+        }
+        .sync-status-pill.syncing { color: #22d3ee; border-color: rgba(34,211,238,.45); box-shadow: 0 0 14px rgba(34,211,238,.18); }
+        .sync-status-pill.synced { color: #34d399; border-color: rgba(52,211,153,.35); }
+        .sync-status-pill.offline { color: #f59e0b; border-color: rgba(245,158,11,.35); }
+        .sync-status-pill.error { color: #fb7185; border-color: rgba(251,113,133,.35); }
+        .sync-status-dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; box-shadow: 0 0 10px currentColor; }
+        .sync-status-pill.syncing .sync-status-dot { animation: pulseSyncv965h 1s infinite ease-in-out; }
+        @keyframes pulseSyncv965h { 0%,100% { transform: scale(.8); opacity:.45; } 50% { transform: scale(1.18); opacity:1; } }
+
+
+
+        /* (- New Feature v9.6.1h -) Product Image Icon System: แสดงรูปสินค้าจริงแทน emoji พร้อม fallback อัตโนมัติ */
+        .affiliate-product-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 14px;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), rgba(15,23,42,0.85));
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 18px rgba(0,0,0,0.20);
+        }
+        .affiliate-product-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.38));
+        }
+        .affiliate-product-icon-fallback {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .affiliate-modal-image-wrap {
+            width: 120px;
+            height: 120px;
+            border-radius: 26px;
+            margin: 0 auto 16px auto;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.16), rgba(15,23,42,0.92));
+            border: 1px solid rgba(6, 182, 212, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 28px rgba(6,182,212,0.13), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .affiliate-modal-image {
+            width: 112px;
+            height: 112px;
+            object-fit: contain;
+            padding: 4px;
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.42));
+        }
+
+
+        /* (- New Feature v9.6.2h -) Premium Affiliate Recommendation Panel */
+        .affiliate-premium-section {
+            position: relative;
+            padding: 18px;
+            border-radius: 24px;
+            border: 1px solid rgba(6, 182, 212, 0.28);
+            background:
+                radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.13), transparent 32%),
+                radial-gradient(circle at 90% 12%, rgba(236, 72, 153, 0.10), transparent 32%),
+                linear-gradient(180deg, rgba(30,41,59,.68), rgba(15,23,42,.72));
+            box-shadow: 0 18px 42px rgba(0,0,0,.28), 0 0 26px rgba(6,182,212,.07), inset 0 1px 0 rgba(255,255,255,.05);
+            overflow: hidden;
+        }
+        .affiliate-premium-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.06) 42%, transparent 60%);
+            opacity: .38;
+            pointer-events: none;
+        }
+        .affiliate-section-kicker {
+            width: fit-content;
+            margin: 0 auto 8px auto;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(6,182,212,.12);
+            border: 1px solid rgba(6,182,212,.24);
+            color: #67e8f9;
+            font-size: 9px;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            box-shadow: 0 0 14px rgba(6,182,212,.10);
+        }
+        .affiliate-choice-guide {
+            margin: -6px 0 16px 0;
+            padding: 12px 13px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(6,182,212,.12), rgba(15,23,42,.42));
+            border: 1px solid rgba(6,182,212,.22);
+            color: #dbeafe;
+            font-size: 11px;
+            line-height: 1.65;
+            text-align: center;
+        }
+        .affiliate-choice-guide b { color: #22d3ee; }
+        .affiliate-choice-guide .mini-note { display:block; color:#94a3b8; font-size:9px; margin-top:2px; }
+        .affiliate-card-premium {
+            position: relative;
+            border-radius: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(15,23,42,.96), rgba(30,41,59,.70));
+            border: 1px solid rgba(148,163,184,.14);
+            box-shadow: 0 12px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035);
+            overflow: hidden;
+            transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+        }
+        .affiliate-card-premium::after {
+            content: "";
+            position: absolute;
+            top: -30%;
+            right: -28%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(6,182,212,.16), transparent 65%);
+            pointer-events: none;
+        }
+        .affiliate-card-premium:hover {
+            transform: translateY(-3px);
+            border-color: rgba(34,211,238,.44);
+            box-shadow: 0 18px 36px rgba(0,0,0,.30), 0 0 22px rgba(6,182,212,.12);
+        }
+        .affiliate-card-premium.is-highlight {
+            border-color: rgba(34,211,238,.45);
+            box-shadow: 0 16px 34px rgba(0,0,0,.28), 0 0 28px rgba(6,182,212,.13);
+        }
+        .affiliate-product-icon {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            border-radius: 18px;
+            background: radial-gradient(circle at 30% 18%, rgba(255,255,255,0.18), rgba(15,23,42,0.88));
+            border: 1px solid rgba(34,211,238,0.16);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 22px rgba(0,0,0,0.28), 0 0 18px rgba(6,182,212,.08);
+            transition: transform .22s ease, box-shadow .22s ease;
+        }
+        .affiliate-card-premium:hover .affiliate-product-icon { transform: scale(1.05) rotate(-1deg); }
+        .affiliate-product-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
+            filter: drop-shadow(0 4px 7px rgba(0,0,0,0.42));
+        }
+        .affiliate-action-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .affiliate-action-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.16), transparent);
+            transform: translateX(-120%);
+            transition: transform .55s ease;
+        }
+        .affiliate-action-btn:hover::before { transform: translateX(120%); }
+
+
+
+        /* (- New Feature v9.6.3h -) Brand Logo Integration */
+        .brand-unlock-logo {
+            width: 88px;
+            height: 88px;
+            object-fit: contain;
+            border-radius: 24px;
+            box-shadow: 0 0 24px rgba(6,182,212,.30), 0 12px 28px rgba(0,0,0,.25);
+        }
+        .app-title-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 9999px;
+            filter: drop-shadow(0 0 10px rgba(6,182,212,.45));
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .app-title-logo { width: 36px; height: 36px; }
+        }
+
+
+
+        /* (- Production v9.6.15h -) Identity Lock + Sync Trust UI */
+        .identity-lock-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(34, 211, 238, .08);
+            border: 1px solid rgba(34, 211, 238, .18);
+            color: #93c5fd;
+            font-size: 10px;
+            line-height: 1.55;
+            text-align: left;
+        }
+
+
+
+        /* (- Admin Control Center Lite v9.6.15h -) Admin-only system console */
+        .admin-tab-btn {
+            padding: 10px 12px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, .14);
+            background: rgba(15, 23, 42, .70);
+            transition: all .2s ease;
+            white-space: nowrap;
+        }
+        .admin-tab-btn:hover {
+            color: #e2e8f0;
+            border-color: rgba(34, 211, 238, .28);
+            background: rgba(30, 41, 59, .78);
+        }
+        .admin-tab-btn.active {
+            color: #22d3ee;
+            border-color: rgba(34, 211, 238, .52);
+            box-shadow: 0 0 18px rgba(34, 211, 238, .12);
+            background: linear-gradient(135deg, rgba(8, 145, 178, .18), rgba(15, 23, 42, .84));
+        }
+        .admin-metric-card {
+            border: 1px solid rgba(148, 163, 184, .14);
+            background: rgba(15, 23, 42, .62);
+            border-radius: 18px;
+            padding: 14px;
+            min-height: 86px;
+        }
+        .admin-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 13px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            border: 1px solid rgba(148, 163, 184, .16);
+            background: rgba(30, 41, 59, .72);
+            color: #e2e8f0;
+            transition: all .2s ease;
+        }
+        .admin-action-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(34, 211, 238, .35);
+            box-shadow: 0 0 16px rgba(34, 211, 238, .10);
+        }
+        .admin-action-btn.danger { color: #fb7185; border-color: rgba(251, 113, 133, .28); }
+        .admin-action-btn.success { color: #34d399; border-color: rgba(52, 211, 153, .28); }
+        .admin-action-btn.cyan { color: #22d3ee; border-color: rgba(34, 211, 238, .28); }
+        .admin-codebox {
+            background: rgba(2, 6, 23, .80);
+            border: 1px solid rgba(148, 163, 184, .15);
+            border-radius: 16px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.55;
+            color: #cbd5e1;
+            overflow: auto;
+            max-height: 240px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* (- New Feature v9.6g -) ซ่อนปุ่มทางเข้าแผงควบคุมแอดมินลับแบบล่องหนที่มุมขวาล่าง */
+        #v96gAdminInvisibleTrigger {
+            position: fixed;
+            bottom: 3px;
+            right: 3px;
+            width: 14px;
+            height: 14px;
+            background: transparent;
+            cursor: pointer;
+            z-index: 10005;
+        }
+    
+
+        /* (- v9.6.15h -) Affiliate Intel Controls */
+        .admin-control-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
+        .admin-mini-select { background:rgba(15,23,42,.92); border:1px solid rgba(148,163,184,.22); color:#e2e8f0; border-radius:12px; padding:9px 10px; font-size:11px; outline:none; }
+        .admin-mini-select:focus { border-color:rgba(34,211,238,.65); box-shadow:0 0 0 2px rgba(34,211,238,.08); }
+        .admin-aff-row { display:grid; grid-template-columns: 1.35fr .7fr .55fr .8fr; gap:12px; align-items:center; }
+        @media (max-width: 900px) { .admin-aff-row { grid-template-columns: 1fr; gap:6px; } }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div id="v96gAdminInvisibleTrigger" onclick="checkAdminSecurityGate()" title="Admin Control Panel Gate"></div>
+
+    <div id="leadMagnetOverlay">
+        <div class="text-center w-full max-w-md p-8 glass-card mx-4 border border-cyan-500/20">
+            <div class="mx-auto mb-5 flex items-center justify-center">
+                <img src="./assets/app-icons/sleep-well-pro-logo.png" alt="Sleep Well Pro" class="brand-unlock-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/20&quot;><i class=&quot;fas fa-gift text-white text-2xl&quot;></i></div>'">
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-white">ปลดล็อกระบบวิเคราะห์การนอนฟรี</h2>
+            <p class="text-slate-400 text-xs mt-2 mb-6 leading-relaxed">ใส่ข้อมูลเพื่อลงทะเบียนรับสิทธิ์เข้าใช้งานระบบประมวลผลอัจฉริยะ และรับคำแนะนำการดูแลสุขภาพการนอนเชิงลึกฟรีตลอดการใช้งาน</p>
+            <form onsubmit="submitLeadMagnet(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="text-[11px] text-slate-400 font-medium ml-1">ชื่อ-นามสกุลของคุณ</label>
+                    <input type="text" id="leadName" required class="w-full p-3 mt-1 input-dark text-sm outline-none focus:border-cyan-500" placeholder="ตัวอย่าง: คุณอ้น คัดสรรกู๊ดส์">
+                </div>
+                <div>
+                    <label class="text-[11px] text-slate-400 font-medium ml-1">อีเมลสำหรับรับผลรายงานสุขภาพ</label>
+                    <input type="email" id="leadEmail" required class="w-full p-3 mt-1 input-dark text-sm outline-none focus:border-cyan-500" placeholder="example@email.com">
+                </div>
+                <button type="submit" class="w-full py-3.5 mt-2 rounded-xl btn-cyan font-bold text-white tracking-wider text-xs uppercase shadow-lg shadow-cyan-950/20">ลงทะเบียนและเข้าใช้งานแอปพลิเคชัน</button>
+            </form>
+            <p class="text-[9px] text-slate-500 mt-4"><i class="fas fa-lock mr-1"></i> Privacy Secured: ข้อมูลของคุณจะถูกเก็บรักษาไว้ภายใต้มาตรฐานความปลอดภัยสูงสุด</p>
+            <div class="identity-lock-note"><i class="fas fa-id-card mr-1 text-cyan-400"></i> ใช้อีเมลนี้เป็นรหัสประจำตัวหลักสำหรับ Sync ข้อมูลทุกอุปกรณ์ โปรดใช้อีเมลเดียวกันทุกครั้งเพื่อให้ข้อมูลตรงกัน</div>
+        </div>
+    </div>
+
+    <div id="pinOverlay">
+        <div class="text-center">
+            <h2 class="text-2xl font-bold mb-6 tracking-widest text-cyan-400">SLEEP WELL PRO</h2>
+            <div class="flex justify-center mb-8" id="pinDisplay">
+                <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 max-w-[250px] mx-auto">
+                <button onclick="inputPin(1)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">1</button>
+                <button onclick="inputPin(2)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">2</button>
+                <button onclick="inputPin(3)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">3</button>
+                <button onclick="inputPin(4)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">4</button>
+                <button onclick="inputPin(5)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">5</button>
+                <button onclick="inputPin(6)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">6</button>
+                <button onclick="inputPin(7)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">7</button>
+                <button onclick="inputPin(8)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">8</button>
+                <button onclick="inputPin(9)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">9</button>
+                <button onclick="clearPin()" class="w-16 h-16 rounded-full text-sm text-rose-400">Clear</button>
+                <button onclick="inputPin(0)" class="w-16 h-16 rounded-full border border-slate-700 text-xl active:bg-cyan-900 transition">0</button>
+            </div>
+            <p id="pinMsg" class="mt-4 text-xs text-slate-500 uppercase tracking-widest">Enter Security PIN</p>
+        </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto" id="mainAppContent">
+        <header class="flex flex-col md:flex-row justify-between items-start mb-10 gap-4">
+            <div>
+                <div class="flex items-center gap-3">
+                    <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.20h PRO</span></h1>
+                        <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3 items-center justify-end w-full md:w-auto">
+                <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
+                    <span class="sync-status-dot"></span>
+                    <span id="syncStatusText">พร้อม Sync</span>
+                </div>
+                <button onclick="exportData()" class="bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2">
+                    <i class="fas fa-download text-cyan-400"></i> สำรองข้อมูล
+                </button>
+                <button onclick="importData()" class="bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2">
+                    <i class="fas fa-upload text-emerald-400"></i> นำเข้าข้อมูล
+                </button>
+                <div class="text-right">
+                    <p class="text-[9px] text-slate-500 uppercase font-bold">ช่วงวันที่แชร์:</p>
+                    <div class="flex gap-2">
+                        <input type="date" id="shareStart" class="bg-transparent text-[11px] text-cyan-400 outline-none border-b border-slate-700">
+                        <span class="text-slate-600 text-[10px]">ถึง</span>
+                        <input type="date" id="shareEnd" class="bg-transparent text-[11px] text-cyan-400 outline-none border-b border-slate-700">
+                    </div>
+                </div>
+                <button onclick="captureFilteredReport()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-[0_0_10px_rgba(6,182,212,0.4)]">
+                    <i class="fas fa-file-export"></i> แชร์รายงานล่าสุด
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-3 space-y-6">
+                <section class="glass-card p-6 border-t-2 border-cyan-500 shadow-[0_-2px_10px_rgba(6,182,212,0.2)]">
+                    <h2 class="text-xs font-bold text-slate-400 mb-4 uppercase tracking-[0.2em]"><i class="fas fa-user-circle mr-2"></i> Profile & Goals</h2>
+                    <div class="space-y-3">
+                        <input type="text" id="pName" placeholder="ชื่อ" class="w-full p-3 input-dark text-sm outline-none focus:border-cyan-500">
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="pGender" class="p-3 input-dark text-sm outline-none"><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select>
+                            <input type="number" id="pAge" placeholder="อายุ" class="p-3 input-dark text-sm outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="pWeight" placeholder="นน." class="p-3 input-dark text-sm outline-none">
+                            <input type="number" id="pHeight" placeholder="สส." class="p-3 input-dark text-sm outline-none">
+                        </div>
+                        <input type="number" id="pGoal" placeholder="เป้าหมายนอน (ชม.)" step="0.5" class="w-full p-3 input-dark text-sm outline-none">
+                        <button onclick="saveProfile()" class="w-full py-2 text-[10px] text-slate-500 hover:text-cyan-400 uppercase font-bold transition">Update Profile</button>
+                        <button onclick="changePinPrompt()" class="w-full py-1 text-[9px] text-slate-700 hover:text-rose-400 uppercase transition">Change Security PIN</button>
+                    </div>
+                </section>
+
+                <section class="glass-card p-6 border-t-2 border-rose-500 shadow-[0_-2px_10px_rgba(244,63,94,0.2)]">
+                    <h2 class="text-xs font-bold text-slate-400 mb-4 uppercase tracking-[0.2em]"><i class="fas fa-moon mr-2"></i> บันทึกการนอนคืนล่าสุด</h2>
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] text-slate-400">เวลาเข้านอนจริง</label>
+                            <input type="datetime-local" id="sTime" class="w-full p-3 input-dark text-xs outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] text-slate-400">เวลาที่ตื่นจริง</label>
+                            <input type="datetime-local" id="wTime" class="w-full p-3 input-dark text-xs outline-none">
+                        </div>
+                        <div class="flex justify-between items-center"><span class="text-[10px] text-slate-500">คุณภาพ (หลังตื่น | Rate 1-10):</span> <span id="qVal" class="text-cyan-400 font-bold">7/10</span></div>
+                        <input type="range" id="sQual" min="1" max="10" value="7" oninput="qVal.innerText=this.value+'/10'" class="w-full accent-cyan-500">
+                        <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400">
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fCaf" class="accent-cyan-500"> คาเฟอีน</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fStr" class="accent-cyan-500"> ความเครียด</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fExe" class="accent-cyan-500"> ออกกำลังกาย</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fScr" class="accent-cyan-500"> ใช้หน้าจอ</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" id="fRoom" class="accent-cyan-500"> ห้องนอน</label>
+                            <label class="flex items-center gap-2 text-rose-400"><input type="checkbox" id="fAlc" class="accent-rose-500"> แอลกอฮอล์</label>
+                        </div>
+                        <button onclick="addSleepLog()" class="w-full py-4 rounded-xl btn-cyan font-bold text-white shadow-lg shadow-cyan-950/20 uppercase tracking-wider text-xs">วิเคราะห์ข้อมูลสุขภาพการนอน</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="lg:col-span-6 space-y-6" id="captureArea">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card p-4 text-center border-b-2 border-cyan-500 shadow-[0_2px_8px_rgba(6,182,212,0.1)]">
+                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">ชม. การนอน</p>
+                        <p class="text-xl font-bold text-cyan-400" id="statDur">0 ชม. 0 นาที</p>
+                        <p class="benchmark-label">เกณฑ์ดี: 7-9 ชม.</p>
+                    </div>
+                    <div class="glass-card p-4 text-center border-b-2 border-orange-500 shadow-[0_2px_8px_rgba(245,158,11,0.1)]">
+                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">แคลอรี่เผาผลาญ</p>
+                        <p class="text-2xl font-bold text-orange-400" id="statCal">0</p>
+                        <p class="benchmark-label">เกณฑ์ดี: > 300 kcal</p>
+                    </div>
+                    <div class="glass-card p-4 text-center border-b-2 border-cyan-400 shadow-[0_2px_8px_rgba(34,211,238,0.1)]">
+                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">รอบการนอน</p>
+                        <p class="text-2xl font-bold text-cyan-300" id="statCyc">0.0</p>
+                        <p class="benchmark-label">เกณฑ์ดี: 5-6 รอบ</p>
+                    </div>
+                    <div class="glass-card p-4 text-center border-b-2 border-rose-500 shadow-[0_2px_8px_rgba(244,63,94,0.1)]">
+                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">ความสำเร็จ (%)</p>
+                        <p class="text-2xl font-bold text-rose-400" id="statPct">0%</p>
+                        <p class="benchmark-label">เกณฑ์ดี: > 85%</p>
+                    </div>
+                </div>
+
+                <section class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 id="mainChartTitle" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">คุณภาพการนอนเทียบชั่วโมง</h3>
+                        <div class="text-[9px] flex gap-3">
+                            <span><span class="legend-dot bg-cyan-500 shadow-[0_0_6px_#06b6d4]"></span> ชม. นอน</span>
+                            <span><span class="legend-dot bg-rose-500 shadow-[0_0_6px_#f43f5e]"></span> คุณภาพ (%)</span>
+                        </div>
+                    </div>
+                    <div class="h-64"><canvas id="mainChart"></canvas></div>
+                </section>
+
+                <section class="glass-card p-6 overflow-hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">ประวัติการบันทึก (จัดเรียงตามวันที่)</h3>
+                        <button onclick="confirmClear()" class="text-[9px] text-rose-500 hover:text-rose-400 uppercase font-bold">ล้างทั้งหมด</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-[11px] log-table">
+                            <thead class="text-slate-500 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-2">วันที่</th>
+                                    <th class="p-2">เข้านอน</th>
+                                    <th class="p-2">ตื่น</th>
+                                    <th class="p-2">ชม. นอนจริง</th>
+                                    <th class="p-2">แคล</th>
+                                    <th class="p-2">รอบ</th>
+                                    <th class="p-2">คุณภาพ</th>
+                                    <th class="p-2 text-center text-rose-500">ลบ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyBody" class="divide-y divide-slate-800/40"></tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <section class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">แนวโน้มการเผาผลาญและความสำเร็จ</h3>
+                        <div class="text-[9px] flex gap-3">
+                            <span><span class="legend-dot bg-orange-500 shadow-[0_0_6px_#f59e0b]"></span> แคลอรี่</span>
+                            <span><span class="legend-dot bg-emerald-500 shadow-[0_0_6px_#10b981]"></span> ความสำเร็จ (%)</span>
+                        </div>
+                    </div>
+                    <div class="h-64"><canvas id="trendChart"></canvas></div>
+                </section>
+
+                <div id="reportFooter" class="hidden text-center py-4 border-t border-slate-800 mt-4">
+                    <p class="text-[10px] text-slate-500 tracking-[0.3em] uppercase">รายงานสรุปผลสุขภาพการนอน by Aone Krittapas</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-6">
+                <section class="glass-card p-6 border-l-4 border-cyan-500 bg-cyan-950/10 min-h-[380px] shadow-[0_4px_15px_rgba(6,182,212,0.05)]">
+                    <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-4"><i class="fas fa-brain mr-2"></i> AI DEEP ANALYSIS</h3>
+                    <div id="aiAnalysis" class="text-[12px] text-slate-300 leading-relaxed space-y-4">
+                        <div class="opacity-30 italic">กำลังรอข้อมูลใหม่เพื่อประมวลผลวิเคราะห์สุขภาพเชิงลึก...</div>
+                    </div>
+                </section>
+
+                <section class="affiliate-premium-section">
+                    <div class="affiliate-section-kicker"><i class="fas fa-sparkles mr-1"></i> Smart Sleep Picks</div>
+                    <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
+                    <div class="affiliate-choice-guide">
+                        เลือกตัวช่วยกับปัญหาการนอนของคุณจากด้านล่าง 👇
+                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้ตัดสินใจง่ายขึ้น</span>
+                    </div>
+                    <div id="affiliateContainer" class="space-y-4">
+                    </div>
+                </section>
+            </div>
+        </div>
+        <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.20h • BY AONE KRITTAPAS
+        </footer>
+    </div>
+
+    <div id="prodModal" class="fixed inset-0 bg-black/80 z-[10002] hidden items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 relative border border-cyan-500/30">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white"><i class="fas fa-times"></i></button>
+            <div id="modalContent" class="text-sm"></div>
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <a id="modalShopeeLink" href="#" target="_blank" class="block w-full text-center py-3 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition">สั่งซื้อผ่าน Shopee</a>
+                <a id="modalTiktokLink" href="#" target="_blank" class="block w-full text-center py-3 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">สั่งซื้อผ่าน TikTok</a>
+            </div>
+            <p class="text-[9px] text-center text-slate-500 mt-4 italic">* รายได้ส่วนหนึ่งจากการแนะนำสินค้าช่วยสนับสนุนการพัฒนาระบบฟรีต่อไป</p>
+        </div>
+    </div>
+
+    <script>
+        // Core System Database Initializer Configuration Engine
+        // (- New Feature v9.6h -) สร้างระบบ Data Migration Strategy รองรับการเก็บข้อมูลสากลด้วยสคีมานิ่งชื่อ "sleep_well_pro_db"
+        function runDatabaseMigrationv96h() {
+            const universalKey = 'sleep_well_pro_db';
+            if (!localStorage.getItem(universalKey)) {
+                // อาร์เรย์เก็บคีย์มรดกตกทอดจากเวอร์ชันดั้งเดิมทั้งหมด
+                const legacyKeys = ['sleep_v96g_db', 'sleep_v96c_db', 'sleep_v96b_db', 'sleep_v96_db', 'sleep_v94_db'];
+                for (const oldKey of legacyKeys) {
+                    const legacyRawData = localStorage.getItem(oldKey);
+                    if (legacyRawData) {
+                        try {
+                            const parsedData = JSON.parse(legacyRawData);
+                            if (parsedData && (parsedData.logs || parsedData.profile)) {
+                                localStorage.setItem(universalKey, legacyRawData);
+                                console.log(`[Migration] ย้ายข้อมูลเก่าจากคีย์ ${oldKey} เข้าสู่ระบบสากล v9.6h สำเร็จ`);
+                                break;
+                            }
+                        } catch (err) {
+                            console.error(`[Migration Error] ตรวจสอบคีย์เก่าหลุดเฟรม: ${oldKey}`, err);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // รันคำสั่งโอนย้ายฐานข้อมูลทันทีก่อนการจัดสรรอินสแตนซ์บอร์ด
+        runDatabaseMigrationv96h();
+
+        // (- New Feature v9.6.15h -) Version Control Configuration
+        const APP_VERSION = "9.6.20h";
+        const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
+        const AUTO_BACKUP_LIMIT = 15;
+
+        // ดึงชุดข้อมูลสากลมาเป็นโครงสร้างหลักของสถาปัตยกรรมตัวแอป v9.6h
+        let db = JSON.parse(localStorage.getItem('sleep_well_pro_db')) || {
+            logs: [],
+            profile: { name: 'อ้น', weight: 69, height: 170, age: 55, gender: 'ชาย', goal: 8 },
+            security: { pin: "1234" },
+            leadSaved: false,
+            lead: null,
+            leadData: null,
+            clickTracking: {},
+            googleSheetsUrl: "",
+            userId: "",
+            identityEmail: "",
+            deviceId: "",
+            lastCloudSync: 0,
+            dataVersion: Date.now(),
+            dataSchemaVersion: DATA_SCHEMA_VERSION,
+            appVersion: APP_VERSION,
+            backups: []
+        };
+
+        if (!db.clickTracking) db.clickTracking = {};
+        if (!db.leadData || !Array.isArray(db.leadData)) db.leadData = db.lead ? [db.lead] : [];
+        if (!db.googleSheetsUrl) db.googleSheetsUrl = "";
+        if (!db.deviceId) db.deviceId = `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
+        if (!db.dataVersion) db.dataVersion = Date.now();
+        if (!Array.isArray(db.backups)) db.backups = [];
+        // (- v9.6.15h -) Affiliate & Lead Intelligence: optional fields only, backward compatible
+        if (!db.analytics || typeof db.analytics !== 'object') db.analytics = {};
+        if (!Array.isArray(db.events)) db.events = [];
+        if (!db.leadMeta || typeof db.leadMeta !== 'object') db.leadMeta = {};
+        if (!db.recommendationState || typeof db.recommendationState !== 'object') db.recommendationState = {};
+        db.appVersion = APP_VERSION;
+        db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+
+        // (- Production v9.6.15h -) Identity Lock: บังคับใช้อีเมลเป็น Primary Key เดียวเท่านั้น
+        function normalizeEmailv968h(email) {
+            return String(email || '').trim().toLowerCase();
+        }
+        function isValidIdentityEmailv968h(email) {
+            return isValidEmailv96h ? isValidEmailv96h(normalizeEmailv968h(email)) : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmailv968h(email));
+        }
+        function getIdentityEmailv968h() {
+            const candidates = [db.userId, db.identityEmail, db.userEmail, db.lead && db.lead.email];
+            for (const item of candidates) {
+                const email = normalizeEmailv968h(item);
+                if (isValidIdentityEmailv968h(email)) return email;
+            }
+            return '';
+        }
+        function lockIdentityEmailv968h(email, name = '') {
+            const normalized = normalizeEmailv968h(email);
+            if (!isValidIdentityEmailv968h(normalized)) return false;
+            db.userId = normalized;
+            db.identityEmail = normalized;
+            db.userEmail = normalized;
+            if (!db.lead) db.lead = { name: name || (db.profile && db.profile.name) || '', email: normalized, registeredAt: Date.now() };
+            db.lead.email = normalized;
+            if (name) db.lead.name = name;
+            if (!db.lead.registeredAt) db.lead.registeredAt = Date.now();
+            db.leadSaved = true;
+            return true;
+        }
+        function ensureIdentityOrShowLeadv968h() {
+            const email = getIdentityEmailv968h();
+            if (email) {
+                lockIdentityEmailv968h(email, (db.lead && db.lead.name) || (db.profile && db.profile.name) || '');
+                saveToStoragev96g({ skipVersion: true });
+                return true;
+            }
+            db.leadSaved = false;
+            saveToStoragev96g({ skipVersion: true });
+            return false;
+        }
+
+        function setSyncStatusv965h(state = 'idle', message = 'พร้อม Sync') {
+            const pill = document.getElementById('syncStatus');
+            const text = document.getElementById('syncStatusText');
+            if (!pill || !text) return;
+            pill.className = `sync-status-pill ${state}`.trim();
+            text.textContent = message;
+        }
+
+        function getSafeBackupSnapshotv965h(actionType = 'manual') {
+            return {
+                backupId: `bk_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+                appVersion: APP_VERSION,
+                dataSchemaVersion: DATA_SCHEMA_VERSION,
+                actionType,
+                deviceId: db.deviceId,
+                userKey: getUserKeyv964h ? getUserKeyv964h() : 'local_user',
+                timestamp: Date.now(),
+                dataVersion: db.dataVersion || Date.now(),
+                profile: db.profile || {},
+                logs: db.logs || [],
+                lead: db.lead || null,
+                leadData: db.leadData || [],
+                clickTracking: db.clickTracking || {}
+            };
+        }
+
+        function createAutoBackupv965h(actionType = 'save') {
+            try {
+                if (!Array.isArray(db.backups)) db.backups = [];
+                db.backups.unshift(getSafeBackupSnapshotv965h(actionType));
+                db.backups = db.backups.slice(0, AUTO_BACKUP_LIMIT);
+                localStorage.setItem('sleep_well_pro_auto_backups', JSON.stringify(db.backups));
+            } catch (err) {
+                console.warn('Auto backup failed', err);
+            }
+        }
+
+        // v9.6.4h: ใส่ Google Apps Script Web App URL ตรงนี้ 1 ครั้ง เพื่อให้ข้อมูลผู้ใช้ Sync ข้ามมือถือ/Tablet/Notebook ได้
+        // ตัวอย่าง: const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
+        const DEFAULT_CLOUD_SYNC_ENDPOINT = "https://script.google.com/macros/s/AKfycbxgvKYgLuRje1rKBr2Ifak6yq227Eftu6rfRZwahZ0ZHxwaFYwl2pXiXS6DE8Ykk4bH/exec";
+
+        // v9.6.15h: Cloud endpoint self-healing
+        // ปัญหาที่เจอบน Notebook มักเกิดจาก localStorage เก็บ URL เก่าหรือ URL ผิดไว้ใน db.googleSheetsUrl
+        // จึงตรวจรูปแบบ URL ก่อนใช้งาน และ fallback กลับ DEFAULT_CLOUD_SYNC_ENDPOINT อัตโนมัติ
+        function isValidCloudEndpointv967h(url) {
+            const u = (url || "").trim();
+            return /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(u);
+        }
+
+        function getCloudEndpointv964h() {
+            const savedEndpoint = (db.googleSheetsUrl || "").trim();
+            const defaultEndpoint = (DEFAULT_CLOUD_SYNC_ENDPOINT || "").trim();
+            if (savedEndpoint && isValidCloudEndpointv967h(savedEndpoint)) return savedEndpoint;
+            if (savedEndpoint && !isValidCloudEndpointv967h(savedEndpoint)) {
+                console.warn("[Cloud Sync] พบ URL เก่า/ไม่ถูกต้องในเครื่องนี้ จึง reset กลับไปใช้ DEFAULT_CLOUD_SYNC_ENDPOINT", savedEndpoint);
+                db.googleSheetsUrl = "";
+                try { localStorage.setItem('sleep_well_pro_db', JSON.stringify(db)); } catch(e) {}
+            }
+            return isValidCloudEndpointv967h(defaultEndpoint) ? defaultEndpoint : "";
+        }
+
+        function getCloudEndpointCandidatesv967h() {
+            const candidates = [];
+            const savedEndpoint = (db.googleSheetsUrl || "").trim();
+            const defaultEndpoint = (DEFAULT_CLOUD_SYNC_ENDPOINT || "").trim();
+            if (isValidCloudEndpointv967h(savedEndpoint)) candidates.push(savedEndpoint);
+            if (isValidCloudEndpointv967h(defaultEndpoint) && !candidates.includes(defaultEndpoint)) candidates.push(defaultEndpoint);
+            return candidates;
+        }
+
+        function resetCloudEndpointToDefaultv967h() {
+            db.googleSheetsUrl = "";
+            saveToStoragev96g({ skipVersion: true });
+            setSyncStatusv965h('synced', 'ใช้ Cloud URL หลักแล้ว');
+            return getCloudEndpointv964h();
+        }
+
+        function getUserKeyv964h() {
+            const email = getIdentityEmailv968h();
+            if (!email) {
+                console.warn("[Cloud Sync] ไม่พบ Identity Email จึงหยุด Sync เพื่อป้องกันข้อมูลคนละชุด");
+                return null;
+            }
+            return email;
+        }
+
+        // Multi-Platform Affiliate E-Commerce Product Catalog Structured Matrix (v9.6c Original Content)
+        const AFFILIATE_CATALOG = [{"id": "smartwatch-01", "name": "Banala Lite อุปกรณ์ช่วยนอนหลับ", "tier": "T1 Core Sleep Fix", "icon": "🎧", "iconImg": "./assets/product-icons/banala-lite.png", "badge": "AI RECOMMENDED", "desc": "คลื่นเสียงช่วยผ่อนคลายและสร้าง routine ก่อนนอน เหมาะกับคนหลับยาก/ตื่นกลางคืนบ่อย", "shopeeUrl": "https://s.shopee.co.th/9pbFaeKHLB", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2KhBjKyYt-pM4yJ/", "price": "คลิกดูราคาล่าสุด • 1,500–3,000 บาท", "highlight": true, "matchTags": ["short_sleep", "low_quality", "stress", "irregular"], "priority": 95, "why": "เหมาะเป็นตัวเริ่มต้นสำหรับคนมีปัญหา sleep onset และต้องการตัวช่วยสร้างสัญญาณก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2500}, {"id": "pillow-01", "name": "หมอนหนุน Clover ช่วยหลับสบาย", "tier": "T1 Core Sleep Fix", "icon": "🛌", "iconImg": "./assets/product-icons/clover-pillow.png", "badge": "BEST SELLER", "desc": "ช่วยซัพพอร์ตคอ บ่า ไหล่ ลดการรบกวนท่านอน เหมาะกับคนตื่นแล้วปวดคอ/หลับไม่ต่อเนื่อง", "shopeeUrl": "https://s.shopee.co.th/10zr4VY1P3", "tiktokUrl": "https://vt.tiktok.com/ZS9Yf57YPmnDN-5YjVO/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["low_quality", "short_sleep", "recovery", "neck_support"], "priority": 90, "why": "สภาพแวดล้อมการนอนเป็นฐานสำคัญ ถ้าคอ/ไหล่ไม่สบาย วงจรหลับลึกมักถูกรบกวน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 790}, {"id": "blue-glasses-01", "name": "แว่นกรองแสง LUSEEN รุ่น AG2244", "tier": "T1 Core Sleep Fix", "icon": "👓", "iconImg": "./assets/product-icons/luseen-ag2244.png", "badge": "SCREEN DEFENDER", "desc": "ลดภาระแสงหน้าจอก่อนนอน เหมาะกับคนใช้มือถือ/คอมช่วงกลางคืนและนอนหลับยาก", "shopeeUrl": "https://s.shopee.co.th/6VKndCzibZ", "tiktokUrl": "https://vt.tiktok.com/ZS9Yj1TuA2hwH-ijOZ1/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["screen", "short_sleep", "low_quality", "circadian"], "priority": 88, "why": "แสงและคอนเทนต์หน้าจอก่อนนอนเป็น trigger สำคัญของ delayed sleep timing", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 590}, {"id": "herbal-tea-01", "name": "สเปรย์ MENTE Natural Calming and Refreshing", "tier": "T1 Core Sleep Fix", "icon": "🧴", "iconImg": "./assets/product-icons/mente-spray.png", "badge": "STRESS RELIEF", "desc": "กลิ่นผ่อนคลายก่อนนอน ช่วยทำ anchor ให้สมองเข้าสู่โหมดพัก เหมาะกับคนเครียด/คิดงานก่อนนอน", "shopeeUrl": "https://s.shopee.co.th/7fWkTpXzX7", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2WXFuULAr-JyalG/", "price": "คลิกดูราคาล่าสุด • 100–400 บาท", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 86, "why": "การมี scent cue ซ้ำทุกคืนช่วยให้สมองจำจังหวะผ่อนคลายได้ง่ายขึ้น", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 290}, {"id": "supplement-mag-01", "name": "Biovitt NITE แคปซูลปรับสมดุลในการนอน", "tier": "T1 Core Sleep Fix", "icon": "💊", "iconImg": "./assets/product-icons/biovitt-nite.png", "badge": "DEEP SLEEP BOOSTER", "desc": "ตัวช่วยกลุ่มเสริมการพักผ่อน เหมาะกับคนวงจรหลับไม่ครบ/คุณภาพต่ำ/ตื่นไม่สดชื่น", "shopeeUrl": "https://s.shopee.co.th/3B4L9RTMiW", "tiktokUrl": "https://vt.tiktok.com/ZS9Yjefeqy6Lc-c6Oee/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": true, "matchTags": ["low_cycles", "low_quality", "alcohol", "short_sleep"], "priority": 92, "why": "ใช้เป็นตัวเลือกเมื่อ pattern บ่งชี้ว่าวงจรหลับลึกและ REM อาจไม่ต่อเนื่อง", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 490}, {"id": "magnesium-01", "name": "แมกนีเซียมก่อนนอน", "tier": "T2 Recovery Booster", "icon": "⚡", "iconImg": "./assets/product-icons/magnesium-sleep.png", "badge": "RECOVERY BOOST", "desc": "เหมาะกับคนตึงเครียด กล้ามเนื้อล้า หรือพักไม่สุด ช่วยวางแผน recovery routine ก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "recovery", "exercise", "low_quality"], "priority": 78, "why": "เหมาะเป็นสินค้ากลุ่ม recovery เมื่อผู้ใช้มีความเครียดหรือออกกำลังกายแล้วพักไม่ลึก", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 350}, {"id": "eye-mask-01", "name": "ผ้าปิดตานอนหลับลึก", "tier": "T2 Recovery Booster", "icon": "😴", "iconImg": "./assets/product-icons/sleep-mask.png", "badge": "DARK ROOM", "desc": "ลดแสงรบกวน เหมาะกับคนห้องสว่าง/นอนกลางวัน/ตื่นง่าย", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "irregular", "environment"], "priority": 76, "why": "แสงรบกวนทำให้ sleep continuity ต่ำ การลดแสงเป็น intervention ที่ต้นทุนต่ำและคุ้ม", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–300 บาท", "priceTierKey": "low", "approxPrice": 129}, {"id": "earplug-01", "name": "ที่อุดหูลดเสียงรบกวน", "tier": "T2 Recovery Booster", "icon": "🔇", "iconImg": "./assets/product-icons/sleep-earplug.png", "badge": "NOISE CONTROL", "desc": "เหมาะกับคนตื่นง่ายจากเสียง ห้องติดถนน หรือมีเสียงรบกวนตอนกลางคืน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–250 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "environment", "wake"], "priority": 74, "why": "เสียงรบกวนทำให้ micro-awakening เพิ่มขึ้น แม้ผู้ใช้อาจจำไม่ได้ว่าตื่น", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–250 บาท", "priceTierKey": "low", "approxPrice": 89}, {"id": "humidifier-01", "name": "เครื่องเพิ่มความชื้น/ปรับอากาศห้องนอน", "tier": "T2 Recovery Booster", "icon": "💧", "iconImg": "./assets/product-icons/humidifier.png", "badge": "ROOM COMFORT", "desc": "เหมาะกับคนคอแห้ง ภูมิแพ้ หรือห้องแอร์แห้ง ทำให้สภาพห้องนอนสบายขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "recovery", "low_quality"], "priority": 72, "why": "คุณภาพอากาศและความสบายของห้องนอนส่งผลกับการหลับต่อเนื่อง", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1890}, {"id": "weighted-blanket-01", "name": "ผ้าห่มถ่วงน้ำหนัก/ผ้าห่มนุ่มหลับลึก", "tier": "T2 Recovery Booster", "icon": "🛏️", "iconImg": "./assets/product-icons/weighted-blanket.png", "badge": "CALM BODY", "desc": "เหมาะกับคนเครียด กระสับกระส่าย หรืออยากเพิ่มความรู้สึกปลอดภัยก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 70, "why": "แรงกดเบา ๆ ช่วยสร้าง sensory cue ให้ร่างกายสงบลงก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2200}, {"id": "sleep-journal-01", "name": "สมุด Sleep Journal / Habit Tracker", "tier": "T3 Habit System", "icon": "📓", "iconImg": "./assets/product-icons/sleep-journal.png", "badge": "HABIT TRACKER", "desc": "เหมาะกับคนต้องการปรับพฤติกรรมจริงจัง ใช้จด trigger และหาความสัมพันธ์กับคุณภาพการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["irregular", "habit", "tracking"], "priority": 64, "why": "การเห็น pattern ของตัวเองช่วยให้ปรับพฤติกรรมได้แม่นกว่าเดา", "commercialTier": "Low-Ticket", "priceRange": "100–300 บาท", "priceTierKey": "low", "approxPrice": 159}, {"id": "sunrise-lamp-01", "name": "ไฟปลุกจำลองแสงเช้า", "tier": "T3 Habit System", "icon": "🌅", "iconImg": "./assets/product-icons/sunrise-lamp.png", "badge": "CIRCADIAN RESET", "desc": "เหมาะกับคนตื่นยาก นอนดึก หรืออยากปรับนาฬิกาชีวิตให้คงที่ขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["circadian", "irregular", "short_sleep"], "priority": 68, "why": "แสงเช้าช่วยยึด rhythm ของร่างกาย ทำให้เวลานอนคืนถัดไปนิ่งขึ้น", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1790}, {"id": "breath-trainer-01", "name": "อุปกรณ์/การ์ดฝึกหายใจก่อนนอน", "tier": "T3 Habit System", "icon": "🫁", "iconImg": "./assets/product-icons/breath-trainer.png", "badge": "BREATH RESET", "desc": "เหมาะกับคนเครียด หัวใจเต้นแรง คิดเยอะก่อนนอน ใช้เป็น ritual 3-5 นาที", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "wind_down", "low_quality"], "priority": 66, "why": "การหายใจช้าลงช่วย shift จาก sympathetic ไป parasympathetic ก่อนนอน", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 199}, {"id": "cooling-pad-01", "name": "แผ่นรอง/ปลอกหมอนเย็น", "tier": "T3 Habit System", "icon": "❄️", "iconImg": "./assets/product-icons/cooling-pad.png", "badge": "COOL SLEEP", "desc": "เหมาะกับคนร้อนง่าย เหงื่อออกกลางคืน หรือห้องนอนอุณหภูมิสูง", "shopeeUrl": "#", "tiktokUrl": "#", "price": "400–1,500 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "low_quality", "wake"], "priority": 62, "why": "อุณหภูมิร่างกายที่ลดลงเป็นหนึ่งในสัญญาณสำคัญของการเข้าสู่การนอน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 690}, {"id": "decaf-drink-01", "name": "เครื่องดื่มผ่อนคลายไม่มีคาเฟอีน", "tier": "T3 Habit System", "icon": "🍵", "iconImg": "./assets/product-icons/decaf-night-drink.png", "badge": "NO CAFFEINE", "desc": "เหมาะกับคนติดเครื่องดื่มช่วงเย็น แต่อยากเลี่ยงคาเฟอีนที่รบกวนการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["caffeine", "wind_down", "habit"], "priority": 60, "why": "แทนพฤติกรรมเดิมด้วยเครื่องดื่มไม่มีคาเฟอีนช่วยลดแรงต้านในการปรับ routine", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 220}];
+
+
+
+        // (- New Feature v9.6.1h -) Product Image Rendering Helper: มีรูปใช้รูปจริง, โหลดไม่ได้ fallback เป็น emoji เดิม
+        function renderProductIconv961h(product, size = 'card') {
+            const emoji = product.icon || '🎁';
+            const imageUrl = product.iconImg || product.Icon_Image || '';
+            const wrapClass = size === 'modal' ? 'affiliate-modal-image-wrap' : 'affiliate-product-icon';
+            const imgClass = size === 'modal' ? 'affiliate-modal-image' : 'affiliate-product-icon-img';
+            const fallbackClass = 'affiliate-product-icon-fallback';
+            if (imageUrl) {
+                return `<div class="${wrapClass}" title="${product.name}"><img src="${imageUrl}" alt="${product.name}" class="${imgClass}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=&quot;${fallbackClass}&quot;>${emoji}</span>';"></div>`;
+            }
+            return `<div class="${wrapClass}" title="${product.name}"><span class="${fallbackClass}">${emoji}</span></div>`;
+        }
+
+
+
+        // (- v9.6.15h -) Lightweight Event + Lead Intelligence Layer (optional, backward compatible)
+        function swpNowv9613h(){ return Date.now(); }
+        function swpGetEventsv9613h(){ if(!Array.isArray(db.events)) db.events = []; return db.events; }
+        function swpTrackEventv9613h(type, meta = {}) {
+            try {
+                const event = {
+                    id: `ev_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+                    type,
+                    userKey: getUserKeyv964h ? getUserKeyv964h() : '',
+                    deviceId: db.deviceId || '',
+                    ts: Date.now(),
+                    appVersion: APP_VERSION,
+                    meta
+                };
+                swpGetEventsv9613h().unshift(event);
+                db.events = db.events.slice(0, 200);
+                swpUpdateLeadMetav9613h(type, meta);
+                return event;
+            } catch(e) { console.warn('SWP event tracking failed', e); return null; }
+        }
+        function swpUpdateLeadMetav9613h(type, meta = {}) {
+            const key = getUserKeyv964h ? getUserKeyv964h() : '';
+            if(!key) return;
+            if(!db.leadMeta) db.leadMeta = {};
+            const old = db.leadMeta[key] || { createdAt: Date.now(), totalEvents: 0, productClicks: {}, deviceIds: [] };
+            old.updatedAt = Date.now();
+            old.lastActive = Date.now();
+            old.totalEvents = Number(old.totalEvents || 0) + 1;
+            old.totalLogs = Array.isArray(db.logs) ? db.logs.length : 0;
+            old.lastSleepScore = db.logs && db.logs.length ? db.logs[db.logs.length - 1].quality : old.lastSleepScore || 0;
+            if (db.deviceId && !old.deviceIds.includes(db.deviceId)) old.deviceIds.push(db.deviceId);
+            if (meta.productId) {
+                old.productClicks[meta.productId] = Number(old.productClicks[meta.productId] || 0) + 1;
+                old.preferredProductClicks = Object.entries(old.productClicks).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([id,count])=>({id,count}));
+            }
+            db.leadMeta[key] = old;
+        }
+        function getSleepSignalsv9613h(log = {}) {
+            const f = log.factors || {};
+            const signals = [];
+            if ((log.duration || 0) < 6) signals.push('short_sleep');
+            if ((log.duration || 0) >= 7 && (log.duration || 0) <= 9) signals.push('good_duration');
+            if ((log.quality || 0) <= 5) signals.push('low_quality');
+            if ((log.cycles || 0) < 5) signals.push('low_cycles');
+            if ((log.pct || 0) < 85) signals.push('low_success');
+            if (f.screen || f.screenTime) signals.push('screen');
+            if (f.stress || f.stressFactor) signals.push('stress');
+            if (f.room || f.roomIssue || f.environment) signals.push('environment', 'room');
+            if (f.caffeine) signals.push('caffeine');
+            if (f.alcohol) signals.push('alcohol');
+            if (f.exercise) signals.push('exercise');
+            if (!signals.length) signals.push('maintenance');
+            return signals;
+        }
+        function scoreProductForLogv9613h(product, log = {}) {
+            const signals = getSleepSignalsv9613h(log);
+            const tags = product.matchTags || [];
+            let score = Number(product.priority || 50);
+            signals.forEach(s => { if (tags.includes(s)) score += 18; });
+            if (product.highlight) score += 3;
+            if (product.id === 'blue-glasses-01') score += signals.includes('screen') ? 35 : -95;
+            const roomRelated = ['pillow-01','eye-mask-01','earplug-01','humidifier-01','cooling-pad-01'];
+            if (signals.includes('environment') && roomRelated.includes(product.id)) score += 30;
+            if (signals.includes('stress') && ['herbal-tea-01','weighted-blanket-01','breath-trainer-01','magnesium-01'].includes(product.id)) score += 18;
+            if (signals.includes('low_cycles') && product.id === 'supplement-mag-01') score += 18;
+            if (signals.includes('low_quality') && product.id === 'pillow-01') score += 12;
+            if (signals.includes('caffeine') && product.id === 'decaf-drink-01') score += 28;
+            if (signals.includes('alcohol') && ['supplement-mag-01','decaf-drink-01'].includes(product.id)) score += 12;
+            return Math.max(0, Math.round(score));
+        }
+        function getRankedAffiliateProductsv9613h(log = null, limit = 3) {
+            const latest = log || (db.logs && db.logs.length ? db.logs[db.logs.length - 1] : null);
+            const scored = AFFILIATE_CATALOG.map(p => ({...p, matchScore: latest ? scoreProductForLogv9613h(p, latest) : Number(p.priority || 50)}))
+                .sort((a,b)=>b.matchScore-a.matchScore);
+            if (limit === 3) return getTieredPricingSelectionv9615h(scored, latest, limit);
+            return scored.slice(0, limit);
+        }
+        function getTieredPricingSelectionv9615h(scoredList, log = null, limit = 3) {
+            const order = ['low','mid','high'];
+            const picked = [];
+            const used = new Set();
+            order.forEach(tierKey => {
+                const item = scoredList.find(p => p.priceTierKey === tierKey && !used.has(p.id));
+                if (item && picked.length < limit) { picked.push(item); used.add(item.id); }
+            });
+            // ถ้าบาง tier ไม่มีสินค้า match ดีพอ ให้เติมจากคะแนนสูงสุดโดยไม่ซ้ำ
+            scoredList.forEach(item => {
+                if (picked.length < limit && !used.has(item.id)) { picked.push(item); used.add(item.id); }
+            });
+            // เรียงให้ผู้ใช้เห็นจากซื้อง่าย → ตัวหลัก → high ticket เพื่อช่วย conversion
+            const rank = { low: 1, mid: 2, high: 3 };
+            return picked.slice(0, limit).sort((a,b)=>(rank[a.priceTierKey]||9)-(rank[b.priceTierKey]||9));
+        }
+        function getLeadStatusv9613h(meta = {}) {
+            const logs = Number(meta.totalLogs || 0);
+            const clicks = (meta.preferredProductClicks || []).reduce((s,x)=>s+Number(x.count||0),0);
+            const last = Number(meta.lastActive || 0);
+            const days = last ? (Date.now() - last) / 86400000 : 999;
+            if (clicks >= 3) return 'High Intent';
+            if (logs >= 3 && days <= 7) return 'Active';
+            if (days > 14) return 'Dormant';
+            return 'New';
+        }
+        function getLatestSleepSummaryv9613h(){
+            const l = db.logs && db.logs.length ? db.logs[db.logs.length-1] : null;
+            if(!l) return {signals: [], status:'no_data'};
+            return {signals: getSleepSignalsv9613h(l), duration:l.duration, quality:l.quality, cycles:l.cycles, pct:l.pct};
+        }
+
+        function swpRepairClickTrackingv9614h() {
+            let changed = false;
+            if (!db.clickTracking) db.clickTracking = {};
+            Object.keys(db.clickTracking).forEach(pid => {
+                const s = db.clickTracking[pid] || {};
+                const shopee = swpSafeCountv9614h ? swpSafeCountv9614h(s.shopee) : Math.round(Number(s.shopee || 0));
+                const tiktok = swpSafeCountv9614h ? swpSafeCountv9614h(s.tiktok) : Math.round(Number(s.tiktok || 0));
+                const detail = swpSafeCountv9614h ? swpSafeCountv9614h(s.detail) : Math.round(Number(s.detail || 0));
+                const total = shopee + tiktok + detail;
+                if (s.shopee !== shopee || s.tiktok !== tiktok || s.detail !== detail || s.total !== total) changed = true;
+                db.clickTracking[pid] = { ...s, shopee, tiktok, detail, total };
+            });
+            return changed;
+        }
+
+        let currentPinInput = "";
+        let mainChart = null, trendChart = null;
+
+        // (- New Feature v9.6h -) ฟังก์ชันจัดรูปแบบแยกชั่วโมงและนาทีออกเด็ดขาด (UI/UX Data Formatting Engine)
+        function formatHoursAndMinutesv96h(hoursDecimal) {
+            if (hoursDecimal === undefined || hoursDecimal === null || isNaN(hoursDecimal)) return "0 ชม. 0 นาที";
+            const hrs = Math.floor(hoursDecimal);
+            const mins = Math.round((hoursDecimal - hrs) * 60);
+            return `${hrs} ชม. ${mins} นาที`;
+        }
+
+        // (- New Feature v9.6h -) ฟังก์ชันจัดการเซฟข้อมูลส่วนกลางลงฐานข้อมูลสากล
+        function saveToStoragev96g(options = {}) {
+            if (!options.skipVersion) {
+                db.dataVersion = Date.now();
+                db.appVersion = APP_VERSION;
+                db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+                createAutoBackupv965h(options.actionType || 'save');
+            }
+            localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+        }
+
+        function buildCloudPayloadv964h(actionType, extraData = {}) {
+            const userKey = getUserKeyv964h();
+            if (!userKey) return null;
+            return {
+                action: actionType,
+                appVersion: APP_VERSION,
+                dataSchemaVersion: DATA_SCHEMA_VERSION,
+                userKey,
+                userEmail: userKey,
+                identityEmail: userKey,
+                uuid: userKey,
+                deviceId: db.deviceId,
+                timestamp: Date.now(),
+                dataVersion: db.dataVersion || Date.now(),
+                profile: db.profile,
+                logs: db.logs || [],
+                security: db.security || { pin: "1234" },
+                lead: db.lead || null,
+                leadData: db.leadData || [],
+                clickTracking: db.clickTracking || {},
+                analytics: db.analytics || {},
+                events: db.events || [],
+                leadMeta: db.leadMeta || {},
+                recommendationState: db.recommendationState || {},
+                deletedLogIds: db.deletedLogIds || [],
+                replaceLogs: !!db.replaceLogsOnNextSync,
+                forceReplaceProfileSecurity: !!db.forceReplaceProfileSecurityOnNextSync,
+                importCoreVersion: db.importCoreVersion || 0,
+                coreUpdatedAt: db.coreUpdatedAt || 0,
+                profileUpdatedAt: db.profileUpdatedAt || 0,
+                securityUpdatedAt: db.securityUpdatedAt || 0,
+                backupSnapshot: getSafeBackupSnapshotv965h(actionType),
+                ...extraData
+            };
+        }
+
+        // v9.6.4h Cloud Sync: ส่งข้อมูลขึ้นกลาง เพื่อให้ข้อมูลข้ามอุปกรณ์เหมือนกัน
+        function dispatchCloudSyncv96g(actionType, extraData = {}) {
+            if (!navigator.onLine) {
+                console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
+                setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว');
+                return;
+            }
+            const endpoint = getCloudEndpointv964h();
+            if (!endpoint) {
+                setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud');
+                return;
+            }
+            const userKey = getUserKeyv964h();
+            if (!userKey) {
+                setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync');
+                return;
+            }
+            setSyncStatusv965h('syncing', 'กำลัง Sync...');
+            const payload = buildCloudPayloadv964h(actionType, extraData);
+            if (!payload) return;
+            fetch(endpoint, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                if (payload.replaceLogs) db.replaceLogsOnNextSync = false;
+                if (payload.forceReplaceProfileSecurity) db.forceReplaceProfileSecurityOnNextSync = false;
+                db.lastCloudSync = Date.now();
+                localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+                setSyncStatusv965h('synced', 'อัปโหลดแล้ว');
+            }).catch(err => {
+                console.log("Cloud backup buffering active.", err);
+                setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
+            });
+        }
+
+        function mergeCloudDatav964h(remote) {
+            if (!remote || !remote.ok || !remote.data) return false;
+            const r = remote.data;
+            const remoteVersion = Number(r.dataVersion || 0);
+            const localVersion = Number(db.dataVersion || 0);
+            const localLogs = Array.isArray(db.logs) ? db.logs : [];
+            const remoteLogs = Array.isArray(r.logs) ? r.logs : [];
+            const deletedIds = new Set([...(db.deletedLogIds || []), ...((r.deletedLogIds || []))].map(String));
+            const byId = new Map();
+            [...remoteLogs, ...localLogs].forEach(log => {
+                if (!log) return;
+                const key = String(log.id || `${log.fullDate || log.date}_${log.sleepTime || ''}_${log.wakeTime || ''}_${log.duration || ''}`);
+                if (deletedIds.has(key)) return;
+                const existing = byId.get(key) || {};
+                byId.set(key, { ...existing, ...log });
+            });
+            db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
+            db.deletedLogIds = Array.from(deletedIds).slice(-500);
+            const protectLocalCore = Number(db.localProfileLockUntil || 0) > Date.now();
+            // v9.6.20h: Cloud is source-of-truth for Profile/PIN on pull.
+            // Do not compare dataVersion here because local dataVersion is bumped by render/merge/backup actions,
+            // which previously blocked newer Cloud profile/security from reaching another browser profile.
+            if (!protectLocalCore && r.profile) db.profile = { ...db.profile, ...r.profile };
+            if (!protectLocalCore && r.security && r.security.pin) db.security = { ...db.security, ...r.security };
+            if (!protectLocalCore && r.lead && r.lead.email) lockIdentityEmailv968h(r.lead.email, r.lead.name || '');
+            if (r.leadData && Array.isArray(r.leadData)) {
+                const leadMap = new Map();
+                [...(db.leadData || []), ...r.leadData].forEach(l => {
+                    if (l && l.email) leadMap.set(normalizeEmailv968h(l.email), l);
+                });
+                db.leadData = Array.from(leadMap.values());
+            }
+            if (r.clickTracking) db.clickTracking = { ...(db.clickTracking || {}), ...r.clickTracking };
+            if (r.analytics) db.analytics = { ...(db.analytics || {}), ...r.analytics };
+            if (r.leadMeta) db.leadMeta = { ...(db.leadMeta || {}), ...r.leadMeta };
+            if (Array.isArray(r.events)) {
+                const eventMap = new Map();
+                [...(db.events || []), ...r.events].forEach(ev => { if(ev) eventMap.set(ev.id || `${ev.type}_${ev.ts}_${ev.productId || ''}`, ev); });
+                db.events = Array.from(eventMap.values()).sort((a,b)=>Number(b.ts||0)-Number(a.ts||0)).slice(0,200);
+            }
+            if (r.recommendationState) db.recommendationState = { ...(db.recommendationState || {}), ...r.recommendationState };
+            if (r.appVersion) db.remoteAppVersion = r.appVersion;
+            if (r.dataSchemaVersion) db.remoteDataSchemaVersion = r.dataSchemaVersion;
+            db.leadSaved = true;
+            db.lastCloudSync = Date.now();
+            db.dataVersion = Math.max(localVersion, remoteVersion, Date.now());
+            saveToStoragev96g({ skipVersion: true });
+            return true;
+        }
+
+        
+        // (- Production v9.6.15h -) Multi-transport Cloud Pull Engine
+        // แก้เคส Browser Profile บางตัวโหลด JSONP จาก Apps Script ไม่ได้ ทั้งที่ backend ปกติ
+        // Strategy: JSONP -> hidden iframe postMessage fallback -> retry 3 รอบ
+        const CLOUD_SYNC_TIMEOUT_MS_V9611H = 25000;
+        const CLOUD_SYNC_MAX_RETRY_V9611H = 3;
+        const cloudSyncDiagnosticsv9611h = [];
+
+        function pushSyncDiagv9611h(step, detail = {}) {
+            try {
+                cloudSyncDiagnosticsv9611h.push({ ts: new Date().toISOString(), step, ...detail });
+                if (cloudSyncDiagnosticsv9611h.length > 30) cloudSyncDiagnosticsv9611h.shift();
+                window.__SWP_SYNC_DIAG__ = cloudSyncDiagnosticsv9611h;
+            } catch(e) {}
+        }
+
+        function fetchCloudJsonpv9611h(endpoint, userKey, attemptNo) {
+            return new Promise((resolve, reject) => {
+                const callbackName = `swpSync_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const script = document.createElement('script');
+                const sep = endpoint.includes('?') ? '&' : '?';
+                let done = false;
+                const timer = setTimeout(() => fail('jsonp_timeout'), CLOUD_SYNC_TIMEOUT_MS_V9611H);
+
+                function cleanup() {
+                    clearTimeout(timer);
+                    try { delete window[callbackName]; } catch(e) { window[callbackName] = undefined; }
+                    try { script.remove(); } catch(e) {}
+                }
+
+                function fail(reason) {
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    pushSyncDiagv9611h('jsonp_fail', { reason, endpoint, attemptNo });
+                    reject(new Error(reason));
+                }
+
+                window[callbackName] = function(response) {
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    pushSyncDiagv9611h('jsonp_ok', { endpoint, attemptNo, ok: !!(response && response.ok), hasData: !!(response && response.data), logs: response && response.data && Array.isArray(response.data.logs) ? response.data.logs.length : 0 });
+                    resolve(response);
+                };
+
+                script.onerror = () => fail('jsonp_error');
+                script.async = true;
+                script.referrerPolicy = 'no-referrer';
+                script.src = `${endpoint}${sep}action=getUserData&userKey=${encodeURIComponent(userKey)}&callback=${callbackName}&_=${Date.now()}`;
+                document.body.appendChild(script);
+                pushSyncDiagv9611h('jsonp_start', { endpoint, attemptNo });
+            });
+        }
+
+        function fetchCloudIframev9611h(endpoint, userKey, attemptNo) {
+            return new Promise((resolve, reject) => {
+                const iframe = document.createElement('iframe');
+                const requestId = `swp_iframe_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const sep = endpoint.includes('?') ? '&' : '?';
+                let done = false;
+                const timer = setTimeout(() => fail('iframe_timeout'), CLOUD_SYNC_TIMEOUT_MS_V9611H + 5000);
+
+                function cleanup() {
+                    clearTimeout(timer);
+                    window.removeEventListener('message', onMessage);
+                    try { iframe.remove(); } catch(e) {}
+                }
+
+                function fail(reason) {
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    pushSyncDiagv9611h('iframe_fail', { reason, endpoint, attemptNo });
+                    reject(new Error(reason));
+                }
+
+                function onMessage(event) {
+                    const data = event && event.data;
+                    if (!data || data.sleepWellProCloud !== true || data.requestId !== requestId) return;
+                    if (done) return;
+                    done = true;
+                    cleanup();
+                    pushSyncDiagv9611h('iframe_ok', { endpoint, attemptNo, ok: !!(data.response && data.response.ok), hasData: !!(data.response && data.response.data), logs: data.response && data.response.data && Array.isArray(data.response.data.logs) ? data.response.data.logs.length : 0 });
+                    resolve(data.response);
+                }
+
+                window.addEventListener('message', onMessage);
+                iframe.style.display = 'none';
+                iframe.setAttribute('aria-hidden', 'true');
+                iframe.referrerPolicy = 'no-referrer';
+                iframe.src = `${endpoint}${sep}action=getUserDataIframe&userKey=${encodeURIComponent(userKey)}&requestId=${encodeURIComponent(requestId)}&_=${Date.now()}`;
+                iframe.onload = () => pushSyncDiagv9611h('iframe_loaded', { endpoint, attemptNo });
+                iframe.onerror = () => fail('iframe_error');
+                document.body.appendChild(iframe);
+                pushSyncDiagv9611h('iframe_start', { endpoint, attemptNo });
+            });
+        }
+
+        async function pullCloudOncev9611h(endpoint, userKey, attemptNo) {
+            try {
+                return await fetchCloudJsonpv9611h(endpoint, userKey, attemptNo);
+            } catch (jsonpErr) {
+                pushSyncDiagv9611h('jsonp_to_iframe_fallback', { reason: String(jsonpErr && jsonpErr.message || jsonpErr), attemptNo });
+                return await fetchCloudIframev9611h(endpoint, userKey, attemptNo);
+            }
+        }
+
+        function sleepv9611h(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function syncFromCloudv964h({ render = true } = {}) {
+            return new Promise(async (resolve) => {
+                if (!navigator.onLine) { setSyncStatusv965h('offline', 'ออฟไลน์: ใช้ข้อมูลในเครื่อง'); return resolve(false); }
+                const endpoints = getCloudEndpointCandidatesv967h();
+                if (!endpoints.length) { setSyncStatusv965h('offline', 'ยังไม่เชื่อม Cloud'); return resolve(false); }
+                const userKey = getUserKeyv964h();
+                if (!userKey) { setSyncStatusv965h('offline', 'กรุณาลงทะเบียนอีเมลก่อน Sync'); return resolve(false); }
+
+                let lastError = null;
+                for (let round = 1; round <= CLOUD_SYNC_MAX_RETRY_V9611H; round++) {
+                    for (let i = 0; i < endpoints.length; i++) {
+                        const endpoint = endpoints[i];
+                        try {
+                            setSyncStatusv965h('syncing', round === 1 ? 'กำลัง Sync...' : `กำลัง Sync ซ้ำ ${round}/${CLOUD_SYNC_MAX_RETRY_V9611H}`);
+                            pushSyncDiagv9611h('sync_attempt', { round, endpointIndex: i, endpoint, userKey });
+                            const response = await pullCloudOncev9611h(endpoint, userKey, round);
+                            if (!response || response.ok !== true) {
+                                lastError = new Error(response && response.error ? response.error : 'cloud_response_not_ok');
+                                pushSyncDiagv9611h('response_not_ok', { error: String(lastError.message), response });
+                                continue;
+                            }
+
+                            const changed = mergeCloudDatav964h(response);
+                            if (changed && render && typeof renderDashboard === 'function') {
+                                initProfileFormv964h();
+                                renderDashboard();
+                            }
+                            db.googleSheetsUrl = endpoint === DEFAULT_CLOUD_SYNC_ENDPOINT ? "" : endpoint;
+                            db.lastCloudSync = Date.now();
+                            saveToStoragev96g({ skipVersion: true });
+                            setSyncStatusv965h('synced', 'Sync แล้ว');
+                            pushSyncDiagv9611h('sync_success', { round, endpoint, changed, logs: db.logs && db.logs.length ? db.logs.length : 0 });
+                            return resolve(changed);
+                        } catch (err) {
+                            lastError = err;
+                            pushSyncDiagv9611h('sync_attempt_failed', { round, endpoint, error: String(err && err.message || err) });
+                        }
+                    }
+                    await sleepv9611h(800 * round);
+                }
+
+                console.warn('[Cloud Sync] all transports failed', lastError, cloudSyncDiagnosticsv9611h);
+                setSyncStatusv965h('error', 'Sync ไม่สำเร็จ');
+                resolve(false);
+            });
+        }
+
+function initProfileFormv964h() {
+            if (!db.profile) db.profile = { name: '', weight: 69, height: 170, age: 55, gender: 'ชาย', goal: 8 };
+            const fieldMap = [
+                ['pName', db.profile.name || ''],
+                ['pAge', db.profile.age || ''],
+                ['pWeight', db.profile.weight || ''],
+                ['pHeight', db.profile.height || ''],
+                ['pGoal', db.profile.goal || ''],
+                ['pGender', db.profile.gender || 'ชาย']
+            ];
+            fieldMap.forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.value = value;
+            });
+        }
+
+        // (- New Feature v9.6g -) ฟังก์ชันวิเคราะห์ Tracking Click บันทึกและดึงข้อมูลยอดความสนใจสินค้า
+        function trackProductClickv96g(productId, platform) {
+            if (!db.clickTracking) db.clickTracking = {};
+            if (!db.analytics) db.analytics = {};
+            if (!db.analytics.affiliate) db.analytics.affiliate = { total: 0, byProduct: {}, byPlatform: {} };
+            if (!db.clickTracking[productId]) {
+                db.clickTracking[productId] = { shopee: 0, tiktok: 0, detail: 0, total: 0, lastClickAt: 0 };
+            }
+            db.clickTracking[productId][platform] = swpSafeCountv9614h(db.clickTracking[productId][platform]) + 1;
+            db.clickTracking[productId].total = swpSafeCountv9614h(db.clickTracking[productId].shopee) + swpSafeCountv9614h(db.clickTracking[productId].tiktok) + swpSafeCountv9614h(db.clickTracking[productId].detail);
+            db.clickTracking[productId].lastClickAt = Date.now();
+            db.analytics.affiliate.total = Number(db.analytics.affiliate.total || 0) + 1;
+            db.analytics.affiliate.byPlatform[platform] = Number(db.analytics.affiliate.byPlatform[platform] || 0) + 1;
+            db.analytics.affiliate.byProduct[productId] = Number(db.analytics.affiliate.byProduct[productId] || 0) + 1;
+            const product = AFFILIATE_CATALOG.find(item => item.id === productId);
+            swpTrackEventv9613h(platform === 'detail' ? 'click_product_detail' : `click_${platform}`, {
+                productId, productName: product ? product.name : productId, platform,
+                tier: product ? product.tier : '', matchScore: product ? product.matchScore : undefined
+            });
+            saveToStoragev96g({ actionType: 'trackClick' });
+            dispatchCloudSyncv96g("trackClick", {
+                productId: productId,
+                productName: product ? product.name : productId,
+                platform: platform,
+                tier: product ? product.tier : '',
+                eventType: platform === 'detail' ? 'click_product_detail' : `click_${platform}`
+            });
+        }
+
+        
+        // (- Admin Control Center Lite v9.6.15h -) Admin-only Security Gate + Control Center
+        const ADMIN_EMAILS_V9612H = [
+            "kudsangoods.th@gmail.com"
+        ];
+
+        function getAdminEmailv9612h() {
+            return normalizeEmailv968h ? normalizeEmailv968h(getIdentityEmailv968h ? getIdentityEmailv968h() : (db.userEmail || "")) : String(db.userEmail || "").trim().toLowerCase();
+        }
+
+        function isCurrentAdminv9612h() {
+            const email = getAdminEmailv9612h();
+            return ADMIN_EMAILS_V9612H.map(e => String(e).trim().toLowerCase()).includes(email);
+        }
+
+        function adminReadableTimev9612h(ts) {
+            if (!ts) return "-";
+            try { return new Date(ts).toLocaleString("th-TH"); } catch(e) { return "-"; }
+        }
+
+        function getAdminStatev9612h() {
+            const logs = Array.isArray(db.logs) ? db.logs : [];
+            const leads = Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            const clicks = db.clickTracking || {};
+            const totalClicks = Object.values(clicks).reduce((sum, item) => sum + Number((item && item.total) || 0), 0);
+            const lastLog = logs.length ? [...logs].sort((a,b)=>Number(b.timestamp||0)-Number(a.timestamp||0))[0] : null;
+            return {
+                appVersion: APP_VERSION,
+                schemaVersion: DATA_SCHEMA_VERSION,
+                isAdmin: isCurrentAdminv9612h(),
+                adminEmail: getAdminEmailv9612h(),
+                userKey: getUserKeyv964h ? getUserKeyv964h() : "",
+                endpoint: getCloudEndpointv964h ? getCloudEndpointv964h() : "",
+                deviceId: db.deviceId || "",
+                localLogs: logs.length,
+                leadCount: leads.length,
+                totalClicks,
+                lastLogDate: lastLog ? (lastLog.fullDate || lastLog.date || adminReadableTimev9612h(lastLog.timestamp)) : "-",
+                lastSync: db.lastCloudSync || 0,
+                dataVersion: db.dataVersion || 0,
+                diagnosticsCount: (window.__SWP_SYNC_DIAG__ || []).length,
+                eventCount: (db.events || []).length,
+                highIntentLeads: Object.values(db.leadMeta || {}).filter(m => getLeadStatusv9613h(m) === 'High Intent').length
+            };
+        }
+
+        function setAdminStatusv9612h(message, type = "cyan") {
+            const el = document.getElementById("adminStatusLine");
+            if (!el) return;
+            const color = type === "success" ? "text-emerald-400" : type === "danger" ? "text-rose-400" : type === "warn" ? "text-amber-400" : "text-cyan-400";
+            el.className = `text-[11px] font-bold ${color}`;
+            el.textContent = message;
+        }
+
+        function checkAdminSecurityGate() {
+            if (!isCurrentAdminv9612h()) {
+                alert("⛔ Admin only\nบัญชีนี้ไม่ได้รับสิทธิ์เข้าหน้า Admin Control Center");
+                return;
+            }
+            const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.15h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            if (enteredPin === null) return;
+            if (enteredPin === currentPin) {
+                openAdminDashboardPanelUI();
+            } else {
+                alert("❌ รหัส PIN ไม่ถูกต้อง! ระบบปฏิเสธสิทธิ์การเข้าใช้งาน Admin");
+            }
+        }
+
+        // Hotkey: Shift + Alt + A หรือ Ctrl + Shift + A เปิดได้เฉพาะ Admin email เท่านั้น
+        window.addEventListener('keydown', function (e) {
+            if ((e.shiftKey && e.altKey && (e.key === 'A' || e.key === 'a')) || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a'))) {
+                e.preventDefault();
+                checkAdminSecurityGate();
+            }
+        });
+
+        function swpSafeCountv9614h(value) {
+            const n = Number(value || 0);
+            if (!Number.isFinite(n) || n < 0 || n > 1000000) return 0;
+            return Math.round(n);
+        }
+        function swpFormatCountv9614h(value) {
+            return swpSafeCountv9614h(value).toLocaleString('th-TH');
+        }
+        function getAdminAffiliateViewStatev9615h() {
+            try { return JSON.parse(localStorage.getItem('swp_admin_affiliate_view') || '{}'); } catch(e) { return {}; }
+        }
+        function setAdminAffiliateViewv9615h(key, value) {
+            const s = getAdminAffiliateViewStatev9615h();
+            s[key] = value;
+            localStorage.setItem('swp_admin_affiliate_view', JSON.stringify(s));
+            switchAdminTabv9612h('affiliate');
+        }
+        function getAffiliateStatsRowsv9615h() {
+            return AFFILIATE_CATALOG.map(p => {
+                const raw = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
+                const stat = { shopee: swpSafeCountv9614h(raw.shopee), tiktok: swpSafeCountv9614h(raw.tiktok), detail: swpSafeCountv9614h(raw.detail), lastClickAt: raw.lastClickAt || 0 };
+                stat.total = stat.shopee + stat.tiktok + stat.detail;
+                return { product: p, stat };
+            });
+        }
+        function buildAdminAffiliateControlsv9615h(state) {
+            const filterTier = state.filterTier || 'all';
+            const sortBy = state.sortBy || 'total_desc';
+            const channel = state.channel || 'all';
+            return `
+                <div class="admin-control-row">
+                    <select class="admin-mini-select" onchange="setAdminAffiliateViewv9615h('filterTier', this.value)">
+                        <option value="all" ${filterTier==='all'?'selected':''}>ทุกระดับราคา</option>
+                        <option value="low" ${filterTier==='low'?'selected':''}>Low-Ticket</option>
+                        <option value="mid" ${filterTier==='mid'?'selected':''}>Mid-Ticket</option>
+                        <option value="high" ${filterTier==='high'?'selected':''}>High-Ticket</option>
+                    </select>
+                    <select class="admin-mini-select" onchange="setAdminAffiliateViewv9615h('channel', this.value)">
+                        <option value="all" ${channel==='all'?'selected':''}>ทุกช่องทาง</option>
+                        <option value="shopee" ${channel==='shopee'?'selected':''}>Shopee</option>
+                        <option value="tiktok" ${channel==='tiktok'?'selected':''}>TikTok</option>
+                        <option value="detail" ${channel==='detail'?'selected':''}>ดูรายละเอียด</option>
+                    </select>
+                    <select class="admin-mini-select" onchange="setAdminAffiliateViewv9615h('sortBy', this.value)">
+                        <option value="total_desc" ${sortBy==='total_desc'?'selected':''}>คลิกมาก → น้อย</option>
+                        <option value="total_asc" ${sortBy==='total_asc'?'selected':''}>คลิกน้อย → มาก</option>
+                        <option value="recent_desc" ${sortBy==='recent_desc'?'selected':''}>ล่าสุดก่อน</option>
+                        <option value="name_asc" ${sortBy==='name_asc'?'selected':''}>ชื่อ A-Z</option>
+                        <option value="price_high" ${sortBy==='price_high'?'selected':''}>ราคาแพงก่อน</option>
+                        <option value="price_low" ${sortBy==='price_low'?'selected':''}>ราคาถูกก่อน</option>
+                    </select>
+                    <button class="admin-action-btn cyan" onclick="exportAffiliateIntelCsvv9615h()"><i class="fas fa-file-csv"></i>Export CSV</button>
+                </div>
+            `;
+        }
+        function buildAdminAffiliateHtmlv9612h() {
+            const state = getAdminAffiliateViewStatev9615h();
+            let rows = getAffiliateStatsRowsv9615h();
+            if (state.filterTier && state.filterTier !== 'all') rows = rows.filter(r => r.product.priceTierKey === state.filterTier);
+            const channel = state.channel || 'all';
+            rows = rows.map(r => ({...r, viewClicks: channel === 'all' ? r.stat.total : swpSafeCountv9614h(r.stat[channel])}));
+            const sortBy = state.sortBy || 'total_desc';
+            rows.sort((a,b) => {
+                if (sortBy === 'total_asc') return a.viewClicks - b.viewClicks;
+                if (sortBy === 'recent_desc') return Number(b.stat.lastClickAt||0) - Number(a.stat.lastClickAt||0);
+                if (sortBy === 'name_asc') return String(a.product.name).localeCompare(String(b.product.name),'th');
+                if (sortBy === 'price_high') return Number(b.product.approxPrice||0) - Number(a.product.approxPrice||0);
+                if (sortBy === 'price_low') return Number(a.product.approxPrice||0) - Number(b.product.approxPrice||0);
+                return b.viewClicks - a.viewClicks;
+            });
+            const summaryTotal = rows.reduce((s,r)=>s+r.viewClicks,0);
+            const body = rows.map(({product:p, stat, viewClicks}) => {
+                const split = `Shopee ${swpFormatCountv9614h(stat.shopee)} • TikTok ${swpFormatCountv9614h(stat.tiktok)} • Detail ${swpFormatCountv9614h(stat.detail)}`;
+                return `
+                    <div class="admin-aff-row py-3 border-b border-slate-800/70 text-xs">
+                        <div class="min-w-0">
+                            <div class="text-slate-200 font-semibold truncate">${p.iconImg ? "🖼️" : p.icon} ${p.name}</div>
+                            <div class="text-[10px] mt-1"><span class="text-cyan-300">${p.commercialTier || '-'}</span> <span class="text-slate-500">${p.priceRange || ''}</span></div>
+                        </div>
+                        <div class="text-[10px] text-slate-400">${split}</div>
+                        <div class="text-cyan-400 font-black text-right md:text-left">${swpFormatCountv9614h(viewClicks)} คลิก</div>
+                        <div class="text-[10px] text-slate-500">ล่าสุด: ${adminReadableTimev9612h(stat.lastClickAt)}</div>
+                    </div>`;
+            }).join('') || `<div class="text-center opacity-40 text-xs py-8 italic">ไม่พบข้อมูลตาม filter ที่เลือก</div>`;
+            return `<div class="mb-2 text-[11px] text-slate-400">แสดง ${rows.length} รายการ • รวมตามมุมมองนี้ <b class="text-cyan-300">${swpFormatCountv9614h(summaryTotal)}</b> คลิก</div>${body}`;
+        }
+        function swpSanitizeClickStatv9614h(value) {
+            return swpSafeCountv9614h(value);
+        }
+
+        function exportAffiliateIntelCsvv9615h() {
+            try {
+                const state = getAdminAffiliateViewStatev9615h ? getAdminAffiliateViewStatev9615h() : {};
+                let rows = getAffiliateStatsRowsv9615h();
+                if (state.filterTier && state.filterTier !== 'all') rows = rows.filter(r => r.product.priceTierKey === state.filterTier);
+                const channel = state.channel || 'all';
+                rows = rows.map(r => ({...r, viewClicks: channel === 'all' ? r.stat.total : swpSafeCountv9614h(r.stat[channel])}));
+                const sortBy = state.sortBy || 'total_desc';
+                rows.sort((a,b) => {
+                    if (sortBy === 'total_asc') return a.viewClicks - b.viewClicks;
+                    if (sortBy === 'recent_desc') return Number(b.stat.lastClickAt||0) - Number(a.stat.lastClickAt||0);
+                    if (sortBy === 'name_asc') return String(a.product.name).localeCompare(String(b.product.name),'th');
+                    if (sortBy === 'price_high') return Number(b.product.approxPrice||0) - Number(a.product.approxPrice||0);
+                    if (sortBy === 'price_low') return Number(a.product.approxPrice||0) - Number(b.product.approxPrice||0);
+                    return b.viewClicks - a.viewClicks;
+                });
+                const safeCsv = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+                let csv = "\uFEFFProduct,Tier,Price Tier,Price Range,Approx Price,Shopee,TikTok,Detail,Total,Current View Clicks,Last Click\n";
+                rows.forEach(({product:p, stat, viewClicks}) => {
+                    csv += [
+                        safeCsv(p.name),
+                        safeCsv(p.tier || ''),
+                        safeCsv(p.commercialTier || ''),
+                        safeCsv(p.priceRange || ''),
+                        swpSafeCountv9614h(p.approxPrice),
+                        swpSafeCountv9614h(stat.shopee),
+                        swpSafeCountv9614h(stat.tiktok),
+                        swpSafeCountv9614h(stat.detail),
+                        swpSafeCountv9614h(stat.total),
+                        swpSafeCountv9614h(viewClicks),
+                        safeCsv(adminReadableTimev9612h(stat.lastClickAt))
+                    ].join(',') + "\n";
+                });
+                const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `SleepWellPro_Affiliate_Intel_${new Date().toISOString().slice(0,10)}.csv`;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => { try { URL.revokeObjectURL(url); a.remove(); } catch(e) {} }, 1200);
+                if (typeof pushEventv9613h === 'function') pushEventv9613h('export_affiliate_csv', { rows: rows.length, channel, sortBy, filterTier: state.filterTier || 'all' });
+                alert(`Export CSV สำเร็จ: ${rows.length} รายการ`);
+            } catch (err) {
+                console.error('Affiliate CSV export failed', err);
+                alert('Export CSV ไม่สำเร็จ: ' + (err && err.message ? err.message : err));
+            }
+        }
+
+        function buildAdminEventHtmlv9613h() {
+            const events = (db.events || []).slice(0, 80);
+            if (!events.length) return `<div class="text-center opacity-40 text-xs py-8 italic">ยังไม่มี Event Log</div>`;
+            return events.map(ev => `
+                <div class="py-2.5 border-b border-slate-800/70 text-[11px]">
+                    <div class="flex justify-between gap-3"><b class="text-cyan-300">${ev.type || '-'}</b><span class="text-slate-500">${adminReadableTimev9612h(ev.ts)}</span></div>
+                    <div class="text-slate-400 mt-1 font-mono text-[10px]">${ev.userKey || '-'} • ${ev.meta && ev.meta.productName ? ev.meta.productName : ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function buildAdminLeadsHtmlv9612h() {
+            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            if (!leads.length) return `<div class="text-center opacity-40 text-xs py-8 italic">ยังไม่มี Lead ในเครื่องนี้</div>`;
+            return leads.map((l, idx) => `
+                <div class="p-3 bg-slate-950/50 rounded-2xl border border-slate-800 text-[11px] mb-2">
+                    <div class="flex justify-between gap-3 font-bold text-slate-300">
+                        <span>${idx + 1}. ${l.name || "-"}</span>
+                        <span class="text-slate-500 font-normal text-[10px]">${adminReadableTimev9612h(l.registeredAt)}</span>
+                    </div>
+                    <div class="text-cyan-400 font-mono mt-1 select-all">${l.email || "-"}</div>
+                    <div class="text-[10px] text-slate-500 mt-2">Status: <b class="text-emerald-400">${getLeadStatusv9613h((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {})}</b> • Logs: ${((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {}).totalLogs || 0} • Last Active: ${adminReadableTimev9612h(((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {}).lastActive)}</div>
+                </div>
+            `).join("");
+        }
+
+        function buildAdminDebugReportv9612h() {
+            const state = getAdminStatev9612h();
+            return {
+                generatedAt: new Date().toISOString(),
+                appVersion: APP_VERSION,
+                schemaVersion: DATA_SCHEMA_VERSION,
+                adminEmail: state.adminEmail,
+                userKey: state.userKey,
+                endpoint: state.endpoint ? state.endpoint.replace(/\/s\/([^/]+)\//, "/s/***masked***/") : "",
+                deviceId: state.deviceId,
+                localLogs: state.localLogs,
+                logIds: (db.logs || []).map(l => l.id || `${l.fullDate || l.date}_${l.sleepTime || ""}_${l.wakeTime || ""}`),
+                leadCount: state.leadCount,
+                totalClicks: state.totalClicks,
+                lastSync: state.lastSync ? new Date(state.lastSync).toISOString() : null,
+                dataVersion: state.dataVersion,
+                navigator: {
+                    online: navigator.onLine,
+                    userAgent: navigator.userAgent,
+                    language: navigator.language
+                },
+                diagnosticsTail: (window.__SWP_SYNC_DIAG__ || []).slice(-20)
+            };
+        }
+
+        function renderAdminControlCenterv9612h(activeTab = "overview") {
+            const state = getAdminStatev9612h();
+            const tabs = [
+                ["overview", "Overview", "fa-gauge-high"],
+                ["debug", "Debug & Sync", "fa-screwdriver-wrench"],
+                ["affiliate", "Affiliate Intel", "fa-mouse-pointer"],
+                ["leads", "Lead Intel", "fa-users"],
+                ["events", "Event Log", "fa-list-check"],
+                ["export", "Export", "fa-file-export"],
+                ["settings", "Settings", "fa-gear"]
+            ];
+            const tabButtons = tabs.map(([id, label, icon]) => `
+                <button class="admin-tab-btn ${activeTab === id ? "active" : ""}" onclick="switchAdminTabv9612h('${id}')">
+                    <i class="fas ${icon} mr-1"></i>${label}
+                </button>
+            `).join("");
+
+            let content = "";
+            if (activeTab === "overview") {
+                content = `
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">App Version</div><div class="text-xl text-cyan-400 font-black mt-2">${state.appVersion}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Local Logs</div><div class="text-xl text-emerald-400 font-black mt-2">${state.localLogs}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Affiliate Clicks</div><div class="text-xl text-orange-400 font-black mt-2">${state.totalClicks}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Leads</div><div class="text-xl text-pink-400 font-black mt-2">${state.leadCount}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Events</div><div class="text-xl text-indigo-400 font-black mt-2">${state.eventCount}</div></div>
+                        <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">High Intent</div><div class="text-xl text-amber-400 font-black mt-2">${state.highIntentLeads}</div></div>
+                    </div>
+                    <div class="mt-4 admin-codebox">${JSON.stringify({
+                        userKey: state.userKey,
+                        identityEmail: state.adminEmail,
+                        lastLogDate: state.lastLogDate,
+                        lastSync: adminReadableTimev9612h(state.lastSync),
+                        dataVersion: state.dataVersion,
+                        deviceId: state.deviceId
+                    }, null, 2)}</div>
+                `;
+            }
+
+            if (activeTab === "debug") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-2">Sync Health</div>
+                            <div class="text-[11px] text-slate-300 space-y-1">
+                                <div>Online: <b class="${navigator.onLine ? "text-emerald-400" : "text-rose-400"}">${navigator.onLine ? "YES" : "NO"}</b></div>
+                                <div>UserKey: <span class="text-cyan-300 font-mono">${state.userKey || "-"}</span></div>
+                                <div>Local Logs: <b class="text-emerald-400">${state.localLogs}</b></div>
+                                <div>Diagnostics: <b class="text-amber-400">${state.diagnosticsCount}</b></div>
+                            </div>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-2">Safe Actions</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn cyan" onclick="adminTestCloudv9612h()"><i class="fas fa-signal"></i>Test Cloud</button>
+                                <button class="admin-action-btn success" onclick="adminForcePullv9612h()"><i class="fas fa-cloud-arrow-down"></i>Force Pull</button>
+                                <button class="admin-action-btn" onclick="adminForcePushv9612h()"><i class="fas fa-cloud-arrow-up"></i>Backup Push</button>
+                                <button class="admin-action-btn" onclick="adminCopyDebugReportv9612h()"><i class="fas fa-copy"></i>Copy Report</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="text-[11px] text-slate-500 font-bold uppercase mb-2">Diagnostics Tail</div>
+                        <div class="admin-codebox">${JSON.stringify((window.__SWP_SYNC_DIAG__ || []).slice(-12), null, 2)}</div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "affiliate") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card md:col-span-2">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="text-orange-400 font-bold text-xs uppercase"><i class="fas fa-mouse-pointer mr-1"></i>Affiliate Tracking</div>
+                                <button onclick="clearTrackingStatsv96g()" class="text-[10px] text-rose-400 hover:underline">ล้างเฉพาะสถิติในเครื่องนี้</button>
+                            </div>
+                            ${buildAdminAffiliateControlsv9615h(getAdminAffiliateViewStatev9615h())}
+                            <div class="max-h-[420px] overflow-y-auto pr-2">${buildAdminAffiliateHtmlv9612h()}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "leads") {
+                content = `
+                    <div class="admin-metric-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="text-emerald-400 font-bold text-xs uppercase"><i class="fas fa-users mr-1"></i>Lead Magnet System</div>
+                            <span class="bg-emerald-950 text-emerald-400 px-2 py-1 rounded-lg text-[10px] font-black">${state.leadCount} คน</span>
+                        </div>
+                        <div class="max-h-[360px] overflow-y-auto pr-2">${buildAdminLeadsHtmlv9612h()}</div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "events") {
+                content = `
+                    <div class="admin-metric-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="text-indigo-400 font-bold text-xs uppercase"><i class="fas fa-list-check mr-1"></i>Event Log</div>
+                            <span class="bg-indigo-950 text-indigo-300 px-2 py-1 rounded-lg text-[10px] font-black">${state.eventCount} events</span>
+                        </div>
+                        <div class="max-h-[420px] overflow-y-auto pr-2">${buildAdminEventHtmlv9613h()}</div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "export") {
+                content = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="admin-metric-card">
+                            <div class="text-cyan-400 font-bold text-xs uppercase mb-3">Export / Backup</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn success" onclick="exportData()"><i class="fas fa-download"></i>Export User Data</button>
+                                <button class="admin-action-btn success" onclick="exportLeadsToExcelv96g()"><i class="fas fa-file-csv"></i>Export Leads CSV</button>
+                                <button class="admin-action-btn cyan" onclick="adminExportDebugJsonv9612h()"><i class="fas fa-bug"></i>Export Debug JSON</button>
+                            </div>
+                        </div>
+                        <div class="admin-metric-card">
+                            <div class="text-amber-400 font-bold text-xs uppercase mb-3">Recovery Tools</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="admin-action-btn" onclick="adminForcePullv9612h()"><i class="fas fa-rotate"></i>Rehydrate From Cloud</button>
+                                <button class="admin-action-btn danger" onclick="adminResetLocalDevicev9612h()"><i class="fas fa-triangle-exclamation"></i>Reset Local Device</button>
+                            </div>
+                            <p class="text-[10px] text-slate-500 mt-3 leading-relaxed">Reset Local Device จะลบเฉพาะข้อมูลใน browser นี้ หลังจากเปิดใหม่ให้ login email เดิมเพื่อดึง Cloud กลับมา ไม่ลบ Cloud</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (activeTab === "settings") {
+                content = `
+                    <div class="admin-metric-card">
+                        <label class="block text-xs font-bold text-cyan-400 mb-2 uppercase tracking-wide"><i class="fas fa-link mr-1"></i>Cloud Endpoint URL</label>
+                        <div class="flex flex-col md:flex-row gap-2">
+                            <input type="url" id="sheetsCloudUrlInput" value="${state.endpoint}" class="flex-1 p-3 input-dark text-xs outline-none focus:border-cyan-500" placeholder="https://script.google.com/macros/s/.../exec">
+                            <button onclick="saveCloudUrlv96g(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn cyan"><i class="fas fa-save"></i>บันทึก</button>
+                            <button onclick="resetCloudEndpointToDefaultv967h(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn"><i class="fas fa-rotate-left"></i>Default</button>
+                        </div>
+                        <div class="mt-4 admin-codebox">${JSON.stringify({
+                            endpointMasked: state.endpoint ? state.endpoint.replace(/\/s\/([^/]+)\//, "/s/***masked***/") : "",
+                            schemaVersion: state.schemaVersion,
+                            autoBackupLimit: AUTO_BACKUP_LIMIT,
+                            adminEmails: ADMIN_EMAILS_V9612H
+                        }, null, 2)}</div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="glass-card max-w-6xl w-full p-6 relative max-h-[92vh] overflow-y-auto border border-cyan-500/30 bg-slate-950/95 shadow-2xl text-slate-200">
+                    <button onclick="document.getElementById('v96gAdminDashboardModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.15h</span></h2>
+                            <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
+                        </div>
+                        <div class="text-right">
+                            <div id="adminStatusLine" class="text-[11px] font-bold text-cyan-400">พร้อมตรวจสอบระบบ</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Last Sync: ${adminReadableTimev9612h(state.lastSync)}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-5">${tabButtons}</div>
+                    <div id="adminTabContent">${content}</div>
+                </div>
+            `;
+        }
+
+        function openAdminDashboardPanelUI() {
+            if (!isCurrentAdminv9612h()) {
+                alert("⛔ Admin only");
+                return;
+            }
+            let adminModal = document.getElementById("v96gAdminDashboardModal");
+            if (!adminModal) {
+                adminModal = document.createElement("div");
+                adminModal.id = "v96gAdminDashboardModal";
+                adminModal.className = "fixed inset-0 bg-black/80 z-[100005] hidden items-center justify-center p-4 backdrop-blur-sm";
+                document.body.appendChild(adminModal);
+            }
+            adminModal.innerHTML = renderAdminControlCenterv9612h("overview");
+            adminModal.classList.remove("hidden");
+            adminModal.classList.add("flex");
+        }
+
+        function switchAdminTabv9612h(tabId) {
+            const modal = document.getElementById("v96gAdminDashboardModal");
+            if (!modal) return;
+            modal.innerHTML = renderAdminControlCenterv9612h(tabId);
+        }
+
+        async function adminTestCloudv9612h() {
+            setAdminStatusv9612h("กำลังทดสอบ Cloud...", "cyan");
+            try {
+                const before = (window.__SWP_SYNC_DIAG__ || []).length;
+                const changed = await syncFromCloudv964h({ render: true });
+                initProfileFormv964h();
+                renderDashboard();
+                const after = (window.__SWP_SYNC_DIAG__ || []).length;
+                setAdminStatusv9612h(`Test Cloud เสร็จ: ${changed ? "พบข้อมูลใหม่/merge แล้ว" : "เชื่อมต่อสำเร็จหรือข้อมูลล่าสุดแล้ว"} • diag +${after-before}`, "success");
+                setTimeout(() => switchAdminTabv9612h("debug"), 600);
+            } catch (err) {
+                setAdminStatusv9612h("Test Cloud ไม่สำเร็จ: " + (err && err.message ? err.message : err), "danger");
+            }
+        }
+
+        async function adminForcePullv9612h() {
+            if (!confirm("Force Pull จะดึงข้อมูลจาก Cloud มา merge กับข้อมูลในเครื่องนี้ ไม่ลบ Cloud ต้องการดำเนินการต่อหรือไม่?")) return;
+            setAdminStatusv9612h("กำลัง Force Pull จาก Cloud...", "cyan");
+            try {
+                await syncFromCloudv964h({ render: true });
+                initProfileFormv964h();
+                renderDashboard();
+                setAdminStatusv9612h("Force Pull เสร็จแล้ว", "success");
+                setTimeout(() => switchAdminTabv9612h("debug"), 600);
+            } catch (err) {
+                setAdminStatusv9612h("Force Pull ไม่สำเร็จ", "danger");
+            }
+        }
+
+        function adminForcePushv9612h() {
+            if (!confirm("Backup Push จะส่งข้อมูล local ปัจจุบันขึ้น Cloud เพื่อสำรอง/merge ต่อ ต้องการดำเนินการต่อหรือไม่?")) return;
+            dispatchCloudSyncv96g("adminBackupPush", { adminAction: true, debugReport: buildAdminDebugReportv9612h() });
+            setAdminStatusv9612h("ส่ง Backup Push แล้ว", "success");
+            setTimeout(() => switchAdminTabv9612h("debug"), 700);
+        }
+
+        function adminCopyDebugReportv9612h() {
+            const text = JSON.stringify(buildAdminDebugReportv9612h(), null, 2);
+            navigator.clipboard?.writeText(text).then(() => {
+                setAdminStatusv9612h("Copy Debug Report แล้ว", "success");
+            }).catch(() => {
+                prompt("Copy Debug Report", text);
+            });
+        }
+
+        function adminExportDebugJsonv9612h() {
+            const blob = new Blob([JSON.stringify(buildAdminDebugReportv9612h(), null, 2)], { type: "application/json;charset=utf-8" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `SleepWellPro_Debug_${APP_VERSION}_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function adminResetLocalDevicev9612h() {
+            const typed = prompt("พิมพ์ RESET เพื่อยืนยันการลบข้อมูลเฉพาะ browser นี้\nCloud จะไม่ถูกลบ และสามารถ login email เดิมเพื่อดึงกลับได้");
+            if (typed !== "RESET") return;
+            clearSleepWellLocalDevicev969h({ hard: true });
+            location.href = location.origin + location.pathname + "?v=" + encodeURIComponent(APP_VERSION) + "&t=" + Date.now();
+        }
+
+function saveCloudUrlv96g() {
+            const inputUrl = document.getElementById("sheetsCloudUrlInput").value.trim();
+            if (inputUrl && !isValidCloudEndpointv967h(inputUrl)) {
+                alert("❌ URL Cloud ไม่ถูกต้อง ต้องเป็นลิงก์ Google Apps Script Web App ที่ลงท้ายด้วย /exec เท่านั้น");
+                return;
+            }
+            db.googleSheetsUrl = inputUrl;
+            saveToStoragev96g({ skipVersion: true });
+            alert("🔒 บันทึกและเชื่อมโยงช่องทาง API คลาวด์เสร็จสมบูรณ์!");
+        }
+
+        function clearTrackingStatsv96g() {
+            if(confirm("คุณต้องการล้างสถิติยอดคลิกสินค้าภายในตัวเครื่องนี้ใช่หรือไม่?")) {
+                db.clickTracking = {};
+                saveToStoragev96g();
+                openAdminDashboardPanelUI();
+            }
+        }
+
+        function triggerWeeklyReportEmailv96g() {
+            if(!db.googleSheetsUrl) return alert("กรุณาระบุและเซฟที่อยู่ Google Apps Script API บนแผงควบคุมก่อนกดปุ่มนี้ครับ");
+            fetch(db.googleSheetsUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "triggerWeeklyReport" })
+            }).then(() => {
+                alert("🚀 ประมวลผลสำเร็จ! ยิงคำสั่งนำส่งข้อมูลสถิติยอดขายและข้อมูลลูกค้าตรงไปยัง kudsangoods.th@gmail.com เรียบร้อยครับ");
+            }).catch(err => alert("การส่งคำขอผิดพลาด: " + err));
+        }
+
+        function exportLeadsToExcelv96g() {
+            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            if(leads.length === 0) return alert("ไม่มีรายชื่อกลุ่มเป้าหมายสะสมบนเครื่องเบราว์เซอร์นี้ที่จะส่งออก");
+            
+            let csvBody = "\uFEFFชื่อ-นามสกุลกลุ่มเป้าหมาย,อีเมลผู้ลงทะเบียนสิทธิ์,วันเวลาที่ลงชื่อเข้าใช้ระบบ\n";
+            leads.forEach(l => {
+                const dateStr = l.registeredAt ? new Date(l.registeredAt).toLocaleString('th-TH') : '-';
+                csvBody += `"${l.name}","${l.email}","${dateStr}"\n`;
+            });
+            
+            const blobFile = new Blob([csvBody], { type: "text/csv;charset=utf-8;" });
+            const downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blobFile);
+            downloadLink.setAttribute("download", `KudsanGoods_Leads_Database_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // (- New Feature v9.6h -) ตรวจสอบความถูกต้องสมบูรณ์โครงสร้าง Email ฟอร์แมตด้วย Regex แบบเคร่งครัด
+        function isValidEmailv96h(email) {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+
+        // (- New Feature v9.6c -) Asynchronous Page Transition & Input Validation Implementation
+        function submitLeadMagnet(event) {
+            event.preventDefault();
+            try {
+                const name = document.getElementById('leadName').value.trim();
+                const email = document.getElementById('leadEmail').value.trim();
+                if (!name || !email) {
+                    alert("กรุณาใส่ข้อมูลลงทะเบียนให้ครบถ้วนทุกช่อง");
+                    return;
+                }
+                if (!isValidEmailv96h(email)) {
+                    alert("❌ รูปแบบอีเมลไม่ถูกต้อง! กรุณาตรวจสอบและกรอกอีเมลที่มีอยู่จริงเพื่อรับรายงานสรุปผล (เช่น name@domain.com)");
+                    return;
+                }
+                lockIdentityEmailv968h(email, name);
+                if (!db.leadData) db.leadData = [];
+                const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
+                if (!existsLead) db.leadData.push(db.lead);
+                swpTrackEventv9613h('register', { name, email: normalizeEmailv968h(email) });
+                saveToStoragev96g({ actionType: 'submitLead' });
+                refreshAdminTriggerVisibilityv9612h();
+
+                const leadOverlay = document.getElementById('leadMagnetOverlay');
+                const pinOverlay = document.getElementById('pinOverlay');
+                pinOverlay.classList.remove('hidden');
+                pinOverlay.style.opacity = '1';
+                pinOverlay.style.display = 'flex';
+                leadOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    leadOverlay.classList.add('hidden');
+                    leadOverlay.style.display = 'none';
+                }, 250);
+
+                // v9.6.20h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
+                syncFromCloudv964h({ render: false }).then(() => {
+                    lockIdentityEmailv968h(email, name);
+                    saveToStoragev96g({ skipVersion: true });
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
+                }).catch(err => {
+                    console.warn('[Lead] background sync failed but app can continue', err);
+                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
+                });
+            } catch (err) {
+                console.error('submitLeadMagnet failed', err);
+                alert('ระบบลงทะเบียนมีข้อผิดพลาด กรุณารีเฟรชหน้าแล้วลองใหม่อีกครั้ง');
+            }
+        }
+
+        // Security PIN Core Authentication Routine Flow
+        function inputPin(num) {
+            if(currentPinInput.length < 4) {
+                currentPinInput += num;
+                updatePinDots();
+                if(currentPinInput.length === 4) {
+                    if(currentPinInput === db.security.pin) {
+                        document.getElementById('pinOverlay').style.opacity = '0';
+                        setTimeout(() => document.getElementById('pinOverlay').style.display = 'none', 500);
+                        initApp();
+                    } else {
+                        document.getElementById('pinMsg').innerText = "รหัสผ่านไม่ถูกต้อง!";
+                        document.getElementById('pinMsg').classList.add('text-rose-500');
+                        clearPin();
+                    }
+                }
+            }
+        }
+        function updatePinDots() {
+            const dots = document.querySelectorAll('.pin-dot');
+            dots.forEach((d, i) => i < currentPinInput.length ? d.classList.add('active') : d.classList.remove('active'));
+        }
+        function clearPin() { currentPinInput = ""; updatePinDots(); }
+        function changePinPrompt() {
+            const old = prompt("กรุณากรอกรหัส PIN ปัจจุบันของคุณ:");
+            if(old === db.security.pin) {
+                const n1 = prompt("กรุณากรอกรหัส PIN ใหม่ความยาว 4 หลัก:");
+                if(n1 && n1.length === 4 && !isNaN(n1)) {
+                    db.security.pin = n1;
+                    db.securityUpdatedAt = Date.now();
+                    db.coreUpdatedAt = Date.now();
+                    db.forceReplaceProfileSecurityOnNextSync = true;
+                    db.localProfileLockUntil = Date.now() + 60000;
+                    swpTrackEventv9613h('change_pin', {});
+                    saveToStoragev96g({ actionType: 'changePin' });
+                    dispatchCloudSyncv96g("changeSecurity", { forceReplaceProfileSecurity: true, coreUpdateKind: 'security' });
+                    alert("เปลี่ยนรหัสผ่าน PIN สำเร็จเรียบร้อยแล้ว!");
+                } else {
+                    alert("รูปแบบรหัสผ่านไม่ถูกต้อง! ต้องเป็นตัวเลข 4 หลัก");
+                }
+            } else if(old !== null) { alert("รหัสผ่านไม่ถูกต้อง!"); }
+        }
+
+        // Profile Synchronization Handler Engine
+        function saveProfile() {
+            db.profile = {
+                name: document.getElementById('pName').value || db.profile.name,
+                weight: parseFloat(document.getElementById('pWeight').value) || db.profile.weight,
+                height: parseFloat(document.getElementById('pHeight').value) || db.profile.height,
+                age: parseInt(document.getElementById('pAge').value) || db.profile.age,
+                gender: document.getElementById('pGender').value,
+                goal: parseFloat(document.getElementById('pGoal').value) || 8
+            };
+            db.profileUpdatedAt = Date.now();
+            db.coreUpdatedAt = Date.now();
+            db.forceReplaceProfileSecurityOnNextSync = true;
+            db.localProfileLockUntil = Date.now() + 60000;
+            swpTrackEventv9613h('save_profile', { profile: db.profile });
+            if (db.lead && db.profile.name) db.lead.name = db.profile.name;
+            saveToStoragev96g({ actionType: 'saveProfile' });
+            dispatchCloudSyncv96g("updateProfile", { forceReplaceProfileSecurity: true, coreUpdateKind: 'profile' });
+            initProfileFormv964h();
+            renderDashboard();
+            alert("บันทึกโปรไฟล์เรียบร้อยแล้ว");
+        }
+
+        // Medical Metric Analytical Calculator & Aggregator Core Logic 
+        function addSleepLog() {
+            const start = new Date(document.getElementById('sTime').value);
+            const end = new Date(document.getElementById('wTime').value);
+            if(isNaN(start) || isNaN(end) || end <= start) return alert("กรุณาระบุเวลาเข้านอนและตื่นนอนให้ถูกต้องสมบูรณ์");
+
+            const dur = parseFloat(((end - start) / (1000 * 60 * 60)).toFixed(2));
+            const cyc = parseFloat((dur / 1.5).toFixed(1));
+            const qual = parseInt(document.getElementById('sQual').value);
+            const sTimeStr = start.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
+            const wTimeStr = end.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
+
+            const bmr = (10 * db.profile.weight) + (6.25 * db.profile.height) - (5 * db.profile.age) + (db.profile.gender === 'ชาย' ? 5 : -161);
+            const cal = Math.round((bmr / 24) * 0.95 * dur);
+            const success = Math.round(Math.min((dur / db.profile.goal) * 100, 100));
+
+            const y = start.getFullYear();
+            const m = String(start.getMonth() + 1).padStart(2, '0');
+            const d = String(start.getDate()).padStart(2, '0');
+            const localDateStr = `${y}-${m}-${d}`; 
+
+            db.logs.push({
+                id: Date.now(),
+                timestamp: start.getTime(),
+                date: start.toLocaleDateString('th-TH', {day:'2-digit', month:'2-digit', year:'2-digit'}),
+                fullDate: localDateStr,
+                sleepTime: sTimeStr,
+                wakeTime: wTimeStr,
+                duration: dur, calories: cal, cycles: cyc, quality: qual, pct: success,
+                factors: { 
+                    screen: document.getElementById('fScr').checked, 
+                    stress: document.getElementById('fStr').checked,
+                    exercise: document.getElementById('fExe').checked,
+                    caffeine: document.getElementById('fCaf').checked,
+                    room: document.getElementById('fRoom') ? document.getElementById('fRoom').checked : false,
+                    environment: document.getElementById('fRoom') ? document.getElementById('fRoom').checked : false,
+                    screenTime: document.getElementById('fScr').checked,
+                    stressFactor: document.getElementById('fStr').checked,
+                    alcohol: document.getElementById('fAlc').checked 
+                }
+            });
+            
+            const latestLogv9613h = db.logs[db.logs.length - 1];
+            latestLogv9613h.sleepSignals = getSleepSignalsv9613h(latestLogv9613h);
+            latestLogv9613h.recommendedProductIds = getRankedAffiliateProductsv9613h(latestLogv9613h, 5).map(p => p.id);
+            swpTrackEventv9613h('add_sleep_log', { quality: latestLogv9613h.quality, duration: latestLogv9613h.duration, signals: latestLogv9613h.sleepSignals });
+            saveToStoragev96g({ actionType: 'addSleepLog' });
+            dispatchCloudSyncv96g("syncStorage");
+            
+            renderDashboard();
+            
+            document.getElementById('sTime').value = "";
+            document.getElementById('wTime').value = "";
+        }
+
+        // [v9.6.15h] Advanced AI Deep Analysis: varied, signal-based, product-aligned narrative engine
+        function pickCopyv9613h(list, seed = 0) {
+            if (!list || !list.length) return '';
+            return list[Math.abs(seed) % list.length];
+        }
+        function sleepSignalLabelv9614h(signal) {
+            return ({
+                short_sleep:'เวลานอนน้อย', good_duration:'เวลานอนอยู่ในเกณฑ์', low_quality:'คุณภาพนอนต่ำ', low_cycles:'รอบการนอนไม่ครบ', low_success:'ยังไม่ถึงเป้าหมาย', screen:'ใช้หน้าจอก่อนนอน', stress:'ความเครียด/คิดงาน', alcohol:'แอลกอฮอล์', caffeine:'คาเฟอีน', exercise:'ออกกำลังกาย', environment:'ห้องนอนรบกวน', room:'ห้องนอนรบกวน', maintenance:'รักษา pattern'
+            })[signal] || signal;
+        }
+        function buildProductReasonv9614h(product, signals) {
+            if (product.id === 'blue-glasses-01') return signals.includes('screen') ? 'เหมาะเพราะมีการใช้หน้าจอก่อนนอน ควรลดแสงและลดคอนเทนต์กระตุ้นสมอง' : 'ยังไม่ใช่ตัวหลักคืนนี้ เพราะไม่ได้ระบุการใช้หน้าจอ';
+            if (['eye-mask-01','earplug-01','humidifier-01','cooling-pad-01','pillow-01'].includes(product.id)) return (signals.includes('environment') || signals.includes('room')) ? 'เหมาะเพราะมีปัจจัยห้องนอน ควรแก้แสง เสียง อุณหภูมิ หรือหมอนก่อนซื้อของกลุ่มอื่น' : 'เหมาะเป็นตัวเสริมเรื่องความสบายของห้องนอน แต่คืนนี้ยังไม่มี trigger ห้องนอนชัดเจน';
+            if (['herbal-tea-01','weighted-blanket-01','breath-trainer-01','magnesium-01'].includes(product.id)) return signals.includes('stress') ? 'เหมาะเพราะมีสัญญาณความเครียด ควรช่วยให้ร่างกายเปลี่ยนจากโหมดคิดงานเป็นโหมดพัก' : 'เหมาะเป็นตัวช่วย routine ผ่อนคลาย เมื่ออยากทำก่อนนอนให้สม่ำเสมอขึ้น';
+            if (product.id === 'supplement-mag-01') return (signals.includes('low_cycles') || signals.includes('low_quality') || signals.includes('alcohol')) ? 'เหมาะเมื่อรอบการนอน/คุณภาพตก ควรใช้เป็นตัวเสริมหลังปรับพฤติกรรมพื้นฐานแล้ว' : 'เหมาะเป็นตัวเสริม ไม่ใช่สิ่งแรกที่ต้องพึ่งถ้า pattern ยังดี';
+            if (product.id === 'decaf-drink-01') return signals.includes('caffeine') ? 'เหมาะเพราะมีคาเฟอีน ควรใช้แทนเครื่องดื่มเดิมช่วงเย็น' : 'เหมาะกับคนอยากมีเครื่องดื่มก่อนนอนแบบไม่รบกวนการหลับ';
+            return product.why || 'สัมพันธ์กับ pattern การนอนล่าสุดของคุณ';
+        }
+        function updateDeepAI(log) {
+            const container = document.getElementById('aiAnalysis');
+            const {duration:d, cycles:c, calories:cal, pct:p, quality:q, factors:f = {}} = log;
+            const durationFormattedText = formatHoursAndMinutesv96h(d);
+            const signals = getSleepSignalsv9613h(log);
+            const ranked = getRankedAffiliateProductsv9613h(log, 5);
+            db.recommendationState = { lastSignals: signals, lastRecommendedIds: ranked.map(x=>x.id), lastUpdatedAt: Date.now() };
+            const durationGood = d >= 7 && d <= 9;
+            const qualityGood = q >= 7;
+            const cycleGood = c >= 5 && c <= 6.5;
+            const successGood = p >= 85;
+            const riskLevel = (durationGood && qualityGood && cycleGood && successGood) ? 'green' : (d < 6 || q <= 4 || c < 4 || p < 55) ? 'red' : 'yellow';
+            const statusText = riskLevel === 'green' ? 'ฟื้นตัวดี' : riskLevel === 'red' ? 'ควรแก้คืนนี้ทันที' : 'พอใช้ แต่ยังมีจุดรั่ว';
+            const durationAdvice = durationGood
+                ? `ดี: เวลานอน ${durationFormattedText} อยู่ในช่วงที่ร่างกายมีเวลาซ่อมแซมตัวเองพอสมควร ควรรักษาเวลาเข้านอน/ตื่นให้ใกล้เดิมอีก 3 คืน`
+                : `ยังไม่ดี: เวลานอน ${durationFormattedText} ยังไม่พอสำหรับการฟื้นตัวเต็มที่ คืนนี้ควรเข้านอนเร็วขึ้น 30–45 นาที และอย่าเพิ่มกิจกรรมหนักช่วงดึก`;
+            const qualityAdvice = qualityGood
+                ? `ดี: คุณภาพ ${q}/10 แปลว่าตื่นมาแล้วร่างกายรับรู้ว่าพักได้ค่อนข้างดี ให้รักษาพฤติกรรมเดิมและอย่าเปลี่ยนหลายอย่างพร้อมกัน`
+                : `ยังไม่ดี: คุณภาพ ${q}/10 แปลว่าต่อให้นอนได้หลายชั่วโมง ร่างกายอาจยังพักไม่ลึกพอ ให้เลือกแก้ trigger หลัก 1 อย่างคืนนี้`;
+            const cycleAdvice = cycleGood
+                ? `ดี: รอบการนอนประมาณ ${c} รอบ ใกล้เป้าหมาย 5–6 รอบ แปลว่าการนอนค่อนข้างต่อเนื่อง`
+                : `ยังไม่ดี: รอบการนอนประมาณ ${c} รอบ ต่ำกว่าเป้าหมาย ควรลดสิ่งที่ทำให้ตื่นกลางดึก เช่น แสง เสียง อุณหภูมิ ห้องนอนไม่สบาย หรือแอลกอฮอล์`;
+            const behaviorSignals = signals.filter(s=>!['good_duration','maintenance','low_success','low_cycles','low_quality','short_sleep'].includes(s));
+            const behaviorLabels = behaviorSignals.map(sleepSignalLabelv9614h);
+            const behaviorAdvice = behaviorLabels.length
+                ? `คืนนี้มีปัจจัยที่คุณระบุเอง: ${behaviorLabels.join(' / ')} ควรแก้จากสิ่งที่ควบคุมง่ายที่สุดก่อน แล้วดูผลวันถัดไป`
+                : `คืนนี้คุณไม่ได้ติ๊ก trigger พฤติกรรมชัดเจน ปัญหาจึงน่าจะมาจากเวลา/ความต่อเนื่อง/สภาพร่างกายมากกว่า อย่าเพิ่งด่วนซื้อของที่ไม่สัมพันธ์กับปัญหา`;
+            let html = `<div class="space-y-4">`;
+            html += `<div class="p-3 rounded-2xl border ${riskLevel==='green'?'border-emerald-500/30 bg-emerald-950/20':riskLevel==='red'?'border-rose-500/30 bg-rose-950/20':'border-amber-500/30 bg-amber-950/20'}">
+                <div class="text-[11px] uppercase tracking-widest text-slate-400 font-bold">Sleep Intelligence Summary</div>
+                <div class="text-lg font-black mt-1 ${riskLevel==='green'?'text-emerald-300':riskLevel==='red'?'text-rose-300':'text-amber-300'}">${statusText}</div>
+                <div class="text-[11px] text-slate-300 mt-2 leading-relaxed">คะแนนรวม ${p}% จากคุณภาพ ${q}/10, เวลานอน ${durationFormattedText}, รอบการนอน ${c} รอบ — ระบบดูว่า “นอนพอไหม + หลับต่อเนื่องไหม + ตื่นมาไหวไหม”</div>
+            </div>`;
+            html += `<div><b class="text-cyan-400"><i class="fas fa-hourglass-half mr-1"></i> เวลานอน:</b> ${durationAdvice}</div>`;
+            html += `<div><b class="text-rose-300"><i class="fas fa-star-half-alt mr-1"></i> คุณภาพหลังตื่น:</b> ${qualityAdvice}</div>`;
+            html += `<div><b class="text-orange-400"><i class="fas fa-fire mr-1"></i> พลังงานระหว่างหลับ:</b> ประมาณ ${cal} kcal ใช้ดูแนวโน้มเท่านั้น ไม่ควรตีความจากคืนเดียว ให้ดูต่อเนื่อง 3–7 วัน</div>`;
+            html += `<div><b class="text-emerald-400"><i class="fas fa-sync-alt mr-1"></i> รอบการนอน:</b> ${cycleAdvice}</div>`;
+            html += `<div><b class="text-pink-400"><i class="fas fa-brain mr-1"></i> ปัจจัยรบกวน:</b> ${behaviorAdvice}</div>`;
+            if (signals.includes('screen')) html += `<div class="text-cyan-200"><b>ใช้หน้าจอ:</b> ควรหยุดคอนเทนต์กระตุ้นอารมณ์ก่อนนอน 45–60 นาที ลดแสงจอ และใช้แว่นกรองแสงเฉพาะคืนที่เลี่ยงหน้าจอไม่ได้</div>`;
+            if (signals.includes('stress')) html += `<div class="text-amber-200"><b>ความเครียด:</b> ไม่ควรขึ้นเตียงพร้อมงานค้างในหัว ให้เขียนสิ่งที่กังวล 3 บรรทัด + หายใจช้า 3 นาที ก่อนนอน</div>`;
+            if (signals.includes('environment') || signals.includes('room')) html += `<div class="text-sky-200"><b>ห้องนอน:</b> ควรเช็ก 4 อย่าง: แสง เสียง อุณหภูมิ และหมอน/ที่นอน ถ้าห้องไม่พร้อม ต่อให้นอนนานก็อาจหลับไม่ลึก</div>`;
+            if (signals.includes('caffeine')) html += `<div class="text-lime-200"><b>คาเฟอีน:</b> คืนนี้ควรงดกาแฟ/ชาเข้มหลังบ่ายสอง และใช้เครื่องดื่มไม่มีคาเฟอีนแทนเพื่อไม่ให้รบกวนเวลาหลับ</div>`;
+            if (signals.includes('alcohol')) html += `<div class="text-rose-200"><b>แอลกอฮอล์:</b> อาจทำให้เหมือนหลับไว แต่คุณภาพการหลับมักตก คืนถัดไปควรงดซ้ำ ดื่มน้ำให้พอ และนอนให้ตรงเวลา</div>`;
+            html += `<div class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800"><b class="text-cyan-300">Product Logic:</b><div class="mt-2 space-y-1">${ranked.slice(0,3).map((p,i)=>`<div class="text-[11px] text-slate-300">${i+1}. <b>${p.name}</b> <span class="text-slate-500">(${p.commercialTier || p.tier})</span> — ${buildProductReasonv9614h(p, signals)}</div>`).join('')}</div><div class="text-[10px] text-slate-500 mt-2">หลักการเลือก: 1 ชิ้นซื้อง่าย + 1 ชิ้นแก้ปัญหาหลัก + 1 ชิ้นมูลค่าสูง เพื่อบาลานซ์ประโยชน์กับโอกาสสร้างรายได้</div></div>`;
+            html += `<div><b class="text-rose-400"><i class="fas fa-heart-beat mr-1"></i> Action Plan คืนนี้:</b> ${riskLevel==='green'?'ทำเหมือนเดิมต่ออีก 3 คืนเพื่อยืนยันว่า pattern นี้เวิร์กจริง':'เลือกแก้ 1 trigger หลักก่อน แล้วดูคะแนนวันถัดไป ไม่ควรซื้อหรือเปลี่ยนหลายอย่างพร้อมกันจนวัดผลไม่ได้'}</div>`;
+            html += `</div>`;
+            container.innerHTML = html;
+            triggerConditionalAffiliate(log);
+        }
+
+        // [v9.6.15h] Product Matching Engine: chooses products by sleep signal + tier diversity
+        function triggerConditionalAffiliate(log) {
+            const finalSelection = getRankedAffiliateProductsv9613h(log, 3).map(p => p.id);
+            renderAffiliateProducts(finalSelection);
+        }
+
+        // Modular Injection 1 & 9: Dynamic Affiliate Engine Rendering Execution Loop
+        function renderAffiliateProducts(targetIds = ["smartwatch-01", "pillow-01", "blue-glasses-01"]) {
+            const container = document.getElementById('affiliateContainer');
+            if(!container) return;
+            
+            const renderList = AFFILIATE_CATALOG.filter(p => targetIds.includes(p.id));
+            
+            container.innerHTML = renderList.map((p, index) => `
+                <div class="affiliate-card-premium ${p.highlight ? 'is-highlight' : ''}">
+                    ${p.badge ? `<span class="absolute top-2 right-2 text-[8px] px-2 py-0.5 rounded-full font-bold bg-cyan-500/15 border border-cyan-400/20 text-cyan-200 tracking-wider uppercase shadow-[0_0_12px_rgba(6,182,212,.16)]">${p.badge}</span>` : ''}
+                    <div class="flex items-center gap-3 mb-3 pr-16 relative z-10">
+                        ${renderProductIconv961h(p, 'card')}
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-[12px] font-bold text-white leading-snug line-clamp-2">${p.name}</h4>
+                            <p class="text-[10px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">${p.desc}</p>
+                            <div class="text-[8px] text-cyan-300/80 mt-1 uppercase tracking-wider">${p.commercialTier || p.tier || ""} • ${p.priceRange || ""}${p.matchScore ? ` • Match ${Math.round(p.matchScore)}` : ""}</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-2 relative z-10">
+                        <a href="${p.shopeeUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'shopee')" class="affiliate-action-btn text-center py-2.5 bg-orange-600/25 hover:bg-orange-600 text-orange-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-orange-500/10">
+                            <i class="fas fa-shopping-bag mr-1"></i> SHOPEE
+                        </a>
+                        <a href="${p.tiktokUrl}" target="_blank" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="affiliate-action-btn text-center py-2.5 bg-pink-600/25 hover:bg-pink-600 text-pink-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-pink-500/10">
+                            <i class="fab fa-tiktok mr-1"></i> TIKTOK
+                        </a>
+                    </div>
+                    <button onclick="trackProductClickv96g('${p.id}', 'detail'); openAffiliateDetail('${p.id}')" class="text-[9px] text-slate-500 hover:text-cyan-300 transition text-center mt-3 block w-full border-t border-slate-700/50 pt-2.5 relative z-10">
+                        ดูคุณสมบัติและราคาพิเศษ <i class="fas fa-chevron-right ml-0.5"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openAffiliateDetail(id) {
+            const product = AFFILIATE_CATALOG.find(p => p.id === id);
+            if(!product) return;
+            
+            const modal = document.getElementById('prodModal');
+            document.getElementById('modalContent').innerHTML = `
+                ${renderProductIconv961h(product, 'modal')}
+                <h3 class="text-xl font-bold text-cyan-400 mb-2 text-center">${product.name}</h3>
+                <p class="text-slate-400 mb-4 text-xs">${product.desc}</p>
+                <div class="text-[10px] text-cyan-300 text-center mb-3 uppercase tracking-widest">${product.commercialTier || product.tier || ""} • ${product.priceRange || ""}</div>
+                <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl text-xs text-slate-300 space-y-2">
+                    <p>✅ สินค้าคัดสรรคุณภาพดีเยี่ยมโดยผู้เชี่ยวชาญยอมรับประสิทธิภาพการใช้งานจริง</p>
+                    <p>✅ ตรงกลุ่มคนแก้ไขปัญหาพฤติกรรมการนอนหลับที่ตรวจพบโดยโมดูล AI</p>
+                    <p>✅ เหตุผลที่แนะนำ: ${product.why || "เหมาะกับ pattern การนอนล่าสุด"}</p>
+                </div>
+                <p class="text-orange-400 font-bold text-lg mt-4">รายละเอียด/โปรโมชั่นพิเศษ: ${product.price}</p>
+            `;
+            document.getElementById('modalShopeeLink').href = product.shopeeUrl;
+            document.getElementById('modalShopeeLink').setAttribute('onclick', `trackProductClickv96g('${product.id}', 'shopee')`);
+            document.getElementById('modalTiktokLink').href = product.tiktokUrl;
+            document.getElementById('modalTiktokLink').setAttribute('onclick', `trackProductClickv96g('${product.id}', 'tiktok')`);
+            
+            modal.classList.remove('hidden'); 
+            modal.classList.add('flex');
+        }
+        function closeModal() { document.getElementById('prodModal').classList.add('hidden'); }
+
+        function deleteLog(id) {
+            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบประวัติบันทึกข้อมูลการนอนของวันนี้ออก?")) {
+                db.deletedLogIds = Array.from(new Set([...(db.deletedLogIds || []), String(id)]));
+                db.logs = db.logs.filter(l => String(l.id) !== String(id));
+                saveToStoragev96g({ actionType: 'deleteLog' });
+                dispatchCloudSyncv96g("syncStorage");
+                renderDashboard();
+            }
+        }
+
+        function exportData() {
+            try {
+                const cleanBackup = { ...db, replaceLogsOnNextSync: false, exportedAt: Date.now(), backupVersion: APP_VERSION };
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cleanBackup));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                const formattedDate = new Date().toISOString().slice(0, 10);
+                downloadAnchorNode.setAttribute("download", `SleepWellPro_Backup_${formattedDate}.json`);
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            } catch (e) {
+                alert("เกิดข้อผิดพลาดทางเทคนิคในการพยายามส่งออกชุดข้อมูล!");
+            }
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = event => {
+                    try {
+                        const imported = JSON.parse(event.target.result);
+                        if (imported.logs && Array.isArray(imported.logs) && imported.profile) {
+                            if (confirm("คุณยืนยันการนำเข้าข้อมูลชุดนี้ใช่หรือไม่? ระบบจะใช้ข้อมูลในไฟล์นี้แทนชุดปัจจุบัน และ Sync ขึ้น Cloud ทันที")) {
+                                const identityEmail = getIdentityEmailv968h();
+                                const keepIdentity = {
+                                    userId: identityEmail,
+                                    identityEmail,
+                                    userEmail: identityEmail,
+                                    googleSheetsUrl: db.googleSheetsUrl || '',
+                                    deviceId: db.deviceId || `swp_${Date.now()}_${Math.random().toString(36).slice(2,10)}`,
+                                    lead: db.lead || imported.lead || null,
+                                    leadData: db.leadData || imported.leadData || []
+                                };
+                                const getLogKey = (l) => String(l && (l.id || `${l.fullDate || l.date || ''}_${l.sleepTime || ''}_${l.wakeTime || ''}_${l.duration || ''}`));
+                                const oldIds = (db.logs || []).map(getLogKey);
+                                const importedIds = new Set((imported.logs || []).map(getLogKey));
+                                db = { ...db, ...imported, ...keepIdentity };
+                                const priorDeleted = Array.isArray(imported.deletedLogIds) ? imported.deletedLogIds.map(String) : [];
+                                const deletedOnlyMissingAfterImport = oldIds.filter(id => id && !importedIds.has(id));
+                                db.deletedLogIds = Array.from(new Set([...priorDeleted, ...deletedOnlyMissingAfterImport])).slice(-500);
+                                db.replaceLogsOnNextSync = true;
+                                db.forceReplaceProfileSecurityOnNextSync = true;
+                                db.importCoreVersion = Date.now();
+                                db.localProfileLockUntil = Date.now() + (10 * 60 * 1000);
+                                db.dataVersion = Date.now();
+                                db.appVersion = APP_VERSION;
+                                db.dataSchemaVersion = DATA_SCHEMA_VERSION;
+                                saveToStoragev96g({ actionType: 'importReplace' });
+                                dispatchCloudSyncv96g("importReplace", { replaceLogs: true, forceReplaceProfileSecurity: true, importCoreVersion: db.importCoreVersion });
+                                setTimeout(()=>{ db.replaceLogsOnNextSync = false; db.forceReplaceProfileSecurityOnNextSync = false; saveToStoragev96g({ skipVersion: true }); }, 4500);
+                                alert("นำเข้าข้อมูลและส่ง Sync แล้ว ระบบจะรีเฟรชหน้าเพื่อแสดงข้อมูลล่าสุด");
+                                setTimeout(()=>location.reload(), 900);
+                            }
+                        } else {
+                            alert("รูปแบบไฟล์สำรองไม่ถูกต้อง! กรุณาใช้ไฟล์ JSON ที่ดาวน์โหลดออกจากระบบนี้เท่านั้น");
+                        }
+                    } catch (err) {
+                        alert("ไม่สามารถอ่านประมวลผลไฟล์ดังกล่าวได้! ตรวจสอบความถูกต้องของโครงสร้างไฟล์อีกครั้ง");
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function captureFilteredReport() {
+            const startVal = document.getElementById('shareStart').value;
+            const endVal = document.getElementById('shareEnd').value;
+            if(!startVal || !endVal) return alert("กรุณาระบุช่วงขอบเขตวันที่ต้องการประมวลผลเพื่อแชร์รายงานสรุปผล");
+            
+            const filteredLogs = db.logs.filter(l => l.fullDate >= startVal && l.fullDate <= endVal);
+            if(filteredLogs.length === 0) return alert("ไม่พบฐานข้อมูลประวัติการนอนหลับในช่วงเวลาที่คุณเลือก");
+
+            document.getElementById('reportFooter').classList.remove('hidden');
+            document.getElementById('mainChartTitle').innerText = `รายงานผลการนอนเชิงสถิติ (${startVal} ถึง ${endVal})`;
+            
+            renderHistory(filteredLogs);
+            renderCharts(filteredLogs); 
+
+            setTimeout(() => {
+                html2canvas(document.getElementById('captureArea'), {backgroundColor:'#0f172a', scale: 2}).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `SleepReport_${startVal}_to_${endVal}.png`;
+                    link.href = canvas.toDataURL(); 
+                    link.click();
+                    
+                    document.getElementById('reportFooter').classList.add('hidden');
+                    document.getElementById('mainChartTitle').innerText = "คุณภาพการนอนเทียบชั่วโมง";
+                    renderDashboard();
+                });
+            }, 800);
+        }
+
+        // Master UI Dashboard Execution Pipeline Orchestrator
+        function renderDashboard() {
+            db.logs.sort((a, b) => a.timestamp - b.timestamp);
+            const last = db.logs[db.logs.length - 1];
+            if(last) {
+                // (- New Feature v9.6h -) ส่งอินพุตตัวเลขทศนิยมผ่านโมดูลจัดฟอร์แมตแยก ชม. และ นาที ให้ถูกต้องสวยงาม
+                document.getElementById('statDur').innerText = formatHoursAndMinutesv96h(last.duration);
+                document.getElementById('statCal').innerText = last.calories;
+                document.getElementById('statCyc').innerText = last.cycles;
+                document.getElementById('statPct').innerText = last.pct + '%';
+                updateDeepAI(last);
+            } else {
+                document.getElementById('statDur').innerText = "0 ชม. 0 นาที";
+                document.getElementById('statCal').innerText = "0";
+                document.getElementById('statCyc').innerText = "0.0";
+                document.getElementById('statPct').innerText = "0%";
+                document.getElementById('aiAnalysis').innerHTML = `<div class="opacity-30 italic text-center py-4">ป้อนข้อมูลนอนล่าสุดเพื่อรับบทวิเคราะห์จาก AI...</div>`;
+                renderAffiliateProducts();
+            }
+            renderHistory(); 
+            renderCharts();  
+        }
+
+        // Row Deletion Features compliant Table renderer
+        function renderHistory(customLogs) {
+            const displayLogs = customLogs || [...db.logs].reverse().slice(0, 10);
+            const body = document.getElementById('historyBody');
+            
+            // (- New Feature v9.6h -) เปลี่ยนฟอร์แมตในตารางให้แสดงผลกระชับแบบแยกชั่วโมง/นาทีชัดเจน (เช่น 6 ชม. 45 น.)
+            body.innerHTML = displayLogs.map(l => {
+                const hrs = Math.floor(l.duration);
+                const mins = Math.round((l.duration - hrs) * 60);
+                const formattedTableDuration = `${hrs} ชม. ${mins} น.`;
+                
+                return `
+                <tr class="transition-all duration-150">
+                    <td class="p-2 text-slate-500">${l.date}</td>
+                    <td class="p-2 text-cyan-500 font-medium">${l.sleepTime || '--:--'}</td>
+                    <td class="p-2 text-emerald-500 font-medium">${l.wakeTime || '--:--'}</td>
+                    <td class="p-2 text-cyan-300 font-bold">${formattedTableDuration}</td>
+                    <td class="p-2 text-orange-400">${l.calories}</td>
+                    <td class="p-2 text-cyan-400">${l.cycles}</td>
+                    <td class="p-2 ${l.quality < 5 ? 'text-rose-400':'text-emerald-400'}">${l.quality}/10</td>
+                    <td class="p-2 text-center">
+                        <button onclick="deleteLog(${l.id})" class="text-slate-600 hover:text-rose-500 transition-colors p-1" title="ลบบันทึกเฉพาะวันนี้">
+                            <i class="fas fa-trash-alt text-xs"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        // Advanced Visual Analytics Render Block Engine
+        // (- New Feature v9.6h -) ชุบชีวิตสีกราฟและ Grid Line ให้เรืองแสงสดใสในสไตล์สถาปัตยกรรมระดับสูง Neon Glow Effect
+        function renderCharts(customLogs) {
+            const displayData = customLogs || db.logs.slice(-7);
+            const labels = displayData.map(d => d.date);
+
+            // ส่วนที่ 1 (Main Chart): กราฟแท่งผสมกราฟเส้นซ้อนทับกันอย่างเสถียร
+            const ctx1 = document.getElementById('mainChart').getContext('2d');
+            if(mainChart) mainChart.destroy();
+            
+            // (- New Feature v9.6h -) สร้าง Gradient เรืองแสงสีสันนีออนให้กับแท่งกราฟชั่วโมงนอน
+            const cyanNeonGradient = ctx1.createLinearGradient(0, 0, 0, 300);
+            cyanNeonGradient.addColorStop(0, 'rgba(6, 182, 212, 0.85)');
+            cyanNeonGradient.addColorStop(1, 'rgba(6, 182, 212, 0.15)');
+
+            mainChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { 
+                            label: 'ชม. นอน', 
+                            data: displayData.map(d => d.duration), 
+                            backgroundColor: cyanNeonGradient, 
+                            borderColor: '#22d3ee', // สีนีออนสว่างไสว
+                            borderWidth: 1.5,
+                            borderRadius: 8, 
+                            order: 2, 
+                            yAxisID: 'y' 
+                        },
+                        { 
+                            label: 'คุณภาพ (%)', 
+                            data: displayData.map(d => d.quality * 10), 
+                            type: 'line', 
+                            borderColor: '#f43f5e', // สีนีออน Dirty Pink / Rose Glow
+                            pointBackgroundColor: '#ffffff',
+                            pointBorderColor: '#f43f5e',
+                            pointHoverBackgroundColor: '#f43f5e',
+                            pointHoverBorderColor: '#ffffff',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            shadowColor: 'rgba(244, 63, 94, 0.6)', // สั่งเรืองแสงเส้นไลน์
+                            shadowBlur: 10,
+                            backgroundColor: 'transparent', 
+                            tension: 0.4, 
+                            order: 1, 
+                            yAxisID: 'y1' 
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false }, 
+                        tooltip: { 
+                            enabled: true, 
+                            mode: 'index', 
+                            intersect: false,
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#06b6d4',
+                            bodyColor: '#f1f5f9',
+                            borderColor: 'rgba(6, 182, 212, 0.4)',
+                            borderWidth: 1,
+                            padding: 12,
+                            bodyFont: { family: 'Kanit' },
+                            titleFont: { family: 'Kanit', weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const log = displayData[index];
+                                    if (context.datasetIndex === 0) {
+                                        // เรียกใช้ฟังก์ชันแปลงเศษส่วนหน้าจอในตัว Tooltip ด้วยเพื่อความกระจ่างชัดร้อยเปอร์เซ็นต์
+                                        const hrsText = formatHoursAndMinutesv96h(log.duration);
+                                        return [
+                                            `• ช่วงเวลา: ${log.sleepTime || '--:--'} น. ถึง ${log.wakeTime || '--:--'} น.`,
+                                            `• ระยะเวลาหลับจริง: ${hrsText}`,
+                                            `• เผาผลาญพลังงาน: ${log.calories} kcal`,
+                                            `• รอบวงจรหลับ (Cycles): ${log.cycles} รอบ`
+                                        ];
+                                    }
+                                    return `• ดัชนีประสิทธิภาพ: ${log.quality * 10}% (${log.quality}/10)`;
+                                }
+                            }
+                        } 
+                    },
+                    scales: { 
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.02)' },
+                            ticks: { color: '#94a3b8', font: { family: 'Kanit' } }
+                        },
+                        y: { 
+                            position: 'left', 
+                            title: { display: true, text: 'จำนวนชั่วโมง', color: '#64748b', font: { size: 10 } }, 
+                            grid: { color: 'rgba(6, 182, 212, 0.08)' }, // เส้นกริดเรืองแสงจาง
+                            ticks: { color: '#06b6d4' } 
+                        }, 
+                        y1: { 
+                            position: 'right', 
+                            display: true, 
+                            min: 0, 
+                            max: 100, 
+                            title: { display: true, text: 'คุณภาพ %', color: '#64748b', font: { size: 10 } }, 
+                            grid: { drawOnChartArea: false }, 
+                            ticks: { color: '#f43f5e' } 
+                        } 
+                    }
+                }
+            });
+
+            // ส่วนที่ 2 (Trend Chart): กราฟเส้นคู่ความปลอดภัยสเกลสมการและ Logic ดั้งเดิมจาก v9.6g
+            const ctx2 = document.getElementById('trendChart').getContext('2d');
+            if(trendChart) trendChart.destroy();
+            trendChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { 
+                            label: 'แคลอรี่', 
+                            data: displayData.map(d => d.calories), 
+                            borderColor: '#fbbf24', // สีนีออนเหลืองอำพันสว่าง
+                            pointBackgroundColor: '#fbbf24',
+                            borderWidth: 2,
+                            backgroundColor: 'transparent', 
+                            tension: 0.3, 
+                            yAxisID: 'y' 
+                        },
+                        { 
+                            label: 'ความสำเร็จ (%)', 
+                            data: displayData.map(d => d.pct), 
+                            borderColor: '#34d399', // สีนีออนเขียวมรกตพรีเมียม
+                            pointBackgroundColor: '#34d399',
+                            borderWidth: 2,
+                            backgroundColor: 'transparent', 
+                            tension: 0.3, 
+                            yAxisID: 'y1' 
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            borderColor: 'rgba(245, 158, 11, 0.3)',
+                            borderWidth: 1,
+                            padding: 12,
+                            bodyFont: { family: 'Kanit' },
+                            callbacks: {
+                                label: function(context) {
+                                    if(context.datasetIndex === 0) {
+                                        return `• เผาผลาญพลังงาน: ${context.raw} kcal`;
+                                    }
+                                    return `• อัตราความสำเร็จ: ${context.raw}% ของเป้าหมายบนโปรไฟล์`;
+                                }
+                            }
+                        }
+                    }, 
+                    scales: { 
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.02)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        y: { 
+                            position: 'left', 
+                            display: true, 
+                            title: { display: true, text: 'แคลอรี่ (kcal)', color: '#64748b', font: { size: 9 } }, 
+                            grid: { color: 'rgba(245, 158, 11, 0.08)' }, 
+                            ticks: { color: '#f59e0b' } 
+                        }, 
+                        y1: { 
+                            position: 'right', 
+                            display: true, 
+                            min: 0, 
+                            max: 100, 
+                            title: { display: true, text: 'ความสำเร็จ (%)', color: '#64748b', font: { size: 9 } }, 
+                            grid: { drawOnChartArea: false }, 
+                            ticks: { color: '#10b981' } 
+                        } 
+                    } 
+                }
+            });
+        }
+
+        function confirmClear() { 
+            if(confirm("คุณต้องการล้างฐานข้อมูลประวัติการนอนทั้งหมดทิ้งใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้")) { 
+                db.deletedLogIds = Array.from(new Set([...(db.deletedLogIds || []), ...(db.logs || []).map(l => String(l.id || `${l.fullDate || l.date || ''}_${l.sleepTime || ''}_${l.wakeTime || ''}_${l.duration || ''}`))]));
+                db.logs = []; 
+                db.replaceLogsOnNextSync = true;
+                saveToStoragev96g({ actionType: 'clearLogs' });
+                dispatchCloudSyncv96g("syncStorage");
+                renderDashboard(); 
+            } 
+        }
+
+        function initApp() {
+            if (typeof swpRepairClickTrackingv9614h === 'function' && swpRepairClickTrackingv9614h()) saveToStoragev96g({ actionType: 'repairClickTracking' });
+            initProfileFormv964h();
+
+            const today = new Date();
+            const lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+            document.getElementById('shareEnd').value = today.toISOString().slice(0,10);
+            document.getElementById('shareStart').value = lastWeek.toISOString().slice(0,10);
+
+            const shareStartEl = document.getElementById('shareStart');
+            const shareEndEl = document.getElementById('shareEnd');
+            if (!shareStartEl.dataset.bound) {
+                shareStartEl.addEventListener('change', renderDashboard);
+                shareStartEl.dataset.bound = '1';
+            }
+            if (!shareEndEl.dataset.bound) {
+                shareEndEl.addEventListener('change', renderDashboard);
+                shareEndEl.dataset.bound = '1';
+            }
+
+            renderDashboard();
+            // v9.6.15h: Pull-first stabilizer. ดึง Cloud ซ้ำแบบปลอดภัย เพื่อกันบาง browser ได้แต่ upload success แต่ยังไม่ได้ hydrate logs
+            syncFromCloudv964h({ render: true }).then((changed) => {
+                initProfileFormv964h();
+                renderDashboard();
+                if(changed && db.logs && db.logs.length > 0) dispatchCloudSyncv96g("syncStorage");
+                setTimeout(() => {
+                    syncFromCloudv964h({ render: true }).then(() => {
+                        initProfileFormv964h();
+                        renderDashboard();
+                    });
+                }, 1800);
+            });
+        }
+
+        window.addEventListener('online', () => {
+            setSyncStatusv965h('syncing', 'กลับมาออนไลน์ กำลัง Sync...');
+            dispatchCloudSyncv96g('syncStorage');
+            syncFromCloudv964h({ render: true });
+        });
+        window.addEventListener('offline', () => setSyncStatusv965h('offline', 'ออฟไลน์: สำรองในเครื่องแล้ว'));
+
+
+        // (- Production v9.6.15h -) Browser Cache / Device Identity Recovery Toolkit
+        function clearSleepWellLocalDevicev969h({ hard = false } = {}) {
+            try {
+                const keys = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    if (!k) continue;
+                    if (hard) {
+                        if (/^(sleep_|swp_|sleep_well_pro_)/i.test(k)) keys.push(k);
+                    } else {
+                        if (k === 'sleep_well_pro_db') keys.push(k);
+                    }
+                }
+                keys.forEach(k => localStorage.removeItem(k));
+                if (hard) {
+                    sessionStorage.clear();
+                }
+            } catch (e) { console.warn('[Recovery] clear local device failed', e); }
+        }
+
+        function handleRecoveryQueryv969h() {
+            const params = new URLSearchParams(location.search);
+            if (params.has('hardreset') || params.has('reset')) {
+                clearSleepWellLocalDevicev969h({ hard: params.has('hardreset') });
+                const cleanUrl = location.origin + location.pathname;
+                location.replace(cleanUrl + '?v=' + encodeURIComponent(APP_VERSION) + '&t=' + Date.now());
+                return true;
+            }
+            return false;
+        }
+
+        async function clearBrowserAppCachesv969h() {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    for (const reg of regs) await reg.unregister();
+                }
+                if ('caches' in window) {
+                    const names = await caches.keys();
+                    await Promise.all(names.map(name => caches.delete(name)));
+                }
+            } catch (e) { console.warn('[Recovery] cache cleanup skipped', e); }
+        }
+
+        function exposeRecoveryToolsv969h() {
+            window.SleepWellProRecovery = {
+                version: APP_VERSION,
+                userKey: () => getUserKeyv964h(),
+                identityEmail: () => getIdentityEmailv968h(),
+                cloudEndpoint: () => getCloudEndpointv964h(),
+                diagnostics: () => window.__SWP_SYNC_DIAG__ || [],
+                clearDevice: () => { clearSleepWellLocalDevicev969h({ hard: false }); location.reload(); },
+                hardReset: () => { clearSleepWellLocalDevicev969h({ hard: true }); location.reload(); },
+                syncNow: () => syncFromCloudv964h({ render: true }).then(() => dispatchCloudSyncv96g('syncStorage')),
+                forcePull: () => syncFromCloudv964h({ render: true }),
+                inspect: () => ({ version: APP_VERSION, userKey: getUserKeyv964h(), identityEmail: getIdentityEmailv968h(), logs: (db.logs||[]).length, logIds: (db.logs||[]).map(l=>l.id), profile: db.profile, endpoint: getCloudEndpointv964h(), dataVersion: db.dataVersion, lead: db.lead, syncDiagnostics: window.__SWP_SYNC_DIAG__ || [] })
+            };
+        }
+
+
+        function refreshAdminTriggerVisibilityv9612h() {
+            const trigger = document.getElementById('v96gAdminInvisibleTrigger');
+            if (!trigger) return;
+            trigger.style.display = isCurrentAdminv9612h() ? 'block' : 'none';
+        }
+
+        // Global Bootloader System Initialization
+        window.onload = () => {
+            if (handleRecoveryQueryv969h()) return;
+            exposeRecoveryToolsv969h();
+            clearBrowserAppCachesv969h();
+            const hasIdentity = ensureIdentityOrShowLeadv968h();
+            refreshAdminTriggerVisibilityv9612h();
+            if (db.leadSaved && hasIdentity) {
+                document.getElementById('leadMagnetOverlay').classList.add('hidden');
+                document.getElementById('leadMagnetOverlay').style.display = 'none';
+                document.getElementById('pinOverlay').classList.remove('hidden');
+                document.getElementById('pinOverlay').style.opacity = '1';
+                document.getElementById('pinOverlay').style.display = 'flex';
+                initApp();
+            } else {
+                document.getElementById('leadMagnetOverlay').classList.remove('hidden');
+                document.getElementById('leadMagnetOverlay').style.opacity = '1';
+                document.getElementById('leadMagnetOverlay').style.display = 'flex';
+                document.getElementById('pinOverlay').classList.add('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
