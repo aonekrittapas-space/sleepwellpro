@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.21h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.22h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -419,7 +419,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.21h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.22h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -591,7 +591,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.21h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.22h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -637,7 +637,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.21h";
+        const APP_VERSION = "9.6.22h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -713,6 +713,55 @@
             db.leadSaved = false;
             saveToStoragev96g({ skipVersion: true });
             return false;
+        }
+
+
+        // v9.6.22h GO LIVE: User isolation guard
+        // ถ้าสมัครด้วยอีเมลใหม่บน browser/profile เดิม ต้องเริ่มเป็นผู้ใช้ใหม่จริง ไม่ลาก Profile/Logs/PIN ของอีเมลเดิมมาด้วย
+        function resetLocalUserDataForIdentityv9622h(email, name = '') {
+            const normalized = normalizeEmailv968h(email);
+            const now = Date.now();
+            const oldDeviceId = db.deviceId || `swp_${now}_${Math.random().toString(36).slice(2,10)}`;
+            const endpoint = db.googleSheetsUrl || '';
+            db = {
+                logs: [],
+                profile: { name: name || '', weight: '', height: '', age: '', gender: 'ชาย', goal: 8 },
+                security: { pin: '1234' },
+                leadSaved: true,
+                lead: { name: name || '', email: normalized, registeredAt: now },
+                leadData: [{ name: name || '', email: normalized, registeredAt: now }],
+                clickTracking: {},
+                googleSheetsUrl: endpoint,
+                userId: normalized,
+                userEmail: normalized,
+                identityEmail: normalized,
+                deviceId: oldDeviceId,
+                lastCloudSync: 0,
+                dataVersion: now,
+                dataSchemaVersion: DATA_SCHEMA_VERSION,
+                appVersion: APP_VERSION,
+                backups: [],
+                analytics: {},
+                events: [],
+                leadMeta: {},
+                recommendationState: {},
+                deletedLogIds: [],
+                replaceLogsOnNextSync: true,
+                forceReplaceProfileSecurityOnNextSync: true,
+                coreUpdatedAt: now,
+                profileUpdatedAt: now,
+                securityUpdatedAt: now,
+                importCoreVersion: 0
+            };
+            localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+            return db;
+        }
+
+        function shouldResetForNewIdentityv9622h(email) {
+            const normalized = normalizeEmailv968h(email);
+            const current = getIdentityEmailv968h();
+            if (!current) return true;
+            return normalizeEmailv968h(current) !== normalized;
         }
 
         function setSyncStatusv965h(state = 'idle', message = 'พร้อม Sync') {
@@ -1003,7 +1052,7 @@
             };
         }
 
-        // v9.6.21h GO LIVE FINAL: verified JSONP write first, no-cors POST fallback second.
+        // v9.6.22h GO LIVE FINAL: verified JSONP write first, no-cors POST fallback second.
         // เป้าหมาย: เครื่องหลักต้องเขียน Cloud ได้แบบรู้ผลจริง ก่อนให้อีก Profile ดึงข้อมูล
         function encodePayloadForGetv9621h(payload) {
             const json = JSON.stringify(payload || {});
@@ -1058,7 +1107,7 @@
             });
         }
 
-        // v9.6.21h Cloud Sync: ส่งข้อมูลขึ้นกลางแบบยืนยันผลได้ก่อน เพื่อกัน Profile/PIN/Logs ไม่ตรงกันข้ามโปรไฟล์
+        // v9.6.22h Cloud Sync: ส่งข้อมูลขึ้นกลางแบบยืนยันผลได้ก่อน เพื่อกัน Profile/PIN/Logs ไม่ตรงกันข้ามโปรไฟล์
         function dispatchCloudSyncv96g(actionType, extraData = {}) {
             if (!navigator.onLine) {
                 console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
@@ -1123,7 +1172,7 @@
             db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
             db.deletedLogIds = Array.from(deletedIds).slice(-500);
             const protectLocalCore = Number(db.localProfileLockUntil || 0) > Date.now();
-            // v9.6.21h: Cloud is source-of-truth for Profile/PIN on pull.
+            // v9.6.22h: Cloud is source-of-truth for Profile/PIN on pull.
             // Do not compare dataVersion here because local dataVersion is bumped by render/merge/backup actions,
             // which previously blocked newer Cloud profile/security from reaching another browser profile.
             if (!protectLocalCore && r.profile) db.profile = { ...db.profile, ...r.profile };
@@ -1329,6 +1378,25 @@ function initProfileFormv964h() {
             });
         }
 
+        // v9.6.22h: Beacon fallback สำหรับ affiliate click ก่อนเปิด tab ใหม่
+        function sendClickBeaconv9622h(productId, platform, product) {
+            try {
+                const endpoint = getCloudEndpointv964h();
+                const userKey = getUserKeyv964h();
+                if (!endpoint || !userKey || !navigator.sendBeacon) return false;
+                const payload = buildCloudPayloadv964h('trackClick', {
+                    productId,
+                    productName: product ? product.name : productId,
+                    platform,
+                    tier: product ? product.tier : '',
+                    eventType: platform === 'detail' ? 'click_product_detail' : `click_${platform}`,
+                    beacon: true
+                });
+                const blob = new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=UTF-8' });
+                return navigator.sendBeacon(endpoint, blob);
+            } catch(e) { console.warn('Click beacon failed', e); return false; }
+        }
+
         // (- New Feature v9.6g -) ฟังก์ชันวิเคราะห์ Tracking Click บันทึกและดึงข้อมูลยอดความสนใจสินค้า
         function trackProductClickv96g(productId, platform) {
             if (!db.clickTracking) db.clickTracking = {};
@@ -1356,6 +1424,7 @@ function initProfileFormv964h() {
                 tier: product ? product.tier : '',
                 eventType: platform === 'detail' ? 'click_product_detail' : `click_${platform}`
             });
+            sendClickBeaconv9622h(productId, platform, product);
         }
 
         
@@ -1453,9 +1522,42 @@ function initProfileFormv964h() {
             localStorage.setItem('swp_admin_affiliate_view', JSON.stringify(s));
             switchAdminTabv9612h('affiliate');
         }
+        // v9.6.22h: Admin global affiliate tracking จาก backend events รวมทุกผู้ใช้ ไม่ใช่เฉพาะ local user ปัจจุบัน
+        function fetchAdminAffiliateStatsv9622h() {
+            return new Promise((resolve) => {
+                if (!isCurrentAdminv9612h()) return resolve(false);
+                const endpoint = getCloudEndpointv964h();
+                if (!endpoint) return resolve(false);
+                const callbackName = `swpAdminStats_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const script = document.createElement('script');
+                const sep = endpoint.includes('?') ? '&' : '?';
+                let done = false;
+                const timer = setTimeout(() => finish(false), 12000);
+                function finish(ok, data) {
+                    if (done) return;
+                    done = true;
+                    clearTimeout(timer);
+                    try { delete window[callbackName]; script.remove(); } catch(e) {}
+                    if (ok && data && data.ok) {
+                        db.adminGlobalClickTracking = data.clickTracking || {};
+                        db.adminGlobalStatsAt = Date.now();
+                        localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+                        resolve(true);
+                    } else resolve(false);
+                }
+                window[callbackName] = (response) => finish(true, response);
+                script.onerror = () => finish(false);
+                script.async = true;
+                script.referrerPolicy = 'no-referrer';
+                script.src = `${endpoint}${sep}action=getAdminAffiliateStats&adminEmail=${encodeURIComponent(getAdminEmailv9612h())}&callback=${callbackName}&_=${Date.now()}`;
+                document.body.appendChild(script);
+            });
+        }
+
         function getAffiliateStatsRowsv9615h() {
+            const source = (isCurrentAdminv9612h() && db.adminGlobalClickTracking && Object.keys(db.adminGlobalClickTracking).length) ? db.adminGlobalClickTracking : (db.clickTracking || {});
             return AFFILIATE_CATALOG.map(p => {
-                const raw = db.clickTracking && db.clickTracking[p.id] ? db.clickTracking[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
+                const raw = source && source[p.id] ? source[p.id] : { shopee:0, tiktok:0, detail:0, total:0 };
                 const stat = { shopee: swpSafeCountv9614h(raw.shopee), tiktok: swpSafeCountv9614h(raw.tiktok), detail: swpSafeCountv9614h(raw.detail), lastClickAt: raw.lastClickAt || 0 };
                 stat.total = stat.shopee + stat.tiktok + stat.detail;
                 return { product: p, stat };
@@ -1487,6 +1589,7 @@ function initProfileFormv964h() {
                         <option value="price_high" ${sortBy==='price_high'?'selected':''}>ราคาแพงก่อน</option>
                         <option value="price_low" ${sortBy==='price_low'?'selected':''}>ราคาถูกก่อน</option>
                     </select>
+                    <button class="admin-action-btn" onclick="fetchAdminAffiliateStatsv9622h().then(()=>switchAdminTabv9612h('affiliate'))"><i class="fas fa-rotate"></i>Refresh Tracking</button>
                     <button class="admin-action-btn cyan" onclick="exportAffiliateIntelCsvv9615h()"><i class="fas fa-file-csv"></i>Export CSV</button>
                 </div>
             `;
@@ -1507,6 +1610,7 @@ function initProfileFormv964h() {
                 return b.viewClicks - a.viewClicks;
             });
             const summaryTotal = rows.reduce((s,r)=>s+r.viewClicks,0);
+            const globalNote = db.adminGlobalStatsAt ? ` • อัปเดตจาก Cloud: ${adminReadableTimev9612h(db.adminGlobalStatsAt)}` : '';
             const body = rows.map(({product:p, stat, viewClicks}) => {
                 const split = `Shopee ${swpFormatCountv9614h(stat.shopee)} • TikTok ${swpFormatCountv9614h(stat.tiktok)} • Detail ${swpFormatCountv9614h(stat.detail)}`;
                 return `
@@ -1520,7 +1624,7 @@ function initProfileFormv964h() {
                         <div class="text-[10px] text-slate-500">ล่าสุด: ${adminReadableTimev9612h(stat.lastClickAt)}</div>
                     </div>`;
             }).join('') || `<div class="text-center opacity-40 text-xs py-8 italic">ไม่พบข้อมูลตาม filter ที่เลือก</div>`;
-            return `<div class="mb-2 text-[11px] text-slate-400">แสดง ${rows.length} รายการ • รวมตามมุมมองนี้ <b class="text-cyan-300">${swpFormatCountv9614h(summaryTotal)}</b> คลิก</div>${body}`;
+            return `<div class="mb-2 text-[11px] text-slate-400">แสดง ${rows.length} รายการ • รวมตามมุมมองนี้ <b class="text-cyan-300">${swpFormatCountv9614h(summaryTotal)}</b> คลิก${globalNote}</div>${body}`;
         }
         function swpSanitizeClickStatv9614h(value) {
             return swpSafeCountv9614h(value);
@@ -1939,11 +2043,12 @@ function saveCloudUrlv96g() {
         }
 
         // (- New Feature v9.6c -) Asynchronous Page Transition & Input Validation Implementation
-        function submitLeadMagnet(event) {
+        // (- v9.6.22h -) User-isolated registration flow
+        async function submitLeadMagnet(event) {
             event.preventDefault();
             try {
                 const name = document.getElementById('leadName').value.trim();
-                const email = document.getElementById('leadEmail').value.trim();
+                const email = normalizeEmailv968h(document.getElementById('leadEmail').value.trim());
                 if (!name || !email) {
                     alert("กรุณาใส่ข้อมูลลงทะเบียนให้ครบถ้วนทุกช่อง");
                     return;
@@ -1952,13 +2057,35 @@ function saveCloudUrlv96g() {
                     alert("❌ รูปแบบอีเมลไม่ถูกต้อง! กรุณาตรวจสอบและกรอกอีเมลที่มีอยู่จริงเพื่อรับรายงานสรุปผล (เช่น name@domain.com)");
                     return;
                 }
-                lockIdentityEmailv968h(email, name);
+
+                const isNewIdentityOnThisDevice = shouldResetForNewIdentityv9622h(email);
+                if (isNewIdentityOnThisDevice) {
+                    resetLocalUserDataForIdentityv9622h(email, name);
+                } else {
+                    lockIdentityEmailv968h(email, name);
+                }
+
                 if (!db.leadData) db.leadData = [];
-                const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === normalizeEmailv968h(email));
+                const existsLead = db.leadData.some(l => l && normalizeEmailv968h(l.email) === email);
                 if (!existsLead) db.leadData.push(db.lead);
-                swpTrackEventv9613h('register', { name, email: normalizeEmailv968h(email) });
+                swpTrackEventv9613h('register', { name, email });
                 saveToStoragev96g({ actionType: 'submitLead' });
                 refreshAdminTriggerVisibilityv9612h();
+                setSyncStatusv965h('syncing', 'กำลังตรวจสอบบัญชี...');
+
+                // Pull-first: ถ้าอีเมลนี้เคยมีข้อมูลใน Cloud ให้ดึงมาก่อนเข้า PIN; ถ้าเป็นอีเมลใหม่จริง จะคงข้อมูลว่างสะอาดไว้
+                const pulled = await syncFromCloudv964h({ render: false });
+                if (!pulled || !db.logs || db.logs.length === 0) {
+                    // สร้าง Cloud row สะอาดสำหรับผู้ใช้ใหม่ โดยไม่ดึงข้อมูลเก่าของ browser เดิมเข้าไป
+                    db.replaceLogsOnNextSync = true;
+                    db.forceReplaceProfileSecurityOnNextSync = true;
+                    await dispatchCloudSyncv96g('importReplace', { onboardingNewUser: true, forceReplaceProfileSecurity: true, replaceLogs: true });
+                }
+
+                lockIdentityEmailv968h(email, name);
+                saveToStoragev96g({ skipVersion: true });
+                initProfileFormv964h();
+                renderDashboard();
 
                 const leadOverlay = document.getElementById('leadMagnetOverlay');
                 const pinOverlay = document.getElementById('pinOverlay');
@@ -1970,16 +2097,6 @@ function saveCloudUrlv96g() {
                     leadOverlay.classList.add('hidden');
                     leadOverlay.style.display = 'none';
                 }, 250);
-
-                // v9.6.21h: ไม่ block การเข้าแอปด้วย Cloud sync; ให้เข้า PIN ก่อน แล้ว sync ตามหลังแบบปลอดภัย
-                syncFromCloudv964h({ render: false }).then(() => {
-                    lockIdentityEmailv968h(email, name);
-                    saveToStoragev96g({ skipVersion: true });
-                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
-                }).catch(err => {
-                    console.warn('[Lead] background sync failed but app can continue', err);
-                    dispatchCloudSyncv96g("submitLead", { name: name, email: normalizeEmailv968h(email), leadOnly: true });
-                });
             } catch (err) {
                 console.error('submitLeadMagnet failed', err);
                 alert('ระบบลงทะเบียนมีข้อผิดพลาด กรุณารีเฟรชหน้าแล้วลองใหม่อีกครั้ง');
