@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.22h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.23h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -14,6 +14,12 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* v9.6.23h Mobile modal guard polish */
+        @media (max-width: 640px) {
+            #prodModal { align-items: flex-start !important; overflow-y: auto; padding: 14px !important; }
+            #prodModal > div { width: 100% !important; max-height: none !important; margin-top: 18px; margin-bottom: 32px; }
+            #modalShopeeLink, #modalTiktokLink { min-height: 48px; display: flex !important; align-items: center; justify-content: center; }
+        }
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght=200;300;400;500;600&display=swap');
         :root { --blue-ocean: #0f172a; --turquoise-blue: #06b6d4; --bright-pearl: #f1f5f9; }
         body { font-family: 'Kanit', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
@@ -419,7 +425,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.22h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.23h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -716,7 +722,7 @@
         }
 
 
-        // v9.6.22h GO LIVE: User isolation guard
+        // v9.6.23h GO LIVE: User isolation guard
         // ถ้าสมัครด้วยอีเมลใหม่บน browser/profile เดิม ต้องเริ่มเป็นผู้ใช้ใหม่จริง ไม่ลาก Profile/Logs/PIN ของอีเมลเดิมมาด้วย
         function resetLocalUserDataForIdentityv9622h(email, name = '') {
             const normalized = normalizeEmailv968h(email);
@@ -1052,7 +1058,7 @@
             };
         }
 
-        // v9.6.22h GO LIVE FINAL: verified JSONP write first, no-cors POST fallback second.
+        // v9.6.23h GO LIVE FINAL: verified JSONP write first, no-cors POST fallback second.
         // เป้าหมาย: เครื่องหลักต้องเขียน Cloud ได้แบบรู้ผลจริง ก่อนให้อีก Profile ดึงข้อมูล
         function encodePayloadForGetv9621h(payload) {
             const json = JSON.stringify(payload || {});
@@ -1107,7 +1113,7 @@
             });
         }
 
-        // v9.6.22h Cloud Sync: ส่งข้อมูลขึ้นกลางแบบยืนยันผลได้ก่อน เพื่อกัน Profile/PIN/Logs ไม่ตรงกันข้ามโปรไฟล์
+        // v9.6.23h Cloud Sync: ส่งข้อมูลขึ้นกลางแบบยืนยันผลได้ก่อน เพื่อกัน Profile/PIN/Logs ไม่ตรงกันข้ามโปรไฟล์
         function dispatchCloudSyncv96g(actionType, extraData = {}) {
             if (!navigator.onLine) {
                 console.warn("[Offline Alert] บันทึกลงเครื่องแล้ว จะ Sync เมื่อออนไลน์");
@@ -1172,7 +1178,7 @@
             db.logs = Array.from(byId.values()).sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
             db.deletedLogIds = Array.from(deletedIds).slice(-500);
             const protectLocalCore = Number(db.localProfileLockUntil || 0) > Date.now();
-            // v9.6.22h: Cloud is source-of-truth for Profile/PIN on pull.
+            // v9.6.23h: Cloud is source-of-truth for Profile/PIN on pull.
             // Do not compare dataVersion here because local dataVersion is bumped by render/merge/backup actions,
             // which previously blocked newer Cloud profile/security from reaching another browser profile.
             if (!protectLocalCore && r.profile) db.profile = { ...db.profile, ...r.profile };
@@ -1378,7 +1384,7 @@ function initProfileFormv964h() {
             });
         }
 
-        // v9.6.22h: Beacon fallback สำหรับ affiliate click ก่อนเปิด tab ใหม่
+        // v9.6.23h: Beacon fallback สำหรับ affiliate click ก่อนเปิด tab ใหม่
         function sendClickBeaconv9622h(productId, platform, product) {
             try {
                 const endpoint = getCloudEndpointv964h();
@@ -1522,7 +1528,7 @@ function initProfileFormv964h() {
             localStorage.setItem('swp_admin_affiliate_view', JSON.stringify(s));
             switchAdminTabv9612h('affiliate');
         }
-        // v9.6.22h: Admin global affiliate tracking จาก backend events รวมทุกผู้ใช้ ไม่ใช่เฉพาะ local user ปัจจุบัน
+        // v9.6.23h: Admin global affiliate tracking จาก backend events รวมทุกผู้ใช้ ไม่ใช่เฉพาะ local user ปัจจุบัน
         function fetchAdminAffiliateStatsv9622h() {
             return new Promise((resolve) => {
                 if (!isCurrentAdminv9612h()) return resolve(false);
@@ -2043,7 +2049,7 @@ function saveCloudUrlv96g() {
         }
 
         // (- New Feature v9.6c -) Asynchronous Page Transition & Input Validation Implementation
-        // (- v9.6.22h -) User-isolated registration flow
+        // (- v9.6.23h -) User-isolated registration flow
         async function submitLeadMagnet(event) {
             event.preventDefault();
             try {
@@ -2355,8 +2361,50 @@ function saveCloudUrlv96g() {
             
             modal.classList.remove('hidden'); 
             modal.classList.add('flex');
+
+            // v9.6.23h Mobile Back Button Guard
+            // When product modal is open, Android/iOS browser back should close the modal first, not leave the app.
+            if (!window.swpProductModalHistoryOpen) {
+                try {
+                    const baseUrl = window.location.href.split('#')[0];
+                    history.pushState({ swpModal: 'product', productId: product.id }, '', baseUrl + '#product-' + encodeURIComponent(product.id));
+                    window.swpProductModalHistoryOpen = true;
+                } catch (e) {
+                    console.warn('[Product Modal] history push failed', e);
+                }
+            }
         }
-        function closeModal() { document.getElementById('prodModal').classList.add('hidden'); }
+
+        function closeModal(options = {}) {
+            const modal = document.getElementById('prodModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+            const shouldPopHistory = !options.fromPopState && window.swpProductModalHistoryOpen;
+            window.swpProductModalHistoryOpen = false;
+            if (shouldPopHistory) {
+                try { history.back(); } catch (e) { console.warn('[Product Modal] history back failed', e); }
+            }
+        }
+
+        window.addEventListener('popstate', function () {
+            const modal = document.getElementById('prodModal');
+            const isModalOpen = modal && !modal.classList.contains('hidden');
+            if (isModalOpen || window.swpProductModalHistoryOpen) {
+                closeModal({ fromPopState: true });
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeModal();
+        });
+
+        document.addEventListener('click', function (event) {
+            const modal = document.getElementById('prodModal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (event.target === modal) closeModal();
+        });
 
         function deleteLog(id) {
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบประวัติบันทึกข้อมูลการนอนของวันนี้ออก?")) {
