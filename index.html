@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.23h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.24h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -425,7 +425,7 @@
                 <div class="flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.23h PRO</span></h1>
+                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบวิเคราะห์ข้อมูลสุขภาพการนอน <span class="text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.24h PRO</span></h1>
                         <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                     </div>
                 </div>
@@ -597,7 +597,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.22h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.24h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -643,7 +643,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.22h";
+        const APP_VERSION = "9.6.24h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1455,8 +1455,9 @@ function initProfileFormv964h() {
 
         function getAdminStatev9612h() {
             const logs = Array.isArray(db.logs) ? db.logs : [];
-            const leads = Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
-            const clicks = db.clickTracking || {};
+            const visibility = (db.adminVisibility && typeof db.adminVisibility === 'object') ? db.adminVisibility : {};
+            const leads = (Array.isArray(visibility.leads) && visibility.leads.length) ? visibility.leads : (Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []));
+            const clicks = (db.adminGlobalClickTracking && Object.keys(db.adminGlobalClickTracking).length) ? db.adminGlobalClickTracking : (db.clickTracking || {});
             const totalClicks = Object.values(clicks).reduce((sum, item) => sum + Number((item && item.total) || 0), 0);
             const lastLog = logs.length ? [...logs].sort((a,b)=>Number(b.timestamp||0)-Number(a.timestamp||0))[0] : null;
             return {
@@ -1493,7 +1494,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.6.15h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.24h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -1596,6 +1597,7 @@ function initProfileFormv964h() {
                         <option value="price_low" ${sortBy==='price_low'?'selected':''}>ราคาถูกก่อน</option>
                     </select>
                     <button class="admin-action-btn" onclick="fetchAdminAffiliateStatsv9622h().then(()=>switchAdminTabv9612h('affiliate'))"><i class="fas fa-rotate"></i>Refresh Tracking</button>
+                    <button class="admin-action-btn" onclick="fetchAdminDataVisibilityv9624h().then(()=>switchAdminTabv9612h('affiliate'))"><i class="fas fa-cloud-arrow-down"></i>Refresh Admin Data</button>
                     <button class="admin-action-btn cyan" onclick="exportAffiliateIntelCsvv9615h()"><i class="fas fa-file-csv"></i>Export CSV</button>
                 </div>
             `;
@@ -1697,17 +1699,136 @@ function initProfileFormv964h() {
             `).join('');
         }
 
+
+        // v9.6.24h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
+        function getAdminVisibilityv9624h() {
+            if (!db.adminVisibility || typeof db.adminVisibility !== 'object') db.adminVisibility = { leads: [], users: [], events: [] };
+            return db.adminVisibility;
+        }
+        function fetchAdminDataVisibilityv9624h() {
+            return new Promise((resolve) => {
+                if (!isCurrentAdminv9612h()) return resolve(false);
+                const endpoint = getCloudEndpointv964h();
+                if (!endpoint) return resolve(false);
+                const callbackName = `swpAdminData_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const script = document.createElement('script');
+                const sep = endpoint.includes('?') ? '&' : '?';
+                let done = false;
+                const timer = setTimeout(() => finish(false), 16000);
+                function finish(ok, data) {
+                    if (done) return;
+                    done = true;
+                    clearTimeout(timer);
+                    try { delete window[callbackName]; script.remove(); } catch(e) {}
+                    if (ok && data && data.ok) {
+                        db.adminVisibility = {
+                            leads: Array.isArray(data.leads) ? data.leads : [],
+                            users: Array.isArray(data.users) ? data.users : [],
+                            events: Array.isArray(data.events) ? data.events : [],
+                            summary: data.summary || {},
+                            source: data.source || 'cloud',
+                            fetchedAt: Date.now()
+                        };
+                        db.adminVisibilityAt = Date.now();
+                        if (data.clickTracking) {
+                            db.adminGlobalClickTracking = data.clickTracking;
+                            db.adminGlobalStatsAt = Date.now();
+                        }
+                        localStorage.setItem('sleep_well_pro_db', JSON.stringify(db));
+                        resolve(true);
+                    } else resolve(false);
+                }
+                window[callbackName] = (response) => finish(true, response);
+                script.onerror = () => finish(false);
+                script.async = true;
+                script.referrerPolicy = 'no-referrer';
+                script.src = `${endpoint}${sep}action=getAdminDataVisibility&adminEmail=${encodeURIComponent(getAdminEmailv9612h())}&callback=${callbackName}&_=${Date.now()}`;
+                document.body.appendChild(script);
+            });
+        }
+        function getAdminLeadsForDisplayv9624h() {
+            const vis = getAdminVisibilityv9624h();
+            if (Array.isArray(vis.leads) && vis.leads.length) return vis.leads;
+            const local = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
+            return local.map(l => {
+                const key = normalizeEmailv968h(l.email || '');
+                const meta = ((db.leadMeta || {})[key] || {});
+                return {
+                    name: l.name || (db.profile && db.profile.name) || '-',
+                    email: key || l.email || '-',
+                    createdAt: l.registeredAt || l.createdAt || 0,
+                    lastActive: meta.lastActive || db.lastCloudSync || 0,
+                    logsCount: Number(meta.totalLogs || ((key === getUserKeyv964h()) ? ((db.logs || []).length) : 0)),
+                    leadStatus: getLeadStatusv9613h(meta),
+                    deviceCount: Array.isArray(meta.deviceIds) ? meta.deviceIds.length : 1,
+                    lastLogDate: (db.logs && db.logs.length && key === getUserKeyv964h()) ? (db.logs[db.logs.length-1].fullDate || db.logs[db.logs.length-1].date || '') : ''
+                };
+            });
+        }
+        function getAdminUsersForExportv9624h() {
+            const vis = getAdminVisibilityv9624h();
+            if (Array.isArray(vis.users) && vis.users.length) return vis.users;
+            const email = getUserKeyv964h ? getUserKeyv964h() : '';
+            return [{
+                email,
+                name: (db.profile && db.profile.name) || (db.lead && db.lead.name) || '',
+                gender: (db.profile && db.profile.gender) || '',
+                age: (db.profile && db.profile.age) || '',
+                weight: (db.profile && db.profile.weight) || '',
+                height: (db.profile && db.profile.height) || '',
+                goal: (db.profile && db.profile.goal) || '',
+                logsCount: Array.isArray(db.logs) ? db.logs.length : 0,
+                lastLogDate: (db.logs && db.logs.length) ? (db.logs[db.logs.length-1].fullDate || db.logs[db.logs.length-1].date || '') : '',
+                lastSync: db.lastCloudSync || 0,
+                leadStatus: getLeadStatusv9613h(((db.leadMeta || {})[email] || {}))
+            }];
+        }
+        function exportAdminUsersCsvv9624h() {
+            try {
+                const users = getAdminUsersForExportv9624h();
+                if (!users.length) return alert('ยังไม่มีข้อมูลผู้ใช้ให้ส่งออก');
+                const safe = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+                let csv = '\uFEFFEmail,Name,Gender,Age,Weight,Height,Goal,Logs Count,Last Log Date,Last Sync,Lead Status,Device Count,Data Version\n';
+                users.forEach(u => {
+                    csv += [
+                        safe(u.email), safe(u.name), safe(u.gender), safe(u.age), safe(u.weight), safe(u.height), safe(u.goal),
+                        Number(u.logsCount || 0), safe(u.lastLogDate || ''), safe(adminReadableTimev9612h(u.lastSync || u.updatedAt)), safe(u.leadStatus || ''),
+                        Number(u.deviceCount || 0), safe(u.dataVersion || '')
+                    ].join(',') + '\n';
+                });
+                const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `SleepWellPro_User_Data_${new Date().toISOString().slice(0,10)}.csv`;
+                a.style.display = 'none';
+                document.body.appendChild(a); a.click();
+                setTimeout(() => { try { URL.revokeObjectURL(url); a.remove(); } catch(e) {} }, 1200);
+                alert(`Export User Data CSV สำเร็จ: ${users.length} ผู้ใช้`);
+            } catch(err) {
+                console.error('Export Admin Users CSV failed', err);
+                alert('Export User Data CSV ไม่สำเร็จ: ' + (err && err.message ? err.message : err));
+            }
+        }
+
         function buildAdminLeadsHtmlv9612h() {
-            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
-            if (!leads.length) return `<div class="text-center opacity-40 text-xs py-8 italic">ยังไม่มี Lead ในเครื่องนี้</div>`;
-            return leads.map((l, idx) => `
+            const leads = getAdminLeadsForDisplayv9624h();
+            const cloudNote = db.adminVisibilityAt ? ` • Cloud: ${adminReadableTimev9612h(db.adminVisibilityAt)}` : ' • Local view';
+            if (!leads.length) return `<div class="text-center opacity-40 text-xs py-8 italic">ยังไม่มี Lead ให้แสดง${cloudNote}</div>`;
+            return `<div class="mb-2 text-[11px] text-slate-400">แสดง ${leads.length} คน${cloudNote}</div>` + leads.map((l, idx) => `
                 <div class="p-3 bg-slate-950/50 rounded-2xl border border-slate-800 text-[11px] mb-2">
                     <div class="flex justify-between gap-3 font-bold text-slate-300">
                         <span>${idx + 1}. ${l.name || "-"}</span>
-                        <span class="text-slate-500 font-normal text-[10px]">${adminReadableTimev9612h(l.registeredAt)}</span>
+                        <span class="text-slate-500 font-normal text-[10px]">สมัคร: ${adminReadableTimev9612h(l.createdAt || l.registeredAt)}</span>
                     </div>
                     <div class="text-cyan-400 font-mono mt-1 select-all">${l.email || "-"}</div>
-                    <div class="text-[10px] text-slate-500 mt-2">Status: <b class="text-emerald-400">${getLeadStatusv9613h((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {})}</b> • Logs: ${((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {}).totalLogs || 0} • Last Active: ${adminReadableTimev9612h(((db.leadMeta || {})[normalizeEmailv968h(l.email)] || {}).lastActive)}</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 text-[10px] text-slate-400">
+                        <div>Status: <b class="text-emerald-400">${l.leadStatus || 'New'}</b></div>
+                        <div>Logs: <b class="text-cyan-300">${Number(l.logsCount || 0)}</b></div>
+                        <div>Last Active: <b class="text-amber-300">${adminReadableTimev9612h(l.lastActive)}</b></div>
+                        <div>Device: <b class="text-indigo-300">${Number(l.deviceCount || 0)}</b></div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 mt-2">Last Log: ${l.lastLogDate || '-'} • Data Version: ${l.dataVersion || '-'}</div>
                 </div>
             `).join("");
         }
@@ -1738,6 +1859,7 @@ function initProfileFormv964h() {
         }
 
         function renderAdminControlCenterv9612h(activeTab = "overview") {
+            try { if (isCurrentAdminv9612h() && !db.adminVisibilityAt) fetchAdminDataVisibilityv9624h().then(()=>{}); } catch(e) {}
             const state = getAdminStatev9612h();
             const tabs = [
                 ["overview", "Overview", "fa-gauge-high"],
@@ -1765,7 +1887,7 @@ function initProfileFormv964h() {
                         <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">Events</div><div class="text-xl text-indigo-400 font-black mt-2">${state.eventCount}</div></div>
                         <div class="admin-metric-card"><div class="text-[10px] text-slate-500 uppercase font-bold">High Intent</div><div class="text-xl text-amber-400 font-black mt-2">${state.highIntentLeads}</div></div>
                     </div>
-                    <div class="mt-4 admin-codebox">${JSON.stringify({
+                    <div class="mt-4 flex flex-wrap gap-2"><button class="admin-action-btn" onclick="fetchAdminDataVisibilityv9624h().then(()=>switchAdminTabv9612h('overview'))"><i class="fas fa-rotate"></i>Refresh Admin Data</button></div><div class="mt-4 admin-codebox">${JSON.stringify({
                         userKey: state.userKey,
                         identityEmail: state.adminEmail,
                         lastLogDate: state.lastLogDate,
@@ -1827,7 +1949,7 @@ function initProfileFormv964h() {
                             <div class="text-emerald-400 font-bold text-xs uppercase"><i class="fas fa-users mr-1"></i>Lead Magnet System</div>
                             <span class="bg-emerald-950 text-emerald-400 px-2 py-1 rounded-lg text-[10px] font-black">${state.leadCount} คน</span>
                         </div>
-                        <div class="max-h-[360px] overflow-y-auto pr-2">${buildAdminLeadsHtmlv9612h()}</div>
+                        <div class="flex flex-wrap gap-2 mb-3"><button class="admin-action-btn" onclick="fetchAdminDataVisibilityv9624h().then(()=>switchAdminTabv9612h('leads'))"><i class="fas fa-rotate"></i>Refresh Lead Data</button><button class="admin-action-btn success" onclick="exportLeadsToExcelv96g()"><i class="fas fa-file-csv"></i>Export Leads CSV</button></div><div class="max-h-[360px] overflow-y-auto pr-2">${buildAdminLeadsHtmlv9612h()}</div>
                     </div>
                 `;
             }
@@ -1850,8 +1972,10 @@ function initProfileFormv964h() {
                         <div class="admin-metric-card">
                             <div class="text-cyan-400 font-bold text-xs uppercase mb-3">Export / Backup</div>
                             <div class="flex flex-wrap gap-2">
-                                <button class="admin-action-btn success" onclick="exportData()"><i class="fas fa-download"></i>Export User Data</button>
+                                <button class="admin-action-btn" onclick="fetchAdminDataVisibilityv9624h().then(()=>switchAdminTabv9612h('export'))"><i class="fas fa-rotate"></i>Refresh Admin Data</button>
+                                <button class="admin-action-btn success" onclick="exportAdminUsersCsvv9624h()"><i class="fas fa-table"></i>Export User Data CSV</button>
                                 <button class="admin-action-btn success" onclick="exportLeadsToExcelv96g()"><i class="fas fa-file-csv"></i>Export Leads CSV</button>
+                                <button class="admin-action-btn" onclick="exportData()"><i class="fas fa-download"></i>Export Local Backup JSON</button>
                                 <button class="admin-action-btn cyan" onclick="adminExportDebugJsonv9612h()"><i class="fas fa-bug"></i>Export Debug JSON</button>
                             </div>
                         </div>
@@ -1876,7 +2000,7 @@ function initProfileFormv964h() {
                             <button onclick="saveCloudUrlv96g(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn cyan"><i class="fas fa-save"></i>บันทึก</button>
                             <button onclick="resetCloudEndpointToDefaultv967h(); renderAdminControlCenterv9612h('settings')" class="admin-action-btn"><i class="fas fa-rotate-left"></i>Default</button>
                         </div>
-                        <div class="mt-4 admin-codebox">${JSON.stringify({
+                        <div class="mt-4 flex flex-wrap gap-2"><button class="admin-action-btn" onclick="fetchAdminDataVisibilityv9624h().then(()=>switchAdminTabv9612h('overview'))"><i class="fas fa-rotate"></i>Refresh Admin Data</button></div><div class="mt-4 admin-codebox">${JSON.stringify({
                             endpointMasked: state.endpoint ? state.endpoint.replace(/\/s\/([^/]+)\//, "/s/***masked***/") : "",
                             schemaVersion: state.schemaVersion,
                             autoBackupLimit: AUTO_BACKUP_LIMIT,
@@ -1893,7 +2017,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.15h</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.24h</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -2024,22 +2148,25 @@ function saveCloudUrlv96g() {
         }
 
         function exportLeadsToExcelv96g() {
-            const leads = db.leadData && Array.isArray(db.leadData) ? db.leadData : (db.lead ? [db.lead] : []);
-            if(leads.length === 0) return alert("ไม่มีรายชื่อกลุ่มเป้าหมายสะสมบนเครื่องเบราว์เซอร์นี้ที่จะส่งออก");
-            
-            let csvBody = "\uFEFFชื่อ-นามสกุลกลุ่มเป้าหมาย,อีเมลผู้ลงทะเบียนสิทธิ์,วันเวลาที่ลงชื่อเข้าใช้ระบบ\n";
+            const leads = getAdminLeadsForDisplayv9624h();
+            if(leads.length === 0) return alert("ไม่มีรายชื่อกลุ่มเป้าหมายสะสมให้ส่งออก");
+            const safe = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+            let csvBody = "\uFEFFชื่อ-นามสกุลกลุ่มเป้าหมาย,อีเมลผู้ลงทะเบียนสิทธิ์,วันเวลาที่ลงชื่อเข้าใช้ระบบ,Last Active,Logs Count,Lead Status,Device Count,Last Log Date,Data Version\n";
             leads.forEach(l => {
-                const dateStr = l.registeredAt ? new Date(l.registeredAt).toLocaleString('th-TH') : '-';
-                csvBody += `"${l.name}","${l.email}","${dateStr}"\n`;
+                csvBody += [
+                    safe(l.name || ''), safe(l.email || ''), safe(adminReadableTimev9612h(l.createdAt || l.registeredAt)),
+                    safe(adminReadableTimev9612h(l.lastActive)), Number(l.logsCount || 0), safe(l.leadStatus || ''),
+                    Number(l.deviceCount || 0), safe(l.lastLogDate || ''), safe(l.dataVersion || '')
+                ].join(',') + "\n";
             });
-            
             const blobFile = new Blob([csvBody], { type: "text/csv;charset=utf-8;" });
             const downloadLink = document.createElement("a");
             downloadLink.href = URL.createObjectURL(blobFile);
-            downloadLink.setAttribute("download", `KudsanGoods_Leads_Database_${new Date().toISOString().slice(0,10)}.csv`);
+            downloadLink.setAttribute("download", `SleepWellPro_Leads_Database_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
+            setTimeout(() => { try { URL.revokeObjectURL(downloadLink.href); } catch(e) {} }, 1200);
         }
 
         // (- New Feature v9.6h -) ตรวจสอบความถูกต้องสมบูรณ์โครงสร้าง Email ฟอร์แมตด้วย Regex แบบเคร่งครัด
