@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.26h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.27h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -20,7 +20,7 @@
             #prodModal > div { width: 100% !important; max-height: none !important; margin-top: 18px; margin-bottom: 32px; }
             #modalShopeeLink, #modalTiktokLink { min-height: 48px; display: flex !important; align-items: center; justify-content: center; }
         }
-        /* v9.6.26h Mobile UX Final Polish: UI-only patch, Core Sync untouched */
+        /* v9.6.27h Mobile UX Final Polish: UI-only patch, Core Sync untouched */
         .swp-date-input-wrap { position: relative; }
         .swp-date-input-wrap .swp-date-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #22d3ee; opacity: .9; pointer-events: none; filter: drop-shadow(0 0 6px rgba(34,211,238,.35)); }
         .swp-quality-label-title { color: #e2e8f0; font-weight: 800; letter-spacing: .02em; }
@@ -55,9 +55,9 @@
             .swp-history-duration { white-space: nowrap; font-size: 13px; }
             .swp-affiliate-cta { min-height: 48px; font-size: 13px !important; }
         }
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght=200;300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Kanit:wght@200;300;400;500;600&display=swap');
         :root { --blue-ocean: #0f172a; --turquoise-blue: #06b6d4; --bright-pearl: #f1f5f9; }
-        body { font-family: 'Kanit', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
+        body { font-family: 'Prompt', 'Kanit', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
         
         /* (- New Feature v9.6h -) ปรับแต่งกรอบกระจกเงาให้เป็นสไตล์ Neon Glowing Edge ปรับความพรีเมียมระดับสูง */
         .glass-card { 
@@ -404,7 +404,7 @@
 
     
 
-        /* v9.6.26h Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
+        /* v9.6.27h Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
         .swp-byline-sync { display: flex; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
         .swp-version-badge { white-space: nowrap; }
         .swp-change-pin-btn {
@@ -508,6 +508,93 @@
             .swp-scroll-x { margin-left: -2px; margin-right: -2px; }
         }
 
+    
+
+        /* v9.6.27h GO LIVE FINAL VISUAL FREEZE: Mobile header, readability, picks branding, no Core Sync changes */
+        :root { --dirty-pink: #ff8fa3; --cyan-neon: #22d3ee; }
+        body { font-family: 'Prompt', 'Kanit', sans-serif; letter-spacing: -0.005em; }
+        .swp-title-line { display: inline; }
+        .swp-title-line-2 { display: inline; }
+        .swp-important-label,
+        .swp-trigger-list label,
+        .swp-stat-label,
+        .swp-section-label,
+        .log-table th {
+            color: #dbeafe !important;
+            opacity: 1 !important;
+            text-shadow: 0 0 10px rgba(34,211,238,.18);
+            font-weight: 800 !important;
+        }
+        .swp-trigger-list label { font-size: 11px !important; line-height: 1.45; }
+        .swp-stat-label { color: #cbd5e1 !important; letter-spacing: .03em; }
+        .benchmark-label { color: #e2e8f0 !important; background: rgba(148,163,184,.18) !important; border-color: rgba(203,213,225,.22) !important; }
+        .affiliate-section-kicker {
+            color: var(--dirty-pink) !important;
+            border-color: rgba(255,143,163,.58) !important;
+            background: rgba(255,143,163,.10) !important;
+            box-shadow: 0 0 18px rgba(255,143,163,.18) !important;
+        }
+        .affiliate-premium-section {
+            border-color: rgba(255,143,163,.42) !important;
+            box-shadow: 0 18px 42px rgba(0,0,0,.30), 0 0 28px rgba(255,143,163,.10), inset 0 1px 0 rgba(255,255,255,.05) !important;
+        }
+        .affiliate-premium-section h3 {
+            color: #67e8f9 !important;
+            text-shadow: 0 0 12px rgba(34,211,238,.45), 0 0 26px rgba(34,211,238,.18);
+            letter-spacing: .13em !important;
+        }
+        .swp-user-logic-note {
+            color: #cffafe !important;
+            background: rgba(6,182,212,.10) !important;
+            border-color: rgba(34,211,238,.30) !important;
+            font-weight: 600;
+        }
+        @media (max-width: 640px) {
+            #mainAppContent { padding: 20px 14px 100px !important; }
+            .swp-app-header { gap: 14px !important; padding-top: 6px; }
+            .swp-title-row { grid-template-columns: 52px 1fr !important; gap: 12px !important; }
+            .app-title-logo { width: 46px !important; height: 46px !important; align-self: center; }
+            #mainAppContent header h1.swp-main-title {
+                font-size: clamp(1.72rem, 7.4vw, 2.08rem) !important;
+                line-height: 1.13 !important;
+                max-width: calc(100vw - 92px) !important;
+                letter-spacing: -0.035em !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+            }
+            .swp-title-line { display: block !important; white-space: normal !important; }
+            .swp-title-line-2 { display: block !important; }
+            #mainAppContent header h1 .swp-version-badge {
+                font-size: 10.5px !important;
+                padding: 3px 8px !important;
+                margin-left: 8px !important;
+                transform: translateY(-2px);
+            }
+            .swp-byline-sync { display: grid !important; grid-template-columns: 1fr auto !important; align-items: center !important; gap: 10px !important; }
+            .swp-byline-sync #syncStatus { min-width: 118px !important; min-height: 38px !important; padding: 7px 12px !important; }
+            .swp-header-actions { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+            .swp-date-share { grid-column: 1 / -1 !important; margin-top: 6px !important; }
+            .swp-date-share p { color:#cbd5e1 !important; font-weight:800 !important; margin-bottom: 6px !important; }
+            .swp-date-share .flex { grid-template-columns: minmax(0,1fr) 24px minmax(0,1fr) !important; gap: 8px !important; }
+            .swp-date-share input[type="date"] { min-width: 0; font-size: 15px !important; }
+            .swp-share-btn { margin-top: 2px; }
+            .swp-scroll-x {
+                border-bottom: 5px solid rgba(148,163,184,.65) !important;
+                border-radius: 0 0 8px 8px;
+                box-shadow: inset 0 -7px 0 rgba(148,163,184,.06);
+                background: linear-gradient(90deg, transparent 0, transparent calc(100% - 44px), rgba(148,163,184,.12) 100%) !important;
+            }
+            .swp-scroll-x::-webkit-scrollbar { height: 10px !important; display: block !important; }
+            .swp-scroll-x::-webkit-scrollbar-thumb { background: rgba(203,213,225,.9) !important; }
+            .log-table th { font-size: 13px !important; }
+            .swp-important-label { font-size: 13px !important; }
+            .swp-trigger-list label { font-size: 13px !important; color: #e2e8f0 !important; }
+            .swp-stat-label { font-size: 11px !important; }
+            .benchmark-label { font-size: 12px !important; padding: 6px 12px !important; }
+            .affiliate-section-kicker { font-size: 11px !important; padding: 7px 14px !important; }
+            .affiliate-premium-section h3 { font-size: 18px !important; line-height: 1.3; }
+        }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -519,7 +606,7 @@
             <div class="mx-auto mb-5 flex items-center justify-center">
                 <img src="./assets/app-icons/sleep-well-pro-logo.png" alt="Sleep Well Pro" class="brand-unlock-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/20&quot;><i class=&quot;fas fa-gift text-white text-2xl&quot;></i></div>'">
             </div>
-            <h2 class="text-2xl font-bold tracking-tight text-white">ปลดล็อกระบบผู้ช่วยอัจฉริยะสุขภาพการนอนฟรี</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-white">ปลดล็อกระบบผู้ช่วยอัจฉริยะสุขภาพการนอน - ฟรี</h2>
             <p class="text-slate-400 text-xs mt-2 mb-6 leading-relaxed">ใส่ข้อมูลเพื่อลงทะเบียนรับสิทธิ์เข้าใช้งานระบบผู้ช่วยอัจฉริยะ และรับคำแนะนำการดูแลสุขภาพการนอนเชิงลึกฟรีตลอดการใช้งาน</p>
             <form onsubmit="submitLeadMagnet(event)" class="space-y-4 text-left">
                 <div>
@@ -566,7 +653,7 @@
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="text-3xl font-bold tracking-tight leading-tight">ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.26h PRO</span></h1>
+                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.27h PRO</span></span></h1>
                         <div class="swp-byline-sync">
                             <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                             <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
@@ -622,14 +709,14 @@
                     <h2 class="text-xs font-bold text-slate-400 mb-4 uppercase tracking-[0.2em]"><i class="fas fa-moon mr-2"></i> บันทึกการนอนคืนล่าสุด</h2>
                     <div class="space-y-4">
                         <div class="space-y-1">
-                            <label class="text-[10px] text-slate-400">เวลาเข้านอนจริง</label>
+                            <label class="swp-important-label text-[10px] text-slate-400">เวลาเข้านอนจริง</label>
                             <div class="swp-date-input-wrap">
                                 <input type="datetime-local" id="sTime" class="w-full p-3 pr-11 input-dark text-xs outline-none">
                                 <i class="fas fa-calendar-days swp-date-icon"></i>
                             </div>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[10px] text-slate-400">เวลาที่ตื่นจริง</label>
+                            <label class="swp-important-label text-[10px] text-slate-400">เวลาที่ตื่นจริง</label>
                             <div class="swp-date-input-wrap">
                                 <input type="datetime-local" id="wTime" class="w-full p-3 pr-11 input-dark text-xs outline-none">
                                 <i class="fas fa-calendar-days swp-date-icon"></i>
@@ -644,7 +731,7 @@
                             <span id="qVal" class="text-cyan-400 font-bold text-xl">7/10</span>
                         </div>
                         <input type="range" id="sQual" min="1" max="10" value="7" oninput="qVal.innerText=this.value+'/10'" class="w-full accent-cyan-500">
-                        <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400">
+                        <div class="swp-trigger-list grid grid-cols-2 gap-2 text-[10px] text-slate-400">
                             <label class="flex items-center gap-2"><input type="checkbox" id="fCaf" class="accent-cyan-500"> คาเฟอีน</label>
                             <label class="flex items-center gap-2"><input type="checkbox" id="fStr" class="accent-cyan-500"> ความเครียด</label>
                             <label class="flex items-center gap-2"><input type="checkbox" id="fExe" class="accent-cyan-500"> ออกกำลังกาย</label>
@@ -660,22 +747,22 @@
             <div class="lg:col-span-6 space-y-6" id="captureArea">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="glass-card p-4 text-center border-b-2 border-cyan-500 shadow-[0_2px_8px_rgba(6,182,212,0.1)]">
-                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">ชม. การนอน</p>
+                        <p class="swp-stat-label text-[9px] text-slate-500 font-bold uppercase mb-1">ชม. การนอน</p>
                         <p class="text-xl font-bold text-cyan-400" id="statDur">0 ชม. 0 นาที</p>
                         <p class="benchmark-label">เกณฑ์ดี: 7-9 ชม.</p>
                     </div>
                     <div class="glass-card p-4 text-center border-b-2 border-orange-500 shadow-[0_2px_8px_rgba(245,158,11,0.1)]">
-                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">แคลอรี่เผาผลาญ</p>
+                        <p class="swp-stat-label text-[9px] text-slate-500 font-bold uppercase mb-1">แคลอรี่เผาผลาญ</p>
                         <p class="text-2xl font-bold text-orange-400" id="statCal">0</p>
                         <p class="benchmark-label">เกณฑ์ดี: > 300 kcal</p>
                     </div>
                     <div class="glass-card p-4 text-center border-b-2 border-cyan-400 shadow-[0_2px_8px_rgba(34,211,238,0.1)]">
-                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">รอบการนอน</p>
+                        <p class="swp-stat-label text-[9px] text-slate-500 font-bold uppercase mb-1">รอบการนอน</p>
                         <p class="text-2xl font-bold text-cyan-300" id="statCyc">0.0</p>
                         <p class="benchmark-label">เกณฑ์ดี: 5-6 รอบ</p>
                     </div>
                     <div class="glass-card p-4 text-center border-b-2 border-rose-500 shadow-[0_2px_8px_rgba(244,63,94,0.1)]">
-                        <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">ความสำเร็จ (%)</p>
+                        <p class="swp-stat-label text-[9px] text-slate-500 font-bold uppercase mb-1">ความสำเร็จ (%)</p>
                         <p class="text-2xl font-bold text-rose-400" id="statPct">0%</p>
                         <p class="benchmark-label">เกณฑ์ดี: > 85%</p>
                     </div>
@@ -683,7 +770,7 @@
 
                 <section class="glass-card p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 id="mainChartTitle" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">คุณภาพการนอนเทียบชั่วโมง</h3>
+                        <h3 id="mainChartTitle" class="swp-section-label text-[11px] font-bold text-slate-400 uppercase tracking-widest">คุณภาพการนอนเทียบชั่วโมง</h3>
                         <div class="text-[9px] flex gap-3">
                             <span><span class="legend-dot bg-cyan-500 shadow-[0_0_6px_#06b6d4]"></span> ชม. นอน</span>
                             <span><span class="legend-dot bg-rose-500 shadow-[0_0_6px_#f43f5e]"></span> คุณภาพ (%)</span>
@@ -718,7 +805,7 @@
                 
                 <section class="glass-card p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">แนวโน้มการเผาผลาญและความสำเร็จ</h3>
+                        <h3 class="swp-section-label text-[11px] font-bold text-slate-400 uppercase tracking-widest">แนวโน้มการเผาผลาญและความสำเร็จ</h3>
                         <div class="text-[9px] flex gap-3">
                             <span><span class="legend-dot bg-orange-500 shadow-[0_0_6px_#f59e0b]"></span> แคลอรี่</span>
                             <span><span class="legend-dot bg-emerald-500 shadow-[0_0_6px_#10b981]"></span> ความสำเร็จ (%)</span>
@@ -753,7 +840,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.26h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.27h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -799,7 +886,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.26h";
+        const APP_VERSION = "9.6.27h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1013,7 +1100,7 @@
         }
 
         // Multi-Platform Affiliate E-Commerce Product Catalog Structured Matrix (v9.6c Original Content)
-        const AFFILIATE_CATALOG = [{"id": "smartwatch-01", "name": "Banala Lite อุปกรณ์ช่วยนอนหลับ", "tier": "T1 Core Sleep Fix", "icon": "🎧", "iconImg": "./assets/product-icons/banala-lite.png", "badge": "AI RECOMMENDED", "desc": "คลื่นเสียงช่วยผ่อนคลายและสร้าง routine ก่อนนอน เหมาะกับคนหลับยาก/ตื่นกลางคืนบ่อย", "shopeeUrl": "https://s.shopee.co.th/9pbFaeKHLB", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2KhBjKyYt-pM4yJ/", "price": "คลิกดูราคาล่าสุด • 1,500–3,000 บาท", "highlight": true, "matchTags": ["short_sleep", "low_quality", "stress", "irregular"], "priority": 95, "why": "เหมาะเป็นตัวเริ่มต้นสำหรับคนมีปัญหา sleep onset และต้องการตัวช่วยสร้างสัญญาณก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2500}, {"id": "pillow-01", "name": "หมอนหนุน Clover ช่วยหลับสบาย", "tier": "T1 Core Sleep Fix", "icon": "🛌", "iconImg": "./assets/product-icons/clover-pillow.png", "badge": "BEST SELLER", "desc": "ช่วยซัพพอร์ตคอ บ่า ไหล่ ลดการรบกวนท่านอน เหมาะกับคนตื่นแล้วปวดคอ/หลับไม่ต่อเนื่อง", "shopeeUrl": "https://s.shopee.co.th/10zr4VY1P3", "tiktokUrl": "https://vt.tiktok.com/ZS9Yf57YPmnDN-5YjVO/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["low_quality", "short_sleep", "recovery", "neck_support"], "priority": 90, "why": "สภาพแวดล้อมการนอนเป็นฐานสำคัญ ถ้าคอ/ไหล่ไม่สบาย วงจรหลับลึกมักถูกรบกวน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 790}, {"id": "blue-glasses-01", "name": "แว่นกรองแสง LUSEEN รุ่น AG2244", "tier": "T1 Core Sleep Fix", "icon": "👓", "iconImg": "./assets/product-icons/luseen-ag2244.png", "badge": "SCREEN DEFENDER", "desc": "ลดภาระแสงหน้าจอก่อนนอน เหมาะกับคนใช้มือถือ/คอมช่วงกลางคืนและนอนหลับยาก", "shopeeUrl": "https://s.shopee.co.th/6VKndCzibZ", "tiktokUrl": "https://vt.tiktok.com/ZS9Yj1TuA2hwH-ijOZ1/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["screen", "short_sleep", "low_quality", "circadian"], "priority": 88, "why": "แสงและคอนเทนต์หน้าจอก่อนนอนเป็น trigger สำคัญของ delayed sleep timing", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 590}, {"id": "herbal-tea-01", "name": "สเปรย์ MENTE Natural Calming and Refreshing", "tier": "T1 Core Sleep Fix", "icon": "🧴", "iconImg": "./assets/product-icons/mente-spray.png", "badge": "STRESS RELIEF", "desc": "กลิ่นผ่อนคลายก่อนนอน ช่วยทำ anchor ให้สมองเข้าสู่โหมดพัก เหมาะกับคนเครียด/คิดงานก่อนนอน", "shopeeUrl": "https://s.shopee.co.th/7fWkTpXzX7", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2WXFuULAr-JyalG/", "price": "คลิกดูราคาล่าสุด • 100–400 บาท", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 86, "why": "การมี scent cue ซ้ำทุกคืนช่วยให้สมองจำจังหวะผ่อนคลายได้ง่ายขึ้น", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 290}, {"id": "supplement-mag-01", "name": "Biovitt NITE แคปซูลปรับสมดุลในการนอน", "tier": "T1 Core Sleep Fix", "icon": "💊", "iconImg": "./assets/product-icons/biovitt-nite.png", "badge": "DEEP SLEEP BOOSTER", "desc": "ตัวช่วยกลุ่มเสริมการพักผ่อน เหมาะกับคนวงจรหลับไม่ครบ/คุณภาพต่ำ/ตื่นไม่สดชื่น", "shopeeUrl": "https://s.shopee.co.th/3B4L9RTMiW", "tiktokUrl": "https://vt.tiktok.com/ZS9Yjefeqy6Lc-c6Oee/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": true, "matchTags": ["low_cycles", "low_quality", "alcohol", "short_sleep"], "priority": 92, "why": "ใช้เป็นตัวเลือกเมื่อ pattern บ่งชี้ว่าวงจรหลับลึกและ REM อาจไม่ต่อเนื่อง", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 490}, {"id": "magnesium-01", "name": "แมกนีเซียมก่อนนอน", "tier": "T2 Recovery Booster", "icon": "⚡", "iconImg": "./assets/product-icons/magnesium-sleep.png", "badge": "RECOVERY BOOST", "desc": "เหมาะกับคนตึงเครียด กล้ามเนื้อล้า หรือพักไม่สุด ช่วยวางแผน recovery routine ก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "recovery", "exercise", "low_quality"], "priority": 78, "why": "เหมาะเป็นสินค้ากลุ่ม recovery เมื่อผู้ใช้มีความเครียดหรือออกกำลังกายแล้วพักไม่ลึก", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 350}, {"id": "eye-mask-01", "name": "ผ้าปิดตานอนหลับลึก", "tier": "T2 Recovery Booster", "icon": "😴", "iconImg": "./assets/product-icons/sleep-mask.png", "badge": "DARK ROOM", "desc": "ลดแสงรบกวน เหมาะกับคนห้องสว่าง/นอนกลางวัน/ตื่นง่าย", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "irregular", "environment"], "priority": 76, "why": "แสงรบกวนทำให้ sleep continuity ต่ำ การลดแสงเป็น intervention ที่ต้นทุนต่ำและคุ้ม", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–300 บาท", "priceTierKey": "low", "approxPrice": 129}, {"id": "earplug-01", "name": "ที่อุดหูลดเสียงรบกวน", "tier": "T2 Recovery Booster", "icon": "🔇", "iconImg": "./assets/product-icons/sleep-earplug.png", "badge": "NOISE CONTROL", "desc": "เหมาะกับคนตื่นง่ายจากเสียง ห้องติดถนน หรือมีเสียงรบกวนตอนกลางคืน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–250 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "environment", "wake"], "priority": 74, "why": "เสียงรบกวนทำให้ micro-awakening เพิ่มขึ้น แม้ผู้ใช้อาจจำไม่ได้ว่าตื่น", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–250 บาท", "priceTierKey": "low", "approxPrice": 89}, {"id": "humidifier-01", "name": "เครื่องเพิ่มความชื้น/ปรับอากาศห้องนอน", "tier": "T2 Recovery Booster", "icon": "💧", "iconImg": "./assets/product-icons/humidifier.png", "badge": "ROOM COMFORT", "desc": "เหมาะกับคนคอแห้ง ภูมิแพ้ หรือห้องแอร์แห้ง ทำให้สภาพห้องนอนสบายขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "recovery", "low_quality"], "priority": 72, "why": "คุณภาพอากาศและความสบายของห้องนอนส่งผลกับการหลับต่อเนื่อง", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1890}, {"id": "weighted-blanket-01", "name": "ผ้าห่มถ่วงน้ำหนัก/ผ้าห่มนุ่มหลับลึก", "tier": "T2 Recovery Booster", "icon": "🛏️", "iconImg": "./assets/product-icons/weighted-blanket.png", "badge": "CALM BODY", "desc": "เหมาะกับคนเครียด กระสับกระส่าย หรืออยากเพิ่มความรู้สึกปลอดภัยก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 70, "why": "แรงกดเบา ๆ ช่วยสร้าง sensory cue ให้ร่างกายสงบลงก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2200}, {"id": "sleep-journal-01", "name": "สมุด Sleep Journal / Habit Tracker", "tier": "T3 Habit System", "icon": "📓", "iconImg": "./assets/product-icons/sleep-journal.png", "badge": "HABIT TRACKER", "desc": "เหมาะกับคนต้องการปรับพฤติกรรมจริงจัง ใช้จด trigger และหาความสัมพันธ์กับคุณภาพการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["irregular", "habit", "tracking"], "priority": 64, "why": "การเห็น pattern ของตัวเองช่วยให้ปรับพฤติกรรมได้แม่นกว่าเดา", "commercialTier": "Low-Ticket", "priceRange": "100–300 บาท", "priceTierKey": "low", "approxPrice": 159}, {"id": "sunrise-lamp-01", "name": "ไฟปลุกจำลองแสงเช้า", "tier": "T3 Habit System", "icon": "🌅", "iconImg": "./assets/product-icons/sunrise-lamp.png", "badge": "CIRCADIAN RESET", "desc": "เหมาะกับคนตื่นยาก นอนดึก หรืออยากปรับนาฬิกาชีวิตให้คงที่ขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["circadian", "irregular", "short_sleep"], "priority": 68, "why": "แสงเช้าช่วยยึด rhythm ของร่างกาย ทำให้เวลานอนคืนถัดไปนิ่งขึ้น", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1790}, {"id": "breath-trainer-01", "name": "อุปกรณ์/การ์ดฝึกหายใจก่อนนอน", "tier": "T3 Habit System", "icon": "🫁", "iconImg": "./assets/product-icons/breath-trainer.png", "badge": "BREATH RESET", "desc": "เหมาะกับคนเครียด หัวใจเต้นแรง คิดเยอะก่อนนอน ใช้เป็น ritual 3-5 นาที", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "wind_down", "low_quality"], "priority": 66, "why": "การหายใจช้าลงช่วย shift จาก sympathetic ไป parasympathetic ก่อนนอน", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 199}, {"id": "cooling-pad-01", "name": "แผ่นรอง/ปลอกหมอนเย็น", "tier": "T3 Habit System", "icon": "❄️", "iconImg": "./assets/product-icons/cooling-pad.png", "badge": "COOL SLEEP", "desc": "เหมาะกับคนร้อนง่าย เหงื่อออกกลางคืน หรือห้องนอนอุณหภูมิสูง", "shopeeUrl": "#", "tiktokUrl": "#", "price": "400–1,500 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "low_quality", "wake"], "priority": 62, "why": "อุณหภูมิร่างกายที่ลดลงเป็นหนึ่งในสัญญาณสำคัญของการเข้าสู่การนอน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 690}, {"id": "decaf-drink-01", "name": "เครื่องดื่มผ่อนคลายไม่มีคาเฟอีน", "tier": "T3 Habit System", "icon": "🍵", "iconImg": "./assets/product-icons/decaf-night-drink.png", "badge": "NO CAFFEINE", "desc": "เหมาะกับคนติดเครื่องดื่มช่วงเย็น แต่อยากเลี่ยงคาเฟอีนที่รบกวนการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["caffeine", "wind_down", "habit"], "priority": 60, "why": "แทนพฤติกรรมเดิมด้วยเครื่องดื่มไม่มีคาเฟอีนช่วยลดแรงต้านในการปรับ routine", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 220}];
+        const AFFILIATE_CATALOG = [{"id": "smartwatch-01", "name": "Banala Lite อุปกรณ์ช่วยนอนหลับ", "tier": "T1 Core Sleep Fix", "icon": "🎧", "iconImg": "./assets/product-icons/banala-lite.png", "badge": "AI RECOMMENDED", "desc": "คลื่นเสียงช่วยผ่อนคลายและสร้าง routine ก่อนนอน เหมาะกับคนหลับยาก/ตื่นกลางคืนบ่อย", "shopeeUrl": "https://s.shopee.co.th/9pbFaeKHLB", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2KhBjKyYt-pM4yJ/", "price": "คลิกดูราคาล่าสุด • 1,500–3,000 บาท", "highlight": true, "matchTags": ["short_sleep", "low_quality", "stress", "irregular"], "priority": 95, "why": "เหมาะเป็นตัวช่วยหลักเมื่อมีปัญหาหลับยากหรือตื่นกลางคืนบ่อย และต้องการ routine ก่อนนอนที่ทำซ้ำได้ง่าย", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2500}, {"id": "pillow-01", "name": "หมอนหนุน Clover ช่วยหลับสบาย", "tier": "T1 Core Sleep Fix", "icon": "🛌", "iconImg": "./assets/product-icons/clover-pillow.png", "badge": "BEST SELLER", "desc": "ช่วยซัพพอร์ตคอ บ่า ไหล่ ลดการรบกวนท่านอน เหมาะกับคนตื่นแล้วปวดคอ/หลับไม่ต่อเนื่อง", "shopeeUrl": "https://s.shopee.co.th/10zr4VY1P3", "tiktokUrl": "https://vt.tiktok.com/ZS9Yf57YPmnDN-5YjVO/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["low_quality", "short_sleep", "recovery", "neck_support"], "priority": 90, "why": "เหมาะเป็นตัวช่วยเสริมด้านความสบายของร่างกาย ช่วยลดสิ่งรบกวนจากท่านอนและหมอนที่ไม่พอดี", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 790}, {"id": "blue-glasses-01", "name": "แว่นกรองแสง LUSEEN รุ่น AG2244", "tier": "T1 Core Sleep Fix", "icon": "👓", "iconImg": "./assets/product-icons/luseen-ag2244.png", "badge": "SCREEN DEFENDER", "desc": "ลดภาระแสงหน้าจอก่อนนอน เหมาะกับคนใช้มือถือ/คอมช่วงกลางคืนและนอนหลับยาก", "shopeeUrl": "https://s.shopee.co.th/6VKndCzibZ", "tiktokUrl": "https://vt.tiktok.com/ZS9Yj1TuA2hwH-ijOZ1/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["screen", "short_sleep", "low_quality", "circadian"], "priority": 88, "why": "เหมาะเป็นตัวช่วยเสริมเมื่อมีพฤติกรรมใช้หน้าจอก่อนนอน ลดปัจจัยที่ทำให้สมองตื่นตัวตอนกลางคืน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 590}, {"id": "herbal-tea-01", "name": "สเปรย์ MENTE Natural Calming and Refreshing", "tier": "T1 Core Sleep Fix", "icon": "🧴", "iconImg": "./assets/product-icons/mente-spray.png", "badge": "STRESS RELIEF", "desc": "กลิ่นผ่อนคลายก่อนนอน ช่วยทำ anchor ให้สมองเข้าสู่โหมดพัก เหมาะกับคนเครียด/คิดงานก่อนนอน", "shopeeUrl": "https://s.shopee.co.th/7fWkTpXzX7", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2WXFuULAr-JyalG/", "price": "คลิกดูราคาล่าสุด • 100–400 บาท", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 86, "why": "เหมาะเป็นตัวช่วยเริ่มต้นสำหรับคืนที่เครียดหรือคิดงานก่อนนอน ช่วยสร้างสัญญาณผ่อนคลายแบบง่าย ๆ", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 290}, {"id": "supplement-mag-01", "name": "Biovitt NITE แคปซูลปรับสมดุลในการนอน", "tier": "T1 Core Sleep Fix", "icon": "💊", "iconImg": "./assets/product-icons/biovitt-nite.png", "badge": "DEEP SLEEP BOOSTER", "desc": "ตัวช่วยกลุ่มเสริมการพักผ่อน เหมาะกับคนวงจรหลับไม่ครบ/คุณภาพต่ำ/ตื่นไม่สดชื่น", "shopeeUrl": "https://s.shopee.co.th/3B4L9RTMiW", "tiktokUrl": "https://vt.tiktok.com/ZS9Yjefeqy6Lc-c6Oee/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": true, "matchTags": ["low_cycles", "low_quality", "alcohol", "short_sleep"], "priority": 92, "why": "เหมาะเป็นตัวช่วยเสริมเมื่อคุณภาพการนอนต่ำหรือตื่นมาไม่สดชื่น และต้องการดูแลการพักผ่อนให้เป็นระบบขึ้น", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 490}, {"id": "magnesium-01", "name": "แมกนีเซียมก่อนนอน", "tier": "T2 Recovery Booster", "icon": "⚡", "iconImg": "./assets/product-icons/magnesium-sleep.png", "badge": "RECOVERY BOOST", "desc": "เหมาะกับคนตึงเครียด กล้ามเนื้อล้า หรือพักไม่สุด ช่วยวางแผน recovery routine ก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "recovery", "exercise", "low_quality"], "priority": 78, "why": "เหมาะเป็นสินค้ากลุ่ม recovery เมื่อผู้ใช้มีความเครียดหรือออกกำลังกายแล้วพักไม่ลึก", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 350}, {"id": "eye-mask-01", "name": "ผ้าปิดตานอนหลับลึก", "tier": "T2 Recovery Booster", "icon": "😴", "iconImg": "./assets/product-icons/sleep-mask.png", "badge": "DARK ROOM", "desc": "ลดแสงรบกวน เหมาะกับคนห้องสว่าง/นอนกลางวัน/ตื่นง่าย", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "irregular", "environment"], "priority": 76, "why": "แสงรบกวนทำให้ sleep continuity ต่ำ การลดแสงเป็น intervention ที่ต้นทุนต่ำและคุ้ม", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–300 บาท", "priceTierKey": "low", "approxPrice": 129}, {"id": "earplug-01", "name": "ที่อุดหูลดเสียงรบกวน", "tier": "T2 Recovery Booster", "icon": "🔇", "iconImg": "./assets/product-icons/sleep-earplug.png", "badge": "NOISE CONTROL", "desc": "เหมาะกับคนตื่นง่ายจากเสียง ห้องติดถนน หรือมีเสียงรบกวนตอนกลางคืน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–250 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "environment", "wake"], "priority": 74, "why": "เสียงรบกวนทำให้ micro-awakening เพิ่มขึ้น แม้ผู้ใช้อาจจำไม่ได้ว่าตื่น", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–250 บาท", "priceTierKey": "low", "approxPrice": 89}, {"id": "humidifier-01", "name": "เครื่องเพิ่มความชื้น/ปรับอากาศห้องนอน", "tier": "T2 Recovery Booster", "icon": "💧", "iconImg": "./assets/product-icons/humidifier.png", "badge": "ROOM COMFORT", "desc": "เหมาะกับคนคอแห้ง ภูมิแพ้ หรือห้องแอร์แห้ง ทำให้สภาพห้องนอนสบายขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "recovery", "low_quality"], "priority": 72, "why": "คุณภาพอากาศและความสบายของห้องนอนส่งผลกับการหลับต่อเนื่อง", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1890}, {"id": "weighted-blanket-01", "name": "ผ้าห่มถ่วงน้ำหนัก/ผ้าห่มนุ่มหลับลึก", "tier": "T2 Recovery Booster", "icon": "🛏️", "iconImg": "./assets/product-icons/weighted-blanket.png", "badge": "CALM BODY", "desc": "เหมาะกับคนเครียด กระสับกระส่าย หรืออยากเพิ่มความรู้สึกปลอดภัยก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 70, "why": "แรงกดเบา ๆ ช่วยสร้าง sensory cue ให้ร่างกายสงบลงก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2200}, {"id": "sleep-journal-01", "name": "สมุด Sleep Journal / Habit Tracker", "tier": "T3 Habit System", "icon": "📓", "iconImg": "./assets/product-icons/sleep-journal.png", "badge": "HABIT TRACKER", "desc": "เหมาะกับคนต้องการปรับพฤติกรรมจริงจัง ใช้จด trigger และหาความสัมพันธ์กับคุณภาพการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["irregular", "habit", "tracking"], "priority": 64, "why": "การเห็น pattern ของตัวเองช่วยให้ปรับพฤติกรรมได้แม่นกว่าเดา", "commercialTier": "Low-Ticket", "priceRange": "100–300 บาท", "priceTierKey": "low", "approxPrice": 159}, {"id": "sunrise-lamp-01", "name": "ไฟปลุกจำลองแสงเช้า", "tier": "T3 Habit System", "icon": "🌅", "iconImg": "./assets/product-icons/sunrise-lamp.png", "badge": "CIRCADIAN RESET", "desc": "เหมาะกับคนตื่นยาก นอนดึก หรืออยากปรับนาฬิกาชีวิตให้คงที่ขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["circadian", "irregular", "short_sleep"], "priority": 68, "why": "แสงเช้าช่วยยึด rhythm ของร่างกาย ทำให้เวลานอนคืนถัดไปนิ่งขึ้น", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1790}, {"id": "breath-trainer-01", "name": "อุปกรณ์/การ์ดฝึกหายใจก่อนนอน", "tier": "T3 Habit System", "icon": "🫁", "iconImg": "./assets/product-icons/breath-trainer.png", "badge": "BREATH RESET", "desc": "เหมาะกับคนเครียด หัวใจเต้นแรง คิดเยอะก่อนนอน ใช้เป็น ritual 3-5 นาที", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "wind_down", "low_quality"], "priority": 66, "why": "การหายใจช้าลงช่วย shift จาก sympathetic ไป parasympathetic ก่อนนอน", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 199}, {"id": "cooling-pad-01", "name": "แผ่นรอง/ปลอกหมอนเย็น", "tier": "T3 Habit System", "icon": "❄️", "iconImg": "./assets/product-icons/cooling-pad.png", "badge": "COOL SLEEP", "desc": "เหมาะกับคนร้อนง่าย เหงื่อออกกลางคืน หรือห้องนอนอุณหภูมิสูง", "shopeeUrl": "#", "tiktokUrl": "#", "price": "400–1,500 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "low_quality", "wake"], "priority": 62, "why": "อุณหภูมิร่างกายที่ลดลงเป็นหนึ่งในสัญญาณสำคัญของการเข้าสู่การนอน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 690}, {"id": "decaf-drink-01", "name": "เครื่องดื่มผ่อนคลายไม่มีคาเฟอีน", "tier": "T3 Habit System", "icon": "🍵", "iconImg": "./assets/product-icons/decaf-night-drink.png", "badge": "NO CAFFEINE", "desc": "เหมาะกับคนติดเครื่องดื่มช่วงเย็น แต่อยากเลี่ยงคาเฟอีนที่รบกวนการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["caffeine", "wind_down", "habit"], "priority": 60, "why": "แทนพฤติกรรมเดิมด้วยเครื่องดื่มไม่มีคาเฟอีนช่วยลดแรงต้านในการปรับ routine", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 220}];
 
 
 
@@ -1658,7 +1745,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.6.26h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.27h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -1864,7 +1951,7 @@ function initProfileFormv964h() {
         }
 
 
-        // v9.6.26h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
+        // v9.6.27h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
         function getAdminVisibilityv9624h() {
             if (!db.adminVisibility || typeof db.adminVisibility !== 'object') db.adminVisibility = { leads: [], users: [], events: [] };
             return db.adminVisibility;
@@ -2181,7 +2268,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.26h</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.27h</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -2595,7 +2682,7 @@ function saveCloudUrlv96g() {
             renderAffiliateProducts(finalSelection);
         }
 
-        // v9.6.26h Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
+        // v9.6.27h Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
         function getPublicAffiliateFitLabelv9626h(product) {
             const key = String(product?.priceTierKey || product?.commercialTier || '').toLowerCase();
             if (key.includes('high')) return 'ตัวช่วยหลักสำหรับปัญหานี้';
