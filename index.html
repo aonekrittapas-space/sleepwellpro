@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.27h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.6.29h - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -14,13 +14,15 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
         /* v9.6.23h Mobile modal guard polish */
         @media (max-width: 640px) {
             #prodModal { align-items: flex-start !important; overflow-y: auto; padding: 14px !important; }
             #prodModal > div { width: 100% !important; max-height: none !important; margin-top: 18px; margin-bottom: 32px; }
             #modalShopeeLink, #modalTiktokLink { min-height: 48px; display: flex !important; align-items: center; justify-content: center; }
         }
-        /* v9.6.27h Mobile UX Final Polish: UI-only patch, Core Sync untouched */
+        /* v9.6.29h Mobile UX Final Polish: UI-only patch, Core Sync untouched */
         .swp-date-input-wrap { position: relative; }
         .swp-date-input-wrap .swp-date-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #22d3ee; opacity: .9; pointer-events: none; filter: drop-shadow(0 0 6px rgba(34,211,238,.35)); }
         .swp-quality-label-title { color: #e2e8f0; font-weight: 800; letter-spacing: .02em; }
@@ -55,9 +57,9 @@
             .swp-history-duration { white-space: nowrap; font-size: 13px; }
             .swp-affiliate-cta { min-height: 48px; font-size: 13px !important; }
         }
-        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Kanit:wght@200;300;400;500;600&display=swap');
+400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
         :root { --blue-ocean: #0f172a; --turquoise-blue: #06b6d4; --bright-pearl: #f1f5f9; }
-        body { font-family: 'Prompt', 'Kanit', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
+        body { font-family: 'IBM Plex Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--blue-ocean); color: var(--bright-pearl); margin: 0; }
         
         /* (- New Feature v9.6h -) ปรับแต่งกรอบกระจกเงาให้เป็นสไตล์ Neon Glowing Edge ปรับความพรีเมียมระดับสูง */
         .glass-card { 
@@ -404,7 +406,7 @@
 
     
 
-        /* v9.6.27h Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
+        /* v9.6.29h Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
         .swp-byline-sync { display: flex; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
         .swp-version-badge { white-space: nowrap; }
         .swp-change-pin-btn {
@@ -510,9 +512,9 @@
 
     
 
-        /* v9.6.27h GO LIVE FINAL VISUAL FREEZE: Mobile header, readability, picks branding, no Core Sync changes */
+        /* v9.6.29h GO LIVE FINAL VISUAL FREEZE: Mobile header, readability, picks branding, no Core Sync changes */
         :root { --dirty-pink: #ff8fa3; --cyan-neon: #22d3ee; }
-        body { font-family: 'Prompt', 'Kanit', sans-serif; letter-spacing: -0.005em; }
+        body { font-family: 'IBM Plex Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; letter-spacing: -0.01em; font-weight: 500; }
         .swp-title-line { display: inline; }
         .swp-title-line-2 { display: inline; }
         .swp-important-label,
@@ -595,6 +597,75 @@
             .affiliate-premium-section h3 { font-size: 18px !important; line-height: 1.3; }
         }
 
+    
+
+        /* v9.6.29h Final UI/UX Freeze: font + mobile header only, Core Sync/Login/PIN/Profile/Logs/Apps Script untouched */
+        :root { --swp-font: 'IBM Plex Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        html, body, button, input, select, textarea, table, .glass-card { font-family: var(--swp-font) !important; }
+        body { font-weight: 500; text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased; }
+        .swp-main-title { font-weight: 900 !important; letter-spacing: -0.045em !important; }
+        .swp-version-badge { font-family: 'Inter', 'Noto Sans Thai', sans-serif !important; font-weight: 800 !important; letter-spacing: .015em !important; }
+        .swp-date-inline { display: inline-grid; grid-template-columns: auto minmax(118px,1fr) auto minmax(118px,1fr); align-items: end; gap: 8px; }
+        .swp-date-label { color: #94a3b8; font-size: 9px; font-weight: 900; text-transform: uppercase; white-space: nowrap; }
+        .swp-date-to { align-self: center; }
+
+        @media (max-width: 640px) {
+            .swp-app-header { display: grid !important; grid-template-columns: 1fr !important; gap: 16px !important; margin-bottom: 30px !important; }
+            .swp-title-row { display: grid !important; grid-template-columns: 48px minmax(0,1fr) !important; gap: 12px !important; align-items: center !important; }
+            .app-title-logo { width: 44px !important; height: 44px !important; border-radius: 12px !important; }
+            #mainAppContent header h1.swp-main-title {
+                font-size: clamp(1.95rem, 8.35vw, 2.36rem) !important;
+                line-height: 1.08 !important;
+                max-width: 100% !important;
+                letter-spacing: -0.055em !important;
+                font-weight: 900 !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+            }
+            .swp-title-line, .swp-title-line-2 { display: block !important; }
+            #mainAppContent header h1 .swp-version-badge {
+                font-size: 10px !important;
+                line-height: 1 !important;
+                padding: 3px 8px !important;
+                margin-left: 8px !important;
+                margin-top: 0 !important;
+                border-radius: 7px !important;
+                transform: translateY(-4px) !important;
+            }
+            .swp-byline-sync {
+                display: grid !important;
+                grid-template-columns: minmax(0,1fr) auto !important;
+                align-items: center !important;
+                gap: 10px !important;
+                margin-top: 12px !important;
+            }
+            .swp-byline-sync p { margin: 0 !important; font-size: 14px !important; line-height: 1.25 !important; }
+            .swp-byline-sync #syncStatus { min-height: 40px !important; min-width: 124px !important; padding: 7px 12px !important; font-size: 13px !important; }
+            .swp-header-actions { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 10px !important; width: 100% !important; }
+            .swp-header-actions > button:not(.swp-share-btn) { min-height: 52px !important; width: 100% !important; font-size: 15px !important; }
+            .swp-date-share { grid-column: 1 / -1 !important; width: 100% !important; margin-top: 8px !important; text-align: left !important; }
+            .swp-date-inline { display: grid !important; grid-template-columns: auto minmax(0,1fr) auto minmax(0,1fr) !important; gap: 8px !important; align-items: end !important; width: 100% !important; }
+            .swp-date-label { font-size: 14px !important; color: #cbd5e1 !important; font-weight: 900 !important; text-transform: none !important; align-self: center !important; }
+            .swp-date-to { font-size: 14px !important; color: #94a3b8 !important; align-self: center !important; }
+            .swp-date-share input[type="date"] { min-width: 0 !important; width: 100% !important; min-height: 44px !important; font-size: 15px !important; padding: 7px 2px !important; }
+            .swp-share-btn { grid-column: 1 / -1 !important; width: 100% !important; min-height: 58px !important; font-size: 17px !important; }
+        }
+
+
+        /* v9.6.29h Final Font Lock: must stay after every legacy CSS rule */
+        :root { --swp-font: 'IBM Plex Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        html, body, button, input, select, textarea, table, .glass-card, #leadMagnetOverlay, #pinOverlay, #mainAppContent, #prodModal {
+            font-family: var(--swp-font) !important;
+            font-feature-settings: 'kern' 1;
+            text-rendering: optimizeLegibility;
+        }
+        .swp-main-title, #leadMagnetOverlay h2 {
+            font-family: var(--swp-font) !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.035em !important;
+        }
+        .swp-version-badge { font-family: 'Inter', var(--swp-font) !important; }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -653,7 +724,7 @@
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.27h PRO</span></span></h1>
+                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.29h PRO</span></span></h1>
                         <div class="swp-byline-sync">
                             <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                             <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
@@ -672,10 +743,10 @@
                     <i class="fas fa-upload text-emerald-400"></i> นำเข้าข้อมูล
                 </button>
                 <div class="swp-date-share text-right">
-                    <p class="text-[9px] text-slate-500 uppercase font-bold">ช่วงวันที่แชร์:</p>
-                    <div class="flex gap-2">
+                    <div class="swp-date-inline">
+                        <span class="swp-date-label">ช่วงวันที่แชร์:</span>
                         <input type="date" id="shareStart" class="bg-transparent text-[11px] text-cyan-400 outline-none border-b border-slate-700">
-                        <span class="text-slate-600 text-[10px]">ถึง</span>
+                        <span class="swp-date-to text-slate-600 text-[10px]">ถึง</span>
                         <input type="date" id="shareEnd" class="bg-transparent text-[11px] text-cyan-400 outline-none border-b border-slate-700">
                     </div>
                 </div>
@@ -840,7 +911,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.27h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.6.29h • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -886,7 +957,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.27h";
+        const APP_VERSION = "9.6.29h";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1745,7 +1816,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.6.27h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.6.29h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -1951,7 +2022,7 @@ function initProfileFormv964h() {
         }
 
 
-        // v9.6.27h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
+        // v9.6.29h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
         function getAdminVisibilityv9624h() {
             if (!db.adminVisibility || typeof db.adminVisibility !== 'object') db.adminVisibility = { leads: [], users: [], events: [] };
             return db.adminVisibility;
@@ -2268,7 +2339,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.27h</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.29h</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -2682,7 +2753,7 @@ function saveCloudUrlv96g() {
             renderAffiliateProducts(finalSelection);
         }
 
-        // v9.6.27h Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
+        // v9.6.29h Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
         function getPublicAffiliateFitLabelv9626h(product) {
             const key = String(product?.priceTierKey || product?.commercialTier || '').toLowerCase();
             if (key.includes('high')) return 'ตัวช่วยหลักสำหรับปัญหานี้';
@@ -3019,8 +3090,8 @@ function saveCloudUrlv96g() {
                             borderColor: 'rgba(6, 182, 212, 0.4)',
                             borderWidth: 1,
                             padding: 12,
-                            bodyFont: { family: 'Kanit' },
-                            titleFont: { family: 'Kanit', weight: 'bold' },
+                            bodyFont: { family: 'IBM Plex Sans Thai' },
+                            titleFont: { family: 'IBM Plex Sans Thai', weight: 'bold' },
                             callbacks: {
                                 label: function(context) {
                                     const index = context.dataIndex;
@@ -3043,7 +3114,7 @@ function saveCloudUrlv96g() {
                     scales: { 
                         x: {
                             grid: { color: 'rgba(255,255,255,0.02)' },
-                            ticks: { color: '#94a3b8', font: { family: 'Kanit' } }
+                            ticks: { color: '#94a3b8', font: { family: 'IBM Plex Sans Thai' } }
                         },
                         y: { 
                             position: 'left', 
@@ -3107,7 +3178,7 @@ function saveCloudUrlv96g() {
                             borderColor: 'rgba(245, 158, 11, 0.3)',
                             borderWidth: 1,
                             padding: 12,
-                            bodyFont: { family: 'Kanit' },
+                            bodyFont: { family: 'IBM Plex Sans Thai' },
                             callbacks: {
                                 label: function(context) {
                                     if(context.datasetIndex === 0) {
