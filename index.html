@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.7.3a - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.7.3c - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -879,7 +879,7 @@
 
     
 /* =========================================================
-   v9.7.3a MOBILE HEADER LOCKUP HOTFIX
+   v9.7.3c MOBILE HEADER LOCKUP HOTFIX
    Scope: UI-only. Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script.
    Goal: On real mobile viewport, make main title clearly larger in 2 lines,
    and make version badge smaller inline after line 2.
@@ -1016,6 +1016,140 @@
     }
 }
 
+
+
+/* =========================================================
+   v9.7.3c INTEGRATED MOBILE HEADER LOCKUP
+   Root fix: do not rely only on max-width media queries.
+   Real mobile Chrome can report wide CSS viewport, so this uses
+   html/body.swp-real-mobile-header applied by JS below.
+   Scope: visual header only. No Core Sync / Login / PIN / Profile / Logs / Apps Script changes.
+   ========================================================= */
+html.swp-real-mobile-header #mainAppContent .swp-app-header,
+body.swp-real-mobile-header #mainAppContent .swp-app-header {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 28px !important;
+    overflow: visible !important;
+}
+
+html.swp-real-mobile-header #mainAppContent .swp-header-identity,
+body.swp-real-mobile-header #mainAppContent .swp-header-identity {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+}
+
+html.swp-real-mobile-header #mainAppContent .swp-title-row,
+body.swp-real-mobile-header #mainAppContent .swp-title-row {
+    display: grid !important;
+    grid-template-columns: clamp(54px, 11vw, 68px) minmax(0, 1fr) !important;
+    align-items: center !important;
+    justify-content: start !important;
+    gap: clamp(12px, 3vw, 18px) !important;
+    width: 100% !important;
+    min-height: clamp(92px, 18vw, 128px) !important;
+    padding: 6px 0 !important;
+    overflow: visible !important;
+}
+
+html.swp-real-mobile-header #mainAppContent .swp-title-row .app-title-logo,
+body.swp-real-mobile-header #mainAppContent .swp-title-row .app-title-logo {
+    width: clamp(54px, 11vw, 68px) !important;
+    height: clamp(54px, 11vw, 68px) !important;
+    min-width: clamp(54px, 11vw, 68px) !important;
+    flex: 0 0 clamp(54px, 11vw, 68px) !important;
+    align-self: center !important;
+    border-radius: 15px !important;
+    object-fit: cover !important;
+    filter: drop-shadow(0 0 14px rgba(34, 211, 238, .34)) !important;
+}
+
+html.swp-real-mobile-header #mainAppContent .swp-title-copy,
+body.swp-real-mobile-header #mainAppContent .swp-title-copy {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+}
+
+html.swp-real-mobile-header #mainAppContent header h1.swp-main-title,
+html.swp-real-mobile-header #mainAppContent .swp-main-title,
+body.swp-real-mobile-header #mainAppContent header h1.swp-main-title,
+body.swp-real-mobile-header #mainAppContent .swp-main-title {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--swp-font), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--swp-mobile-title-size, 38px) !important;
+    line-height: 1.03 !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.058em !important;
+    color: #f8fafc !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    overflow: visible !important;
+    text-shadow: 0 0 12px rgba(255,255,255,.12) !important;
+}
+
+html.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-title-line,
+body.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-title-line {
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+}
+
+html.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-title-line-2,
+body.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-title-line-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    gap: clamp(7px, 2vw, 11px) !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+}
+
+html.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-version-badge,
+html.swp-real-mobile-header #mainAppContent .swp-version-badge,
+body.swp-real-mobile-header #mainAppContent header h1.swp-main-title .swp-version-badge,
+body.swp-real-mobile-header #mainAppContent .swp-version-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 4px 9px !important;
+    border-radius: 10px !important;
+    font-family: 'Inter', var(--swp-font), system-ui, sans-serif !important;
+    font-size: var(--swp-mobile-badge-size, 11px) !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .01em !important;
+    white-space: nowrap !important;
+    color: #22d3ee !important;
+    border: 1px solid rgba(34, 211, 238, .92) !important;
+    background: rgba(2, 6, 23, .68) !important;
+    box-shadow: 0 0 12px rgba(6, 182, 212, .62), inset 0 0 10px rgba(6, 182, 212, .08) !important;
+    transform: translateY(-1px) !important;
+}
+
 </style>
 </head>
 <body class="p-4 md:p-8">
@@ -1074,7 +1208,7 @@
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.7.3a PRO</span></span></h1>
+                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.7.3c PRO</span></span></h1>
                         <div class="swp-byline-sync">
                             <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                             <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
@@ -3707,5 +3841,101 @@ function saveCloudUrlv96g() {
             }
         };
     </script>
+
+<script>
+/* v9.7.3c mobile header integrated renderer
+   Visual-only. Does not modify data, sync, login, PIN, profile, logs, or Apps Script endpoint. */
+(function () {
+  function isRealMobileHeaderContext() {
+    var ua = navigator.userAgent || '';
+    var touch = (navigator.maxTouchPoints || 0) > 0;
+    var coarse = false;
+    try { coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches; } catch (e) {}
+    var mobileUA = /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV/i.test(ua);
+    var w = Math.min(window.innerWidth || 9999, window.screen && window.screen.width || 9999);
+    return mobileUA || coarse || (touch && w <= 1100);
+  }
+
+  function applyMobileHeaderLockup() {
+    if (!isRealMobileHeaderContext()) return;
+
+    document.documentElement.classList.add('swp-real-mobile-header');
+    document.body && document.body.classList.add('swp-real-mobile-header');
+
+    var row = document.querySelector('#mainAppContent .swp-title-row');
+    var logo = document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
+    var title = document.querySelector('#mainAppContent .swp-main-title');
+    var line1 = document.querySelector('#mainAppContent .swp-main-title .swp-title-line');
+    var line2 = document.querySelector('#mainAppContent .swp-main-title .swp-title-line-2');
+    var badge = document.querySelector('#mainAppContent .swp-main-title .swp-version-badge');
+    if (!row || !title) return;
+
+    var vw = Math.min(window.innerWidth || document.documentElement.clientWidth || 390, 980);
+    // Real mobile Chrome sometimes reports a wide layout viewport. Clamp keeps it usable.
+    var titleSize = Math.max(34, Math.min(48, vw * 0.092));
+    var badgeSize = Math.max(10, Math.min(12, titleSize * 0.27));
+    var logoSize = Math.max(54, Math.min(68, titleSize * 1.42));
+
+    document.documentElement.style.setProperty('--swp-mobile-title-size', titleSize.toFixed(1) + 'px');
+    document.documentElement.style.setProperty('--swp-mobile-badge-size', badgeSize.toFixed(1) + 'px');
+
+    row.style.setProperty('display', 'grid', 'important');
+    row.style.setProperty('grid-template-columns', logoSize.toFixed(0) + 'px minmax(0, 1fr)', 'important');
+    row.style.setProperty('gap', '14px', 'important');
+    row.style.setProperty('align-items', 'center', 'important');
+    row.style.setProperty('min-height', Math.max(100, logoSize + 38).toFixed(0) + 'px', 'important');
+    row.style.setProperty('overflow', 'visible', 'important');
+
+    if (logo) {
+      logo.style.setProperty('width', logoSize.toFixed(0) + 'px', 'important');
+      logo.style.setProperty('height', logoSize.toFixed(0) + 'px', 'important');
+      logo.style.setProperty('min-width', logoSize.toFixed(0) + 'px', 'important');
+      logo.style.setProperty('flex-basis', logoSize.toFixed(0) + 'px', 'important');
+    }
+
+    title.style.setProperty('font-size', titleSize.toFixed(1) + 'px', 'important');
+    title.style.setProperty('line-height', '1.03', 'important');
+    title.style.setProperty('font-weight', '900', 'important');
+    title.style.setProperty('letter-spacing', '-0.058em', 'important');
+    title.style.setProperty('white-space', 'normal', 'important');
+    title.style.setProperty('overflow', 'visible', 'important');
+    title.style.setProperty('max-width', 'none', 'important');
+
+    [line1, line2].forEach(function (el) {
+      if (!el) return;
+      el.style.setProperty('white-space', 'nowrap', 'important');
+      el.style.setProperty('overflow', 'visible', 'important');
+      el.style.setProperty('word-break', 'keep-all', 'important');
+      el.style.setProperty('overflow-wrap', 'normal', 'important');
+    });
+
+    if (line2) {
+      line2.style.setProperty('display', 'flex', 'important');
+      line2.style.setProperty('align-items', 'center', 'important');
+      line2.style.setProperty('gap', '9px', 'important');
+      line2.style.setProperty('flex-wrap', 'nowrap', 'important');
+    }
+
+    if (badge) {
+      badge.style.setProperty('font-size', badgeSize.toFixed(1) + 'px', 'important');
+      badge.style.setProperty('padding', '4px 9px', 'important');
+      badge.style.setProperty('border-radius', '10px', 'important');
+      badge.style.setProperty('margin', '0', 'important');
+      badge.style.setProperty('white-space', 'nowrap', 'important');
+      badge.style.setProperty('transform', 'translateY(-1px)', 'important');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyMobileHeaderLockup);
+  } else {
+    applyMobileHeaderLockup();
+  }
+  window.addEventListener('load', applyMobileHeaderLockup, { once: true });
+  window.addEventListener('resize', applyMobileHeaderLockup);
+  window.addEventListener('orientationchange', function () { setTimeout(applyMobileHeaderLockup, 250); });
+})();
+</script>
+
 </body>
 </html>
