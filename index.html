@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.6.30h - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.7.1a - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -18,7 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
 
-        /* v9.6.30h Emergency CSS Recovery: UI-only; Core Sync/Login/PIN/Profile/Logs untouched */
+        /* v9.7.1a Emergency CSS Recovery: UI-only; Core Sync/Login/PIN/Profile/Logs untouched */
         :root { --blue-ocean:#0f172a; --turquoise-blue:#06b6d4; --bright-pearl:#f1f5f9; --swp-font:'Noto Sans Thai','Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
         html, body { background:#0f172a !important; color:#f1f5f9 !important; margin:0; min-height:100%; font-family:var(--swp-font) !important; }
         body, button, input, select, textarea, table, .glass-card, #leadMagnetOverlay, #pinOverlay, #mainAppContent, #prodModal { font-family:var(--swp-font) !important; }
@@ -32,7 +32,7 @@
             #prodModal > div { width: 100% !important; max-height: none !important; margin-top: 18px; margin-bottom: 32px; }
             #modalShopeeLink, #modalTiktokLink { min-height: 48px; display: flex !important; align-items: center; justify-content: center; }
         }
-        /* v9.6.30h Mobile UX Final Polish: UI-only patch, Core Sync untouched */
+        /* v9.7.1a Mobile UX Final Polish: UI-only patch, Core Sync untouched */
         .swp-date-input-wrap { position: relative; }
         .swp-date-input-wrap .swp-date-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #22d3ee; opacity: .9; pointer-events: none; filter: drop-shadow(0 0 6px rgba(34,211,238,.35)); }
         .swp-quality-label-title { color: #e2e8f0; font-weight: 800; letter-spacing: .02em; }
@@ -415,7 +415,7 @@
 
     
 
-        /* v9.6.30h Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
+        /* v9.7.1a Mobile UX Final Polish: UI/CSS/display-only, Core Sync untouched */
         .swp-byline-sync { display: flex; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
         .swp-version-badge { white-space: nowrap; }
         .swp-change-pin-btn {
@@ -521,7 +521,7 @@
 
     
 
-        /* v9.6.30h GO LIVE FINAL VISUAL FREEZE: Mobile header, readability, picks branding, no Core Sync changes */
+        /* v9.7.1a GO LIVE FINAL VISUAL FREEZE: Mobile header, readability, picks branding, no Core Sync changes */
         :root { --dirty-pink: #ff8fa3; --cyan-neon: #22d3ee; }
         body { font-family: 'Noto Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; letter-spacing: -0.01em; font-weight: 500; }
         .swp-title-line { display: inline; }
@@ -608,7 +608,7 @@
 
     
 
-        /* v9.6.30h Final UI/UX Freeze: font + mobile header only, Core Sync/Login/PIN/Profile/Logs/Apps Script untouched */
+        /* v9.7.1a Final UI/UX Freeze: font + mobile header only, Core Sync/Login/PIN/Profile/Logs/Apps Script untouched */
         :root { --swp-font: 'Noto Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         html, body, button, input, select, textarea, table, .glass-card { font-family: var(--swp-font) !important; }
         body { font-weight: 500; text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased; }
@@ -661,7 +661,7 @@
         }
 
 
-        /* v9.6.30h Final Font Lock: must stay after every legacy CSS rule */
+        /* v9.7.1a Final Font Lock: must stay after every legacy CSS rule */
         :root { --swp-font: 'Noto Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         html, body, button, input, select, textarea, table, .glass-card, #leadMagnetOverlay, #pinOverlay, #mainAppContent, #prodModal {
             font-family: var(--swp-font) !important;
@@ -676,7 +676,7 @@
         .swp-version-badge { font-family: 'Inter', var(--swp-font) !important; }
 
 
-        /* v9.6.30h Mobile header final safety guard */
+        /* v9.7.1a Mobile header final safety guard */
         @media (max-width: 640px) {
             body { padding: 0 !important; overflow-x: hidden !important; }
             #mainAppContent { padding: 24px 16px 96px !important; }
@@ -689,6 +689,78 @@
             .swp-date-share { grid-column: 1 / -1 !important; }
             .swp-date-inline { display: grid !important; grid-template-columns: auto minmax(0,1fr) auto minmax(0,1fr) !important; gap: 8px !important; align-items: center !important; }
             .swp-share-btn { grid-column: 1 / -1 !important; width: 100% !important; }
+        }
+
+
+        /* v9.7.1a Mobile Header Size Patch: UI-only, no Core Sync/Login/PIN/Profile/Logs/Apps Script changes */
+        @media (max-width: 640px) {
+            .swp-app-header {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+                margin-bottom: 28px !important;
+            }
+            .swp-title-row {
+                display: grid !important;
+                grid-template-columns: 46px minmax(0, 1fr) !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100% !important;
+            }
+            .app-title-logo {
+                width: 46px !important;
+                height: 46px !important;
+                flex: 0 0 46px !important;
+                border-radius: 12px !important;
+            }
+            #mainAppContent header h1.swp-main-title,
+            #mainAppContent .swp-main-title {
+                font-family: var(--swp-font) !important;
+                font-size: clamp(1.25rem, 5.25vw, 1.38rem) !important; /* ~15% smaller than unlock title */
+                line-height: 1.24 !important;
+                font-weight: 800 !important;
+                letter-spacing: -0.025em !important;
+                max-width: 100% !important;
+                white-space: normal !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+                text-align: left !important;
+                color: #f8fafc !important;
+            }
+            #mainAppContent header h1.swp-main-title .swp-title-line,
+            #mainAppContent header h1.swp-main-title .swp-title-line-2 {
+                display: block !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            #mainAppContent header h1.swp-main-title .swp-title-line-2 {
+                display: flex !important;
+                align-items: center !important;
+                flex-wrap: wrap !important;
+                gap: 7px !important;
+            }
+            #mainAppContent header h1.swp-main-title .swp-version-badge,
+            .swp-version-badge {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-family: 'Inter', var(--swp-font) !important;
+                font-size: 10px !important; /* close to chart legend labels */
+                line-height: 1 !important;
+                font-weight: 800 !important;
+                letter-spacing: .02em !important;
+                padding: 4px 8px !important;
+                border-radius: 8px !important;
+                margin: 0 !important;
+                white-space: nowrap !important;
+                vertical-align: middle !important;
+            }
+            .swp-byline-sync {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) auto !important;
+                gap: 10px !important;
+                align-items: center !important;
+            }
         }
 
     </style>
@@ -749,7 +821,7 @@
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.6.30h PRO</span></span></h1>
+                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.7.1a PRO</span></span></h1>
                         <div class="swp-byline-sync">
                             <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                             <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
@@ -936,7 +1008,7 @@
             </div>
         </div>
         <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.6.30h • BY AONE KRITTAPAS
+            SLEEP WELL PRO SYSTEM • VERSION 9.7.1a • BY AONE KRITTAPAS
         </footer>
     </div>
 
@@ -982,7 +1054,7 @@
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.6.30h";
+        const APP_VERSION = "9.7.1a";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -1841,7 +1913,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.6.30h]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.7.1a]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -2047,7 +2119,7 @@ function initProfileFormv964h() {
         }
 
 
-        // v9.6.30h: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
+        // v9.7.1a: Admin Data Visibility Fix (read-only admin layer, does not touch core sync)
         function getAdminVisibilityv9624h() {
             if (!db.adminVisibility || typeof db.adminVisibility !== 'object') db.adminVisibility = { leads: [], users: [], events: [] };
             return db.adminVisibility;
@@ -2364,7 +2436,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.6.30h</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.1a</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -2778,7 +2850,7 @@ function saveCloudUrlv96g() {
             renderAffiliateProducts(finalSelection);
         }
 
-        // v9.6.30h Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
+        // v9.7.1a Mobile UX Final Polish: Public copy by commercial tier, no backend wording shown to users
         function getPublicAffiliateFitLabelv9626h(product) {
             const key = String(product?.priceTierKey || product?.commercialTier || '').toLowerCase();
             if (key.includes('high')) return 'ตัวช่วยหลักสำหรับปัญหานี้';
