@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.7.5a - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.7.6a - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -1150,6 +1150,100 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
     transform: translateY(-1px) !important;
 }
 
+
+        /* v9.7.6a Go-Live Header Lockup + Perceived Speed + Scroll Stability
+           UI-only except submit transition feedback. Does NOT change Cloud Sync, Login rules, PIN value, Profile, Logs, or Apps Script endpoint. */
+        .swp-title-lockup-svg { display:block; overflow:visible; }
+        .swp-svg-title-text{
+            font-family: 'Noto Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 950;
+            letter-spacing: -1.25px;
+            fill: #f8fafc;
+        }
+        .swp-svg-version rect{
+            fill: rgba(2, 6, 23, .82);
+            stroke: rgba(34, 211, 238, .98);
+            stroke-width: 2;
+        }
+        .swp-svg-version text{
+            font-family: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: .2px;
+            fill: #22d3ee;
+        }
+        #pinOverlay.swp-pin-preparing .pin-dot { opacity: .55; }
+        #pinOverlay.swp-pin-preparing button { opacity: .38 !important; pointer-events: none !important; }
+        #pinOverlay.swp-pin-preparing #pinMsg { color:#22d3ee !important; }
+
+        @media (max-width: 767px), (max-device-width: 540px), (pointer: coarse) and (max-width: 900px) {
+            body { overflow-x: hidden !important; }
+            #mainAppContent .swp-app-header{
+                transform: translateZ(0) !important;
+                backface-visibility: hidden !important;
+                contain: layout paint style !important;
+            }
+            #mainAppContent .swp-title-row{
+                display: grid !important;
+                grid-template-columns: 76px minmax(0, 1fr) !important;
+                align-items: center !important;
+                gap: 18px !important;
+                width: 100% !important;
+                min-height: 122px !important;
+                overflow: visible !important;
+                padding: 10px 0 8px !important;
+            }
+            #mainAppContent .swp-title-row .app-title-logo{
+                width: 72px !important;
+                height: 72px !important;
+                min-width: 72px !important;
+                max-width: 72px !important;
+                object-fit: cover !important;
+                filter: drop-shadow(0 0 14px rgba(34,211,238,.25)) !important;
+            }
+            #mainAppContent .swp-title-copy{
+                min-width: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                overflow: visible !important;
+            }
+            #mainAppContent .swp-main-title.swp-lockup-title{
+                display: block !important;
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: 0 !important;
+                overflow: visible !important;
+                font-size: 0 !important;
+                white-space: normal !important;
+            }
+            #mainAppContent .swp-title-lockup-svg{
+                width: min(100%, 440px) !important;
+                min-width: 320px !important;
+                height: auto !important;
+                max-width: none !important;
+                overflow: visible !important;
+                transform: translateZ(0) !important;
+            }
+            #mainAppContent .swp-byline-sync{
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) auto !important;
+                align-items: center !important;
+                gap: 10px !important;
+                width: 100% !important;
+                margin-top: 14px !important;
+            }
+            #mainAppContent .swp-header-actions,
+            #mainAppContent .glass-card,
+            #mainAppContent canvas {
+                backface-visibility: hidden !important;
+                transform: translateZ(0) !important;
+            }
+        }
+
 </style>
 </head>
 <body class="p-4 md:p-8">
@@ -1208,7 +1302,32 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title text-3xl font-bold tracking-tight leading-tight"><span class="swp-title-line">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge text-[10px] border border-cyan-500 px-2 py-0.5 rounded text-cyan-400 ml-2 shadow-[0_0_8px_#06b6d4]">v9.7.5a PRO</span></span></h1>
+                        <h1 class="swp-main-title swp-lockup-title" aria-label="ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน v9.7.6a PRO">
+                            <svg class="swp-title-lockup-svg" viewBox="0 0 430 128" role="img" aria-hidden="true" preserveAspectRatio="xMinYMid meet">
+                                <defs>
+                                    <filter id="swpTitleGlow" x="-20%" y="-40%" width="150%" height="180%">
+                                        <feGaussianBlur stdDeviation="2.1" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                    <filter id="swpBadgeGlow" x="-30%" y="-60%" width="170%" height="220%">
+                                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <text x="0" y="48" class="swp-svg-title-text" filter="url(#swpTitleGlow)">ระบบผู้ช่วยอัจฉริยะ</text>
+                                <text x="0" y="99" class="swp-svg-title-text" filter="url(#swpTitleGlow)">สุขภาพการนอน</text>
+                                <g class="swp-svg-version" transform="translate(244,68)" filter="url(#swpBadgeGlow)">
+                                    <rect x="0" y="0" width="168" height="42" rx="14" />
+                                    <text x="84" y="27" text-anchor="middle">v9.7.6a PRO</text>
+                                </g>
+                            </svg>
+                        </h1>
                         <div class="swp-byline-sync">
                             <p class="text-slate-400 text-xs">by <span class="font-bold italic" style="color: var(--turquoise-blue)">Aone Krittapas</span></p>
                             <div id="syncStatus" class="sync-status-pill" title="Cloud Sync Status">
@@ -1441,7 +1560,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
         runDatabaseMigrationv96h();
 
         // (- New Feature v9.6.15h -) Version Control Configuration
-        const APP_VERSION = "9.7.2a";
+        const APP_VERSION = "9.7.6a";
         const DATA_SCHEMA_VERSION = "2026-05-sleepwellpro-v1";
         const AUTO_BACKUP_LIMIT = 15;
 
@@ -2300,7 +2419,7 @@ function initProfileFormv964h() {
                 return;
             }
             const currentPin = db.security && db.security.pin ? db.security.pin : "1234";
-            const enteredPin = prompt("🔒 [Admin Control Center v9.7.2a]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
+            const enteredPin = prompt("🔒 [Admin Control Center v9.7.6a]\nกรุณาระบุรหัส PIN ของ Admin เพื่อเปิดแผงควบคุมระบบ:");
             if (enteredPin === null) return;
             if (enteredPin === currentPin) {
                 openAdminDashboardPanelUI();
@@ -2823,7 +2942,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.2a</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.6a</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
@@ -3011,6 +3130,7 @@ function saveCloudUrlv96g() {
                 saveToStoragev96g({ actionType: 'submitLead' });
                 refreshAdminTriggerVisibilityv9612h();
                 setSyncStatusv965h('syncing', 'กำลังตรวจสอบบัญชี...');
+                showPinPreparingImmediatelyv976a('กำลังเตรียมบัญชี...');
 
                 // Pull-first: ถ้าอีเมลนี้เคยมีข้อมูลใน Cloud ให้ดึงมาก่อนเข้า PIN; ถ้าเป็นอีเมลใหม่จริง จะคงข้อมูลว่างสะอาดไว้
                 const pulled = await syncFromCloudv964h({ render: false });
@@ -3026,20 +3146,59 @@ function saveCloudUrlv96g() {
                 initProfileFormv964h();
                 renderDashboard();
 
-                const leadOverlay = document.getElementById('leadMagnetOverlay');
-                const pinOverlay = document.getElementById('pinOverlay');
-                pinOverlay.classList.remove('hidden');
-                pinOverlay.style.opacity = '1';
-                pinOverlay.style.display = 'flex';
-                leadOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    leadOverlay.classList.add('hidden');
-                    leadOverlay.style.display = 'none';
-                }, 250);
+                // v9.7.6a: PIN screen is already visible; now unlock keypad after the existing preparation flow finishes.
+                setPinPreparingv976a(false);
             } catch (err) {
                 console.error('submitLeadMagnet failed', err);
+                setPinPreparingv976a(false);
                 alert('ระบบลงทะเบียนมีข้อผิดพลาด กรุณารีเฟรชหน้าแล้วลองใหม่อีกครั้ง');
             }
+        }
+
+
+        // v9.7.6a: Perceived-speed fix for registration -> PIN transition.
+        // Shows PIN preparation state immediately while keeping the existing Cloud Sync flow intact.
+        function setPinPreparingv976a(isPreparing, message) {
+            try {
+                const pinOverlay = document.getElementById('pinOverlay');
+                const pinMsg = document.getElementById('pinMsg');
+                if (!pinOverlay) return;
+                if (isPreparing) {
+                    pinOverlay.classList.add('swp-pin-preparing');
+                    pinOverlay.classList.remove('hidden');
+                    pinOverlay.style.opacity = '1';
+                    pinOverlay.style.display = 'flex';
+                    pinOverlay.querySelectorAll('button').forEach(btn => { btn.disabled = true; });
+                    if (pinMsg) pinMsg.innerText = message || 'กำลังเตรียมบัญชี...';
+                } else {
+                    pinOverlay.classList.remove('swp-pin-preparing');
+                    pinOverlay.querySelectorAll('button').forEach(btn => { btn.disabled = false; });
+                    if (pinMsg) {
+                        pinMsg.innerText = 'Enter Security PIN';
+                        pinMsg.classList.remove('text-rose-500');
+                    }
+                }
+            } catch(e) { console.warn('setPinPreparingv976a failed', e); }
+        }
+
+        function showPinPreparingImmediatelyv976a(message) {
+            try {
+                const leadOverlay = document.getElementById('leadMagnetOverlay');
+                const pinOverlay = document.getElementById('pinOverlay');
+                if (pinOverlay) {
+                    pinOverlay.classList.remove('hidden');
+                    pinOverlay.style.opacity = '1';
+                    pinOverlay.style.display = 'flex';
+                }
+                setPinPreparingv976a(true, message || 'กำลังเตรียมบัญชี...');
+                if (leadOverlay) {
+                    leadOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        leadOverlay.classList.add('hidden');
+                        leadOverlay.style.display = 'none';
+                    }, 180);
+                }
+            } catch(e) { console.warn('showPinPreparingImmediatelyv976a failed', e); }
         }
 
         // Security PIN Core Authentication Routine Flow
@@ -3562,6 +3721,8 @@ function saveCloudUrlv96g() {
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
+                    resizeDelay: 300,
+                    animation: false,
                     plugins: { 
                         legend: { display: false }, 
                         tooltip: { 
@@ -3651,7 +3812,9 @@ function saveCloudUrlv96g() {
                 },
                 options: { 
                     responsive: true, 
-                    maintainAspectRatio: false, 
+                    maintainAspectRatio: false,
+                    resizeDelay: 300,
+                    animation: false, 
                     plugins: { 
                         legend: { display: false },
                         tooltip: {
@@ -3842,877 +4005,6 @@ function saveCloudUrlv96g() {
         };
     </script>
 
-<script>
-/* v9.7.3c mobile header integrated renderer
-   Visual-only. Does not modify data, sync, login, PIN, profile, logs, or Apps Script endpoint. */
-(function () {
-  function isRealMobileHeaderContext() {
-    var ua = navigator.userAgent || '';
-    var touch = (navigator.maxTouchPoints || 0) > 0;
-    var coarse = false;
-    try { coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches; } catch (e) {}
-    var mobileUA = /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV/i.test(ua);
-    var w = Math.min(window.innerWidth || 9999, window.screen && window.screen.width || 9999);
-    return mobileUA || coarse || (touch && w <= 1100);
-  }
-
-  function applyMobileHeaderLockup() {
-    if (!isRealMobileHeaderContext()) return;
-
-    document.documentElement.classList.add('swp-real-mobile-header');
-    document.body && document.body.classList.add('swp-real-mobile-header');
-
-    var row = document.querySelector('#mainAppContent .swp-title-row');
-    var logo = document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
-    var title = document.querySelector('#mainAppContent .swp-main-title');
-    var line1 = document.querySelector('#mainAppContent .swp-main-title .swp-title-line');
-    var line2 = document.querySelector('#mainAppContent .swp-main-title .swp-title-line-2');
-    var badge = document.querySelector('#mainAppContent .swp-main-title .swp-version-badge');
-    if (!row || !title) return;
-
-    var vw = Math.min(window.innerWidth || document.documentElement.clientWidth || 390, 980);
-    // Real mobile Chrome sometimes reports a wide layout viewport. Clamp keeps it usable.
-    var titleSize = Math.max(34, Math.min(48, vw * 0.092));
-    var badgeSize = Math.max(10, Math.min(12, titleSize * 0.27));
-    var logoSize = Math.max(54, Math.min(68, titleSize * 1.42));
-
-    document.documentElement.style.setProperty('--swp-mobile-title-size', titleSize.toFixed(1) + 'px');
-    document.documentElement.style.setProperty('--swp-mobile-badge-size', badgeSize.toFixed(1) + 'px');
-
-    row.style.setProperty('display', 'grid', 'important');
-    row.style.setProperty('grid-template-columns', logoSize.toFixed(0) + 'px minmax(0, 1fr)', 'important');
-    row.style.setProperty('gap', '14px', 'important');
-    row.style.setProperty('align-items', 'center', 'important');
-    row.style.setProperty('min-height', Math.max(100, logoSize + 38).toFixed(0) + 'px', 'important');
-    row.style.setProperty('overflow', 'visible', 'important');
-
-    if (logo) {
-      logo.style.setProperty('width', logoSize.toFixed(0) + 'px', 'important');
-      logo.style.setProperty('height', logoSize.toFixed(0) + 'px', 'important');
-      logo.style.setProperty('min-width', logoSize.toFixed(0) + 'px', 'important');
-      logo.style.setProperty('flex-basis', logoSize.toFixed(0) + 'px', 'important');
-    }
-
-    title.style.setProperty('font-size', titleSize.toFixed(1) + 'px', 'important');
-    title.style.setProperty('line-height', '1.03', 'important');
-    title.style.setProperty('font-weight', '900', 'important');
-    title.style.setProperty('letter-spacing', '-0.058em', 'important');
-    title.style.setProperty('white-space', 'normal', 'important');
-    title.style.setProperty('overflow', 'visible', 'important');
-    title.style.setProperty('max-width', 'none', 'important');
-
-    [line1, line2].forEach(function (el) {
-      if (!el) return;
-      el.style.setProperty('white-space', 'nowrap', 'important');
-      el.style.setProperty('overflow', 'visible', 'important');
-      el.style.setProperty('word-break', 'keep-all', 'important');
-      el.style.setProperty('overflow-wrap', 'normal', 'important');
-    });
-
-    if (line2) {
-      line2.style.setProperty('display', 'flex', 'important');
-      line2.style.setProperty('align-items', 'center', 'important');
-      line2.style.setProperty('gap', '9px', 'important');
-      line2.style.setProperty('flex-wrap', 'nowrap', 'important');
-    }
-
-    if (badge) {
-      badge.style.setProperty('font-size', badgeSize.toFixed(1) + 'px', 'important');
-      badge.style.setProperty('padding', '4px 9px', 'important');
-      badge.style.setProperty('border-radius', '10px', 'important');
-      badge.style.setProperty('margin', '0', 'important');
-      badge.style.setProperty('white-space', 'nowrap', 'important');
-      badge.style.setProperty('transform', 'translateY(-1px)', 'important');
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyMobileHeaderLockup);
-  } else {
-    applyMobileHeaderLockup();
-  }
-  window.addEventListener('load', applyMobileHeaderLockup, { once: true });
-  window.addEventListener('resize', applyMobileHeaderLockup);
-  window.addEventListener('orientationchange', function () { setTimeout(applyMobileHeaderLockup, 250); });
-})();
-</script>
-
-
-
-<style id="swp-v973e-force-mobile-header-style">
-/* v9.7.5a FORCE MOBILE HEADER LOCKUP — visual header only, no data/sync/login changes */
-@media screen and (max-device-width: 540px), screen and (hover: none) and (pointer: coarse) {
-  html body.swp-force-mobile-header-v973e #mainAppContent header.swp-app-header {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-    margin-bottom: 28px !important;
-    overflow: visible !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent .swp-header-identity { width:100% !important; max-width:100% !important; overflow:visible !important; }
-  html body.swp-force-mobile-header-v973e #mainAppContent .swp-title-row {
-    display: grid !important;
-    grid-template-columns: 58px minmax(0, 1fr) !important;
-    gap: 12px !important;
-    align-items: center !important;
-    width: 100% !important;
-    min-height: 112px !important;
-    padding: 8px 0 !important;
-    overflow: visible !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent .swp-title-row .app-title-logo {
-    width: 58px !important; height: 58px !important; min-width: 58px !important; flex: 0 0 58px !important;
-    object-fit: cover !important; border-radius: 14px !important; align-self: center !important;
-    filter: drop-shadow(0 0 14px rgba(34,211,238,.38)) !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent .swp-title-copy { min-width:0 !important; overflow:visible !important; width:100% !important; }
-  html body.swp-force-mobile-header-v973e #mainAppContent h1.swp-main-title {
-    display: block !important;
-    width: 100% !important; max-width: none !important; min-width: 0 !important;
-    margin: 0 !important; padding: 0 !important;
-    font-size: 31px !important;
-    line-height: 1.08 !important;
-    font-weight: 950 !important;
-    letter-spacing: -0.055em !important;
-    color: #f8fafc !important;
-    white-space: normal !important; overflow: visible !important;
-    transform: none !important; zoom: 1 !important;
-    text-shadow: 0 0 12px rgba(255,255,255,.14) !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent h1.swp-main-title .swp-title-line {
-    display: block !important;
-    white-space: nowrap !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    width: max-content !important;
-    max-width: none !important;
-    transform: none !important; zoom: 1 !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent h1.swp-main-title .swp-title-line-2 {
-    display: flex !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 8px !important;
-    margin-top: 2px !important;
-    white-space: nowrap !important;
-    width: max-content !important;
-    max-width: none !important;
-  }
-  html body.swp-force-mobile-header-v973e #mainAppContent h1.swp-main-title .swp-version-badge {
-    display: inline-flex !important;
-    align-items: center !important; justify-content: center !important;
-    flex: 0 0 auto !important;
-    font-size: 11px !important;
-    line-height: 1 !important;
-    font-weight: 900 !important;
-    letter-spacing: .01em !important;
-    padding: 4px 8px !important;
-    margin: 0 !important;
-    border-radius: 10px !important;
-    white-space: nowrap !important;
-    transform: translateY(-1px) !important;
-  }
-}
-</style>
-
-<script id="swp-v973e-force-mobile-header-script">
-/* v9.7.5a hard-force mobile title sizing. Scope: header visual only. */
-(function(){
-  function mobileLikely(){
-    var ua = navigator.userAgent || '';
-    var vv = window.visualViewport ? Math.round(window.visualViewport.width) : 9999;
-    var sw = window.screen ? Math.min(window.screen.width || 9999, window.screen.height || 9999) : 9999;
-    var cw = document.documentElement ? document.documentElement.clientWidth : 9999;
-    var touch = (navigator.maxTouchPoints || 0) > 0;
-    var coarse = false;
-    try { coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch(e) {}
-    return /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV/i.test(ua) || vv <= 540 || sw <= 540 || (touch && coarse) || (touch && cw <= 980);
-  }
-  function forceHeader(){
-    if (!mobileLikely()) return;
-    document.documentElement.classList.add('swp-force-mobile-header-v973e');
-    document.body.classList.add('swp-force-mobile-header-v973e','swp-real-mobile-header');
-
-    var row = document.querySelector('#mainAppContent .swp-title-row');
-    var logo = document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
-    var title = document.querySelector('#mainAppContent h1.swp-main-title');
-    var line1 = document.querySelector('#mainAppContent h1.swp-main-title .swp-title-line');
-    var line2 = document.querySelector('#mainAppContent h1.swp-main-title .swp-title-line-2');
-    var badge = document.querySelector('#mainAppContent h1.swp-main-title .swp-version-badge');
-    var copy = document.querySelector('#mainAppContent .swp-title-copy');
-    if (!row || !title) return;
-
-    var vv = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-    var sw = window.screen ? Math.min(window.screen.width || vv, window.screen.height || vv) : vv;
-    var mobileWidth = Math.min(vv || sw || 390, sw || 390, 430);
-    var titlePx = mobileWidth <= 360 ? 29 : (mobileWidth <= 390 ? 31 : 33);
-    var logoPx = mobileWidth <= 360 ? 54 : 58;
-    var badgePx = mobileWidth <= 360 ? 10 : 11;
-
-    row.setAttribute('data-swp-mobile-header-fixed','v9.7.5a');
-    row.style.cssText += ';display:grid!important;grid-template-columns:'+logoPx+'px minmax(0,1fr)!important;gap:12px!important;align-items:center!important;width:100%!important;min-height:112px!important;padding:8px 0!important;overflow:visible!important;';
-    if (copy) copy.style.cssText += ';width:100%!important;min-width:0!important;max-width:none!important;overflow:visible!important;';
-    if (logo) logo.style.cssText += ';width:'+logoPx+'px!important;height:'+logoPx+'px!important;min-width:'+logoPx+'px!important;flex:0 0 '+logoPx+'px!important;object-fit:cover!important;border-radius:14px!important;';
-    title.style.cssText += ';display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;font-size:'+titlePx+'px!important;line-height:1.08!important;font-weight:950!important;letter-spacing:-0.055em!important;color:#f8fafc!important;white-space:normal!important;overflow:visible!important;transform:none!important;zoom:1!important;';
-    [line1,line2].forEach(function(el){ if(el){ el.style.cssText += ';white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;word-break:keep-all!important;overflow-wrap:normal!important;width:max-content!important;max-width:none!important;transform:none!important;zoom:1!important;'; }});
-    if (line2) line2.style.cssText += ';display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:8px!important;margin-top:2px!important;';
-    if (badge) badge.style.cssText += ';display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;font-size:'+badgePx+'px!important;line-height:1!important;font-weight:900!important;padding:4px 8px!important;margin:0!important;border-radius:10px!important;white-space:nowrap!important;transform:translateY(-1px)!important;';
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', forceHeader); else forceHeader();
-  window.addEventListener('load', forceHeader);
-  window.addEventListener('resize', forceHeader);
-  window.addEventListener('orientationchange', function(){ setTimeout(forceHeader, 150); setTimeout(forceHeader, 500); });
-  setTimeout(forceHeader, 250);
-  setTimeout(forceHeader, 1000);
-})();
-</script>
-
-
-
-<style id="swp-v973e-mobile-header-final-lockup-style">
-/* v9.7.5a MOBILE HEADER FINAL LOCKUP
-   Root approach: rebuild only the visual title lockup on mobile instead of fighting older accumulated CSS.
-   No Core Sync / Login / PIN / Profile / Logs / Apps Script changes. */
-html.swp-mobile-title-lockup-final body,
-body.swp-mobile-title-lockup-final {
-  overflow-x: hidden !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent header.swp-app-header,
-body.swp-mobile-title-lockup-final #mainAppContent header.swp-app-header {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 14px !important;
-  margin-bottom: 28px !important;
-  overflow: visible !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent .swp-header-identity,
-body.swp-mobile-title-lockup-final #mainAppContent .swp-header-identity {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow: visible !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent .swp-title-row,
-body.swp-mobile-title-lockup-final #mainAppContent .swp-title-row {
-  display: grid !important;
-  grid-template-columns: var(--swp-final-logo-size, 60px) minmax(0, 1fr) !important;
-  align-items: center !important;
-  justify-content: start !important;
-  column-gap: var(--swp-final-title-gap, 18px) !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: var(--swp-final-row-height, 122px) !important;
-  padding: 8px 0 !important;
-  overflow: visible !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent .swp-title-row .app-title-logo,
-body.swp-mobile-title-lockup-final #mainAppContent .swp-title-row .app-title-logo {
-  width: var(--swp-final-logo-size, 60px) !important;
-  height: var(--swp-final-logo-size, 60px) !important;
-  min-width: var(--swp-final-logo-size, 60px) !important;
-  flex: 0 0 var(--swp-final-logo-size, 60px) !important;
-  object-fit: cover !important;
-  border-radius: 15px !important;
-  align-self: center !important;
-  filter: drop-shadow(0 0 16px rgba(34, 211, 238, .42)) !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent .swp-title-copy,
-body.swp-mobile-title-lockup-final #mainAppContent .swp-title-copy {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  overflow: visible !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title,
-body.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 2px !important;
-  width: max-content !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  font-family: var(--swp-font), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: var(--swp-final-title-size, 42px) !important;
-  line-height: .98 !important;
-  font-weight: 950 !important;
-  letter-spacing: -0.055em !important;
-  color: #f8fafc !important;
-  text-align: left !important;
-  white-space: normal !important;
-  word-break: keep-all !important;
-  overflow-wrap: normal !important;
-  overflow: visible !important;
-  text-shadow: 0 0 14px rgba(255,255,255,.16) !important;
-  transform: none !important;
-  zoom: 1 !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-title-line,
-body.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-title-line {
-  display: block !important;
-  width: max-content !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  word-break: keep-all !important;
-  overflow-wrap: normal !important;
-  transform: none !important;
-  zoom: 1 !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-title-line-2,
-body.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-title-line-2 {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: var(--swp-final-badge-gap, 12px) !important;
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
-}
-html.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-version-badge,
-body.swp-mobile-title-lockup-final #mainAppContent h1.swp-main-title .swp-version-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: 4px 9px !important;
-  border-radius: 10px !important;
-  font-family: 'Inter', system-ui, sans-serif !important;
-  font-size: var(--swp-final-badge-size, 11px) !important;
-  line-height: 1 !important;
-  font-weight: 900 !important;
-  letter-spacing: .01em !important;
-  white-space: nowrap !important;
-  color: #22d3ee !important;
-  border: 1px solid rgba(34, 211, 238, .94) !important;
-  background: rgba(2, 6, 23, .72) !important;
-  box-shadow: 0 0 13px rgba(6, 182, 212, .68), inset 0 0 10px rgba(6, 182, 212, .1) !important;
-  transform: translateY(-2px) !important;
-}
-</style>
-
-<script id="swp-v973e-mobile-header-final-lockup-script">
-(function(){
-  var VERSION_LABEL = 'v9.7.5a PRO';
-
-  function isMobileHeaderTarget(){
-    var ua = navigator.userAgent || '';
-    var touch = (navigator.maxTouchPoints || 0) > 0;
-    var coarse = false;
-    try { coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch(e) {}
-    var vv = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-    var sw = window.screen ? Math.min(window.screen.width || vv, window.screen.height || vv) : vv;
-    return /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV/i.test(ua) || coarse || touch || vv <= 820 || sw <= 540;
-  }
-
-  function px(n){ return Math.round(n) + 'px'; }
-
-  function applyFinalMobileTitleLockup(){
-    if (!isMobileHeaderTarget()) return;
-
-    document.documentElement.classList.add('swp-mobile-title-lockup-final');
-    if (document.body) document.body.classList.add('swp-mobile-title-lockup-final');
-
-    var row = document.querySelector('#mainAppContent .swp-title-row');
-    var logo = document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
-    var copy = document.querySelector('#mainAppContent .swp-title-copy');
-    var title = document.querySelector('#mainAppContent h1.swp-main-title');
-    if (!row || !copy || !title) return;
-
-    // Rebuild title DOM once to remove Tailwind/legacy inline class side effects.
-    if (!title.dataset.swpFinalLockup) {
-      title.className = 'swp-main-title';
-      title.innerHTML = '<span class="swp-title-line swp-title-line-1">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge">' + VERSION_LABEL + '</span></span>';
-      title.dataset.swpFinalLockup = 'v9.7.5a';
-    }
-
-    var vv = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-    var screenMin = window.screen ? Math.min(window.screen.width || vv, window.screen.height || vv) : vv;
-    var visual = Math.min(vv || screenMin || 390, screenMin || 390);
-
-    // Samsung/Chrome screenshots often use a wide CSS viewport; use the actual row width after layout.
-    var rowWidth = Math.max(320, Math.min(row.getBoundingClientRect().width || visual || 390, window.innerWidth || 390));
-    var logoSize = rowWidth >= 700 ? 66 : rowWidth >= 560 ? 62 : rowWidth >= 390 ? 58 : 54;
-    var gap = rowWidth >= 560 ? 20 : 14;
-    var titleSize = rowWidth >= 700 ? 46 : rowWidth >= 560 ? 42 : rowWidth >= 390 ? 36 : 30;
-    var badgeSize = rowWidth >= 560 ? 12 : 10;
-
-    var maxTitleWidth = Math.max(220, rowWidth - logoSize - gap - 10);
-
-    document.documentElement.style.setProperty('--swp-final-logo-size', px(logoSize));
-    document.documentElement.style.setProperty('--swp-final-title-gap', px(gap));
-    document.documentElement.style.setProperty('--swp-final-title-size', px(titleSize));
-    document.documentElement.style.setProperty('--swp-final-badge-size', px(badgeSize));
-    document.documentElement.style.setProperty('--swp-final-row-height', px(Math.max(112, logoSize + 54)));
-
-    row.style.setProperty('display', 'grid', 'important');
-    row.style.setProperty('grid-template-columns', px(logoSize) + ' minmax(0,1fr)', 'important');
-    row.style.setProperty('gap', px(gap), 'important');
-    row.style.setProperty('align-items', 'center', 'important');
-    row.style.setProperty('width', '100%', 'important');
-    row.style.setProperty('max-width', '100%', 'important');
-    row.style.setProperty('min-height', px(Math.max(112, logoSize + 54)), 'important');
-    row.style.setProperty('overflow', 'visible', 'important');
-
-    if (logo) {
-      logo.style.setProperty('width', px(logoSize), 'important');
-      logo.style.setProperty('height', px(logoSize), 'important');
-      logo.style.setProperty('min-width', px(logoSize), 'important');
-      logo.style.setProperty('flex-basis', px(logoSize), 'important');
-      logo.style.setProperty('object-fit', 'cover', 'important');
-      logo.style.setProperty('border-radius', '15px', 'important');
-    }
-
-    copy.style.setProperty('width', '100%', 'important');
-    copy.style.setProperty('min-width', '0', 'important');
-    copy.style.setProperty('overflow', 'visible', 'important');
-
-    title.style.setProperty('font-size', px(titleSize), 'important');
-    title.style.setProperty('line-height', '.98', 'important');
-    title.style.setProperty('font-weight', '950', 'important');
-    title.style.setProperty('letter-spacing', '-0.055em', 'important');
-    title.style.setProperty('width', 'max-content', 'important');
-    title.style.setProperty('max-width', 'none', 'important');
-    title.style.setProperty('overflow', 'visible', 'important');
-
-    var line1 = title.querySelector('.swp-title-line-1');
-    var line2 = title.querySelector('.swp-title-line-2');
-    var badge = title.querySelector('.swp-version-badge');
-    [line1, line2].forEach(function(el){
-      if (!el) return;
-      el.style.setProperty('white-space', 'nowrap', 'important');
-      el.style.setProperty('width', 'max-content', 'important');
-      el.style.setProperty('max-width', 'none', 'important');
-      el.style.setProperty('overflow', 'visible', 'important');
-      el.style.setProperty('display', el === line2 ? 'flex' : 'block', 'important');
-      if (el === line2) {
-        el.style.setProperty('align-items', 'center', 'important');
-        el.style.setProperty('gap', rowWidth >= 560 ? '12px' : '8px', 'important');
-      }
-    });
-    if (badge) {
-      badge.textContent = VERSION_LABEL;
-      badge.style.setProperty('font-size', px(badgeSize), 'important');
-      badge.style.setProperty('padding', rowWidth >= 560 ? '4px 9px' : '3px 7px', 'important');
-      badge.style.setProperty('white-space', 'nowrap', 'important');
-      badge.style.setProperty('display', 'inline-flex', 'important');
-    }
-
-    // Fit guard: keep 2-line lockup professional, but do not allow the browser to shrink it silently.
-    var guard = 0;
-    while (guard < 8 && title.getBoundingClientRect().width > maxTitleWidth && titleSize > 28) {
-      titleSize -= 2;
-      document.documentElement.style.setProperty('--swp-final-title-size', px(titleSize));
-      title.style.setProperty('font-size', px(titleSize), 'important');
-      guard++;
-    }
-
-    row.dataset.swpFinalMobileHeader = 'v9.7.5a';
-  }
-
-  function schedule(){
-    applyFinalMobileTitleLockup();
-    setTimeout(applyFinalMobileTitleLockup, 80);
-    setTimeout(applyFinalMobileTitleLockup, 240);
-    setTimeout(applyFinalMobileTitleLockup, 700);
-    setTimeout(applyFinalMobileTitleLockup, 1400);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
-  window.addEventListener('load', schedule);
-  window.addEventListener('resize', schedule);
-  window.addEventListener('orientationchange', function(){ setTimeout(schedule, 250); });
-})();
-</script>
-
-
-
-<style id="swp-v974a-mobile-header-nuclear-final-style">
-/* v9.7.5a MOBILE HEADER NUCLEAR FINAL
-   Root fix: bypass all older fit guards / shrink logic for phone header only.
-   Visual-only scope. No Core Sync / Login / PIN / Profile / Logs / Apps Script changes. */
-html.swp-v974a-phone-header-final,
-body.swp-v974a-phone-header-final { overflow-x: hidden !important; }
-
-html.swp-v974a-phone-header-final #mainAppContent header.swp-app-header,
-body.swp-v974a-phone-header-final #mainAppContent header.swp-app-header {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 14px !important;
-  margin-bottom: 28px !important;
-  overflow: visible !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent .swp-header-identity,
-body.swp-v974a-phone-header-final #mainAppContent .swp-header-identity {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow: visible !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent .swp-title-row,
-body.swp-v974a-phone-header-final #mainAppContent .swp-title-row {
-  position: relative !important;
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: var(--swp-v974a-row-h, 128px) !important;
-  padding: 10px 0 !important;
-  overflow: visible !important;
-  transform: none !important;
-  zoom: 1 !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent .swp-title-row .app-title-logo,
-body.swp-v974a-phone-header-final #mainAppContent .swp-title-row .app-title-logo {
-  position: absolute !important;
-  left: var(--swp-v974a-logo-left, 18px) !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: var(--swp-v974a-logo, 62px) !important;
-  height: var(--swp-v974a-logo, 62px) !important;
-  min-width: var(--swp-v974a-logo, 62px) !important;
-  max-width: none !important;
-  flex: none !important;
-  object-fit: cover !important;
-  border-radius: 16px !important;
-  filter: drop-shadow(0 0 18px rgba(34, 211, 238, .46)) !important;
-  z-index: 2 !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent .swp-title-copy,
-body.swp-v974a-phone-header-final #mainAppContent .swp-title-copy {
-  position: absolute !important;
-  left: var(--swp-v974a-copy-left, 110px) !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: calc(100% - var(--swp-v974a-copy-left, 110px) - 8px) !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  overflow: visible !important;
-  z-index: 3 !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent .swp-title-copy h1.swp-main-title,
-body.swp-v974a-phone-header-final #mainAppContent .swp-title-copy h1.swp-main-title,
-html.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title,
-body.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title {
-  display: block !important;
-  width: max-content !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  font-family: var(--swp-font), 'Noto Sans Thai', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: var(--swp-v974a-title, 34px) !important;
-  line-height: 1.02 !important;
-  font-weight: 950 !important;
-  letter-spacing: -0.062em !important;
-  color: #f8fafc !important;
-  text-align: left !important;
-  white-space: normal !important;
-  word-break: keep-all !important;
-  overflow-wrap: normal !important;
-  overflow: visible !important;
-  transform: none !important;
-  zoom: 1 !important;
-  text-shadow: 0 0 14px rgba(255,255,255,.20), 0 1px 0 rgba(255,255,255,.08) !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-title-line,
-body.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-title-line {
-  display: block !important;
-  width: max-content !important;
-  max-width: none !important;
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  transform: none !important;
-  zoom: 1 !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-title-line-2,
-body.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-title-line-2 {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  flex-wrap: nowrap !important;
-  gap: var(--swp-v974a-badge-gap, 10px) !important;
-  margin-top: 3px !important;
-  white-space: nowrap !important;
-}
-
-html.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-version-badge,
-body.swp-v974a-phone-header-final #mainAppContent h1.swp-main-title .swp-version-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: 4px 9px !important;
-  border-radius: 10px !important;
-  font-family: 'Inter', system-ui, sans-serif !important;
-  font-size: var(--swp-v974a-badge, 12px) !important;
-  line-height: 1 !important;
-  font-weight: 900 !important;
-  letter-spacing: .01em !important;
-  color: #22d3ee !important;
-  border: 1px solid rgba(34, 211, 238, .96) !important;
-  background: rgba(2, 6, 23, .78) !important;
-  box-shadow: 0 0 14px rgba(6, 182, 212, .7), inset 0 0 10px rgba(6, 182, 212, .1) !important;
-  white-space: nowrap !important;
-  transform: translateY(-1px) !important;
-  zoom: 1 !important;
-}
-</style>
-<script id="swp-v974a-mobile-header-nuclear-final-script">
-(function(){
-  var VERSION_LABEL = 'v9.7.5a PRO';
-  function isPhoneLike(){
-    var ua = navigator.userAgent || '';
-    var sw = window.screen ? Math.min(window.screen.width || 9999, window.screen.height || 9999) : 9999;
-    var iw = window.innerWidth || 9999;
-    var vv = window.visualViewport ? window.visualViewport.width : iw;
-    return /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV|OPR/i.test(ua) || sw <= 540 || iw <= 600 || vv <= 600;
-  }
-  function npx(n){ return Math.round(n) + 'px'; }
-  function forcePhoneHeader(){
-    if (!isPhoneLike()) return;
-    var doc = document.documentElement;
-    var body = document.body;
-    if (!body) return;
-    doc.classList.add('swp-v974a-phone-header-final');
-    body.classList.add('swp-v974a-phone-header-final');
-
-    var row = document.querySelector('#mainAppContent .swp-title-row');
-    var copy = document.querySelector('#mainAppContent .swp-title-copy');
-    var title = document.querySelector('#mainAppContent h1.swp-main-title');
-    var logo = document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
-    if (!row || !copy || !title) return;
-
-    title.className = 'swp-main-title';
-    title.innerHTML = '<span class="swp-title-line swp-title-line-1">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge">' + VERSION_LABEL + '</span></span>';
-    title.dataset.swpHeaderNuclear = 'v9.7.5a';
-
-    var view = Math.min(window.innerWidth || 390, window.visualViewport ? window.visualViewport.width : (window.innerWidth || 390));
-    if (view < 320) view = 320;
-    var rowW = row.getBoundingClientRect().width || view;
-    // Use actual row width but never use shrink-to-fit. This is the root fix.
-    var logoSize = rowW < 380 ? 56 : 62;
-    var logoLeft = rowW < 380 ? 16 : 20;
-    var copyLeft = logoLeft + logoSize + (rowW < 380 ? 18 : 26);
-    var titleSize = rowW < 360 ? 28 : rowW < 420 ? 32 : 36;
-    var badgeSize = rowW < 380 ? 10 : 12;
-    var rowH = Math.max(122, logoSize + 68);
-
-    doc.style.setProperty('--swp-v974a-logo', npx(logoSize));
-    doc.style.setProperty('--swp-v974a-logo-left', npx(logoLeft));
-    doc.style.setProperty('--swp-v974a-copy-left', npx(copyLeft));
-    doc.style.setProperty('--swp-v974a-title', npx(titleSize));
-    doc.style.setProperty('--swp-v974a-badge', npx(badgeSize));
-    doc.style.setProperty('--swp-v974a-row-h', npx(rowH));
-    doc.style.setProperty('--swp-v974a-badge-gap', rowW < 380 ? '8px' : '10px');
-
-    row.style.cssText += ';position:relative!important;display:block!important;width:100%!important;max-width:100%!important;min-height:'+npx(rowH)+'!important;overflow:visible!important;transform:none!important;zoom:1!important;';
-    if (logo) logo.style.cssText += ';position:absolute!important;left:'+npx(logoLeft)+'!important;top:50%!important;transform:translateY(-50%)!important;width:'+npx(logoSize)+'!important;height:'+npx(logoSize)+'!important;min-width:'+npx(logoSize)+'!important;max-width:none!important;flex:none!important;object-fit:cover!important;z-index:2!important;';
-    copy.style.cssText += ';position:absolute!important;left:'+npx(copyLeft)+'!important;top:50%!important;transform:translateY(-50%)!important;width:calc(100% - '+npx(copyLeft)+' - 8px)!important;max-width:none!important;min-width:0!important;overflow:visible!important;z-index:3!important;';
-    title.style.cssText += ';display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;font-size:'+npx(titleSize)+'!important;line-height:1.02!important;font-weight:950!important;letter-spacing:-0.062em!important;white-space:normal!important;overflow:visible!important;transform:none!important;zoom:1!important;color:#f8fafc!important;text-align:left!important;';
-    title.querySelectorAll('.swp-title-line').forEach(function(el){ el.style.cssText += ';display:block!important;width:max-content!important;max-width:none!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;transform:none!important;zoom:1!important;'; });
-    var l2 = title.querySelector('.swp-title-line-2');
-    if (l2) l2.style.cssText += ';display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:'+(rowW < 380 ? '8px' : '10px')+'!important;margin-top:3px!important;';
-    var badge = title.querySelector('.swp-version-badge');
-    if (badge) badge.style.cssText += ';font-size:'+npx(badgeSize)+'!important;padding:4px 9px!important;line-height:1!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;';
-  }
-  function run(){ forcePhoneHeader(); setTimeout(forcePhoneHeader, 60); setTimeout(forcePhoneHeader, 250); setTimeout(forcePhoneHeader, 800); setTimeout(forcePhoneHeader, 1600); setTimeout(forcePhoneHeader, 3000); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
-  window.addEventListener('load', run);
-  window.addEventListener('resize', run);
-  window.addEventListener('orientationchange', function(){ setTimeout(run, 250); });
-})();
-</script>
-
-
-
-<style id="swp-v975a-mobile-header-desktop-viewport-fix">
-/* v9.7.5a — REAL PHONE HEADER FIX
-   Diagnosis: some mobile browsers render GitHub Pages with a wide CSS viewport (~760–980px) then downscale the page.
-   Previous 28–36px title was visually reduced on real phones. This override intentionally uses larger CSS px
-   only on phone-like devices. Visual-only: no Core Sync / Login / PIN / Profile / Logs / Apps Script changes. */
-html.swp-v975a-phone-title-final #mainAppContent header.swp-app-header,
-body.swp-v975a-phone-title-final #mainAppContent header.swp-app-header{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:16px!important;
-  overflow:visible!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent .swp-title-row,
-body.swp-v975a-phone-title-final #mainAppContent .swp-title-row{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-height:var(--swp-v975a-row-h,190px)!important;
-  padding:10px 0!important;
-  overflow:visible!important;
-  transform:none!important;
-  zoom:1!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent .swp-title-row .app-title-logo,
-body.swp-v975a-phone-title-final #mainAppContent .swp-title-row .app-title-logo{
-  position:absolute!important;
-  left:var(--swp-v975a-logo-left,24px)!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  width:var(--swp-v975a-logo,88px)!important;
-  height:var(--swp-v975a-logo,88px)!important;
-  min-width:var(--swp-v975a-logo,88px)!important;
-  max-width:none!important;
-  flex:none!important;
-  object-fit:cover!important;
-  border-radius:18px!important;
-  z-index:2!important;
-  filter:drop-shadow(0 0 20px rgba(34,211,238,.48))!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent .swp-title-copy,
-body.swp-v975a-phone-title-final #mainAppContent .swp-title-copy{
-  position:absolute!important;
-  left:var(--swp-v975a-copy-left,138px)!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  width:calc(100% - var(--swp-v975a-copy-left,138px) - 8px)!important;
-  max-width:none!important;
-  min-width:0!important;
-  overflow:visible!important;
-  z-index:3!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title,
-body.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title{
-  display:block!important;
-  width:max-content!important;
-  max-width:none!important;
-  margin:0!important;
-  padding:0!important;
-  font-family:var(--swp-font),'Noto Sans Thai','Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
-  font-size:var(--swp-v975a-title,72px)!important;
-  line-height:.96!important;
-  font-weight:950!important;
-  letter-spacing:-.064em!important;
-  color:#f8fafc!important;
-  text-align:left!important;
-  white-space:normal!important;
-  word-break:keep-all!important;
-  overflow-wrap:normal!important;
-  overflow:visible!important;
-  transform:none!important;
-  zoom:1!important;
-  text-shadow:0 0 16px rgba(255,255,255,.24),0 1px 0 rgba(255,255,255,.08)!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-title-line,
-body.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-title-line{
-  display:block!important;
-  width:max-content!important;
-  max-width:none!important;
-  white-space:nowrap!important;
-  overflow:visible!important;
-  text-overflow:clip!important;
-  transform:none!important;
-  zoom:1!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-title-line-2,
-body.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-title-line-2{
-  display:flex!important;
-  align-items:center!important;
-  flex-wrap:nowrap!important;
-  gap:var(--swp-v975a-badge-gap,16px)!important;
-  margin-top:4px!important;
-}
-html.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-version-badge,
-body.swp-v975a-phone-title-final #mainAppContent h1.swp-main-title .swp-version-badge{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  flex:0 0 auto!important;
-  font-size:var(--swp-v975a-badge,20px)!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:.01em!important;
-  padding:7px 14px!important;
-  border-radius:13px!important;
-  margin:0!important;
-  white-space:nowrap!important;
-  color:#22d3ee!important;
-  border:1px solid rgba(34,211,238,.96)!important;
-  background:rgba(2,6,23,.82)!important;
-  box-shadow:0 0 16px rgba(6,182,212,.72),inset 0 0 10px rgba(6,182,212,.12)!important;
-  transform:translateY(-3px)!important;
-}
-</style>
-<script id="swp-v975a-mobile-header-desktop-viewport-fix-script">
-(function(){
-  var VERSION_LABEL='v9.7.5a PRO';
-  function phoneLike(){
-    var ua=navigator.userAgent||'';
-    var sw=window.screen?Math.min(window.screen.width||9999,window.screen.height||9999):9999;
-    var touch=(navigator.maxTouchPoints||0)>0;
-    var coarse=false; try{coarse=!!(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches);}catch(e){}
-    return /Android|iPhone|iPod|Mobile|SamsungBrowser|Line|FBAN|FBAV|OPR|Opera/i.test(ua)||sw<=540||(touch&&coarse);
-  }
-  function px(n){return Math.round(n)+'px';}
-  function apply(){
-    if(!phoneLike()) return;
-    var doc=document.documentElement, body=document.body; if(!body) return;
-    doc.classList.add('swp-v975a-phone-title-final');
-    body.classList.add('swp-v975a-phone-title-final');
-    var row=document.querySelector('#mainAppContent .swp-title-row');
-    var copy=document.querySelector('#mainAppContent .swp-title-copy');
-    var title=document.querySelector('#mainAppContent h1.swp-main-title');
-    var logo=document.querySelector('#mainAppContent .swp-title-row .app-title-logo');
-    if(!row||!copy||!title) return;
-    title.className='swp-main-title';
-    title.innerHTML='<span class="swp-title-line swp-title-line-1">ระบบผู้ช่วยอัจฉริยะ</span><span class="swp-title-line swp-title-line-2">สุขภาพการนอน <span class="swp-version-badge">'+VERSION_LABEL+'</span></span>';
-    title.dataset.swpPhoneTitleFinal='v9.7.5a';
-
-    var rowW=row.getBoundingClientRect().width||window.innerWidth||390;
-    /* When Chrome uses a desktop-like CSS viewport on phone, rowW is large and the whole page is scaled down.
-       Therefore use intentionally large CSS px for rowW >= 700. */
-    var logoSize, logoLeft, copyLeft, titleSize, badgeSize, rowH, gap;
-    if(rowW>=720){ logoSize=92; logoLeft=30; gap=30; titleSize=76; badgeSize=21; rowH=210; }
-    else if(rowW>=560){ logoSize=84; logoLeft=24; gap=26; titleSize=66; badgeSize=19; rowH=190; }
-    else if(rowW>=430){ logoSize=72; logoLeft=20; gap=22; titleSize=52; badgeSize=15; rowH=166; }
-    else { logoSize=64; logoLeft=18; gap=18; titleSize=44; badgeSize=13; rowH=148; }
-    copyLeft=logoLeft+logoSize+gap;
-
-    doc.style.setProperty('--swp-v975a-logo',px(logoSize));
-    doc.style.setProperty('--swp-v975a-logo-left',px(logoLeft));
-    doc.style.setProperty('--swp-v975a-copy-left',px(copyLeft));
-    doc.style.setProperty('--swp-v975a-title',px(titleSize));
-    doc.style.setProperty('--swp-v975a-badge',px(badgeSize));
-    doc.style.setProperty('--swp-v975a-row-h',px(rowH));
-    doc.style.setProperty('--swp-v975a-badge-gap',px(Math.max(10,Math.round(gap*.55))));
-
-    row.style.cssText += ';position:relative!important;display:block!important;width:100%!important;max-width:100%!important;min-height:'+px(rowH)+'!important;padding:10px 0!important;overflow:visible!important;transform:none!important;zoom:1!important;';
-    if(logo) logo.style.cssText += ';position:absolute!important;left:'+px(logoLeft)+'!important;top:50%!important;transform:translateY(-50%)!important;width:'+px(logoSize)+'!important;height:'+px(logoSize)+'!important;min-width:'+px(logoSize)+'!important;max-width:none!important;flex:none!important;object-fit:cover!important;z-index:2!important;';
-    copy.style.cssText += ';position:absolute!important;left:'+px(copyLeft)+'!important;top:50%!important;transform:translateY(-50%)!important;width:calc(100% - '+px(copyLeft)+' - 8px)!important;max-width:none!important;min-width:0!important;overflow:visible!important;z-index:3!important;';
-    title.style.cssText += ';display:block!important;width:max-content!important;max-width:none!important;margin:0!important;padding:0!important;font-size:'+px(titleSize)+'!important;line-height:.96!important;font-weight:950!important;letter-spacing:-.064em!important;color:#f8fafc!important;white-space:normal!important;overflow:visible!important;transform:none!important;zoom:1!important;text-align:left!important;';
-    title.querySelectorAll('.swp-title-line').forEach(function(el){el.style.cssText += ';display:block!important;width:max-content!important;max-width:none!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;transform:none!important;zoom:1!important;';});
-    var line2=title.querySelector('.swp-title-line-2');
-    if(line2) line2.style.cssText += ';display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:'+px(Math.max(10,Math.round(gap*.55)))+'!important;margin-top:4px!important;';
-    var badge=title.querySelector('.swp-version-badge');
-    if(badge) badge.style.cssText += ';font-size:'+px(badgeSize)+'!important;padding:'+(badgeSize>=18?'7px 14px':'5px 10px')+'!important;line-height:1!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:nowrap!important;flex:0 0 auto!important;border-radius:13px!important;';
-  }
-  function run(){ apply(); [80,220,500,1000,2000,4000,7000].forEach(function(t){setTimeout(apply,t);}); }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
-  window.addEventListener('load',run); window.addEventListener('resize',run); window.addEventListener('orientationchange',function(){setTimeout(run,250);});
-})();
-</script>
 
 </body>
 </html>
