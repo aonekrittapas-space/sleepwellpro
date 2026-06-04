@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.7.6a - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.7.6c - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -1244,6 +1244,49 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
             }
         }
 
+
+        /* v9.7.6c GO-LIVE HEADER FINAL ALIGNMENT
+           UI-only: logo centering + version badge containment. No Core Sync/Login/PIN/Profile/Logs/Apps Script changes. */
+        .swp-svg-version text{
+            font-size: 15px !important;
+            letter-spacing: .08em !important;
+        }
+        @media (max-width: 767px), (max-device-width: 540px), (pointer: coarse) and (max-width: 900px) {
+            #mainAppContent .swp-title-row{
+                grid-template-columns: clamp(60px, 18vw, 68px) minmax(0, 1fr) !important;
+                gap: clamp(9px, 3vw, 12px) !important;
+                align-items: center !important;
+                min-height: 116px !important;
+                padding: 8px 0 6px !important;
+                overflow: hidden !important;
+            }
+            #mainAppContent .swp-title-row .app-title-logo{
+                width: clamp(58px, 17vw, 66px) !important;
+                height: clamp(58px, 17vw, 66px) !important;
+                min-width: clamp(58px, 17vw, 66px) !important;
+                max-width: 66px !important;
+                align-self: center !important;
+                justify-self: center !important;
+                transform: translateY(-4px) translateZ(0) !important;
+            }
+            #mainAppContent .swp-title-copy{
+                min-width: 0 !important;
+                width: 100% !important;
+                overflow: hidden !important;
+            }
+            #mainAppContent .swp-main-title.swp-lockup-title{
+                width: 100% !important;
+                overflow: hidden !important;
+            }
+            #mainAppContent .swp-title-lockup-svg{
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+        }
+
 </style>
 </head>
 <body class="p-4 md:p-8">
@@ -1302,7 +1345,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title swp-lockup-title" aria-label="ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน v9.7.6a PRO">
+                        <h1 class="swp-main-title swp-lockup-title" aria-label="ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน v9.7.6c PRO">
                             <svg class="swp-title-lockup-svg" viewBox="0 0 430 128" role="img" aria-hidden="true" preserveAspectRatio="xMinYMid meet">
                                 <defs>
                                     <filter id="swpTitleGlow" x="-20%" y="-40%" width="150%" height="180%">
@@ -1320,11 +1363,11 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                                         </feMerge>
                                     </filter>
                                 </defs>
-                                <text x="0" y="48" class="swp-svg-title-text" filter="url(#swpTitleGlow)">ระบบผู้ช่วยอัจฉริยะ</text>
-                                <text x="0" y="99" class="swp-svg-title-text" filter="url(#swpTitleGlow)">สุขภาพการนอน</text>
-                                <g class="swp-svg-version" transform="translate(244,68)" filter="url(#swpBadgeGlow)">
-                                    <rect x="0" y="0" width="168" height="42" rx="14" />
-                                    <text x="84" y="27" text-anchor="middle">v9.7.6a PRO</text>
+                                <text x="0" y="48" class="swp-svg-title-text">ระบบผู้ช่วยอัจฉริยะ</text>
+                                <text x="0" y="99" class="swp-svg-title-text">สุขภาพการนอน</text>
+                                <g class="swp-svg-version" transform="translate(252,70)" filter="url(#swpBadgeGlow)">
+                                    <rect x="0" y="0" width="136" height="36" rx="13" />
+                                    <text x="68" y="23" text-anchor="middle">v9.7.6c PRO</text>
                                 </g>
                             </svg>
                         </h1>
@@ -2942,7 +2985,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.6a</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.6c</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
