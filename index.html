@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Well Pro v9.7.6c - by Aone Krittapas</title>
+    <title>Sleep Well Pro v9.7.6d - by Aone Krittapas</title>
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -1245,7 +1245,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
         }
 
 
-        /* v9.7.6c GO-LIVE HEADER FINAL ALIGNMENT
+        /* v9.7.6d GO-LIVE HEADER FINAL ALIGNMENT
            UI-only: logo centering + version badge containment. No Core Sync/Login/PIN/Profile/Logs/Apps Script changes. */
         .swp-svg-version text{
             font-size: 15px !important;
@@ -1284,6 +1284,29 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                 max-width: 100% !important;
                 height: auto !important;
                 overflow: visible !important;
+            }
+        }
+
+
+        /* v9.7.6d HEADER LOGO CENTER FIX
+           UI-only: center/enlarge header logo against the two-line title lockup.
+           Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script. */
+        @media (max-width: 767px), (max-device-width: 540px), (pointer: coarse) and (max-width: 900px) {
+            #mainAppContent .swp-title-row{
+                align-items: start !important;
+            }
+            #mainAppContent .swp-title-row .app-title-logo{
+                width: clamp(72px, 19vw, 82px) !important;
+                height: clamp(72px, 19vw, 82px) !important;
+                min-width: clamp(72px, 19vw, 82px) !important;
+                max-width: 82px !important;
+                flex-basis: clamp(72px, 19vw, 82px) !important;
+                justify-self: center !important;
+                align-self: start !important;
+                margin-top: clamp(18px, 5.2vw, 24px) !important;
+                transform: translateY(-34px) translateZ(0) !important;
+                object-fit: cover !important;
+                filter: drop-shadow(0 0 16px rgba(34,211,238,.30)) !important;
             }
         }
 
@@ -1345,7 +1368,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                 <div class="swp-title-row flex items-center gap-3">
                     <img src="./assets/app-icons/favicon.png" alt="Sleep Well Pro Logo" class="app-title-logo" onerror="this.style.display='none'">
                     <div class="swp-title-copy">
-                        <h1 class="swp-main-title swp-lockup-title" aria-label="ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน v9.7.6c PRO">
+                        <h1 class="swp-main-title swp-lockup-title" aria-label="ระบบผู้ช่วยอัจฉริยะสุขภาพการนอน v9.7.6d PRO">
                             <svg class="swp-title-lockup-svg" viewBox="0 0 430 128" role="img" aria-hidden="true" preserveAspectRatio="xMinYMid meet">
                                 <defs>
                                     <filter id="swpTitleGlow" x="-20%" y="-40%" width="150%" height="180%">
@@ -1367,7 +1390,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                                 <text x="0" y="99" class="swp-svg-title-text">สุขภาพการนอน</text>
                                 <g class="swp-svg-version" transform="translate(252,70)" filter="url(#swpBadgeGlow)">
                                     <rect x="0" y="0" width="136" height="36" rx="13" />
-                                    <text x="68" y="23" text-anchor="middle">v9.7.6c PRO</text>
+                                    <text x="68" y="23" text-anchor="middle">v9.7.6d PRO</text>
                                 </g>
                             </svg>
                         </h1>
@@ -2985,7 +3008,7 @@ function initProfileFormv964h() {
                     </button>
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5 pr-8">
                         <div>
-                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.6c</span></h2>
+                            <h2 class="text-xl md:text-2xl font-black text-cyan-400 flex items-center gap-2"><i class="fas fa-database"></i> Admin Control Center Lite <span class="text-[10px] px-2 py-1 rounded-lg border border-cyan-500/40 text-cyan-300">v9.7.6d</span></h2>
                             <p class="text-[11px] text-slate-500 mt-1">Admin-only • Debug & Sync • Affiliate • Leads • Export</p>
                         </div>
                         <div class="text-right">
