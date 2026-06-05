@@ -4048,6 +4048,318 @@ function saveCloudUrlv96g() {
             trigger.style.display = isCurrentAdminv9612h() ? 'block' : 'none';
         }
 
+
+        /* =========================================================
+           Sleep Well Pro - Static Affiliate Mapping v1.1 Patch
+           Go Live Candidate / Soft Launch Safe Patch
+
+           Scope:
+           - Static Affiliate Trigger Mapping only
+           - Product ranking / recommendation guardrails only
+           - No Core Sync / Login / PIN / Profile / Logs / Apps Script changes
+
+           Important:
+           - This patch does NOT write to Profile, PIN, Logs, or Cloud Sync schema
+           - This patch does NOT change Apps Script endpoint or sync payload
+           - This patch safely handles the case when user selects none of the 6 triggers
+           ========================================================= */
+
+        const SWP_AFFILIATE_TRIGGER_MASTER_V11 = Object.freeze({
+            CAFFEINE: {
+                code: 'CAFFEINE', signal: 'caffeine', label: 'คาเฟอีน', shortLabel: 'คาเฟอีน',
+                sleepProblem: 'สมองยังตื่น หลับยาก หรือหลับไม่ลึก',
+                analysisAngle: 'คาเฟอีนอาจทำให้ระบบประสาทยังตื่นตัว โดยเฉพาะถ้าดื่มช่วงบ่ายหรือเย็น',
+                recommendationPrinciple: 'ลดคาเฟอีนช่วงบ่าย/เย็น และใช้ routine ที่ไม่กระตุ้นร่างกายแทน'
+            },
+            STRESS: {
+                code: 'STRESS', signal: 'stress', label: 'ความเครียด', shortLabel: 'เครียด/คิดเยอะ',
+                sleepProblem: 'คิดเยอะ หลับยาก ระบบประสาทยังไม่ผ่อน',
+                analysisAngle: 'ความเครียดทำให้ร่างกายยังอยู่ในโหมดทำงาน แม้จะถึงเวลานอนแล้ว',
+                recommendationPrinciple: 'สร้าง routine สั้น ๆ ก่อนนอน เพื่อลดความตื่นตัวของสมองและร่างกาย'
+            },
+            EXERCISE: {
+                code: 'EXERCISE', signal: 'exercise', label: 'ออกกำลังกาย', shortLabel: 'ออกกำลังกาย',
+                sleepProblem: 'ร่างกายอาจยังตื่นหรือตึงล้า ถ้าออกหนักหรือใกล้เวลานอน',
+                analysisAngle: 'การออกกำลังกายเป็นผลดีต่อการนอนโดยรวม แต่ควรมีช่วง cooldown ถ้าออกช่วงเย็นหรือค่ำ',
+                recommendationPrinciple: 'เพิ่ม cooldown / ยืดเหยียดเบา ๆ และสังเกตเวลาการออกกำลังกายกับคุณภาพการนอน'
+            },
+            SCREEN_USE: {
+                code: 'SCREEN_USE', signal: 'screen', label: 'โทรศัพท์/หน้าจอ', shortLabel: 'หน้าจอ',
+                sleepProblem: 'แสงและคอนเทนต์กระตุ้นสมองก่อนนอน',
+                analysisAngle: 'หน้าจอก่อนนอนรบกวนทั้งจากแสง ความสว่าง และคอนเทนต์ที่ทำให้สมองคิดต่อ',
+                recommendationPrinciple: 'ลดแสง ลดเวลาใช้จอ และเปลี่ยนบรรยากาศก่อนนอนให้เข้าสู่โหมดพัก'
+            },
+            BEDROOM_ENV: {
+                code: 'BEDROOM_ENV', signal: 'environment', label: 'ห้องนอน/สภาพแวดล้อม', shortLabel: 'ห้องนอน',
+                sleepProblem: 'แสง เสียง อุณหภูมิ หรือความสบายของร่างกายรบกวนการนอน',
+                analysisAngle: 'สภาพแวดล้อมห้องนอนมีผลกับการหลับต่อเนื่อง โดยเฉพาะแสง เสียง อุณหภูมิ และหมอน',
+                recommendationPrinciple: 'แก้สิ่งรบกวนพื้นฐานก่อน เช่น แสง เสียง อุณหภูมิ และความสบายของหมอน/เตียง'
+            },
+            ALCOHOL: {
+                code: 'ALCOHOL', signal: 'alcohol', label: 'แอลกอฮอล์', shortLabel: 'แอลกอฮอล์',
+                sleepProblem: 'หลับไม่ลึก ตื่นกลางดึก หรือฟื้นตัวไม่เต็ม',
+                analysisAngle: 'แอลกอฮอล์อาจทำให้รู้สึกง่วงช่วงแรก แต่รบกวนคุณภาพการนอนช่วงหลังได้',
+                recommendationPrinciple: 'สังเกตผลกระทบจากวันที่ดื่ม และใช้ routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพักธรรมชาติ'
+            }
+        });
+
+        const SWP_TRIGGER_PRODUCT_MAP_V11 = Object.freeze({
+            CAFFEINE: {
+                triggerCode: 'CAFFEINE', signal: 'caffeine', label: 'คาเฟอีน',
+                preferredProducts: ['decaf-drink-01', 'sleep-journal-01', 'herbal-tea-01', 'magnesium-01'],
+                avoidTopProducts: ['blue-glasses-01', 'sunrise-lamp-01'],
+                maxProducts: 3
+            },
+            STRESS: {
+                triggerCode: 'STRESS', signal: 'stress', label: 'ความเครียด',
+                preferredProducts: ['herbal-tea-01', 'breath-trainer-01', 'weighted-blanket-01', 'smartwatch-01', 'magnesium-01'],
+                avoidTopProducts: [],
+                maxProducts: 3
+            },
+            EXERCISE: {
+                triggerCode: 'EXERCISE', signal: 'exercise', label: 'ออกกำลังกาย',
+                preferredProducts: ['magnesium-01', 'cooling-pad-01', 'pillow-01', 'sleep-journal-01', 'supplement-mag-01'],
+                avoidTopProducts: ['blue-glasses-01', 'decaf-drink-01'],
+                maxProducts: 3
+            },
+            SCREEN_USE: {
+                triggerCode: 'SCREEN_USE', signal: 'screen', label: 'โทรศัพท์/หน้าจอ',
+                preferredProducts: ['blue-glasses-01', 'sunrise-lamp-01', 'sleep-journal-01', 'eye-mask-01', 'smartwatch-01'],
+                avoidTopProducts: [],
+                maxProducts: 3
+            },
+            BEDROOM_ENV: {
+                triggerCode: 'BEDROOM_ENV', signal: 'environment', label: 'ห้องนอน/สภาพแวดล้อม',
+                preferredProducts: ['eye-mask-01', 'earplug-01', 'pillow-01', 'cooling-pad-01', 'humidifier-01'],
+                avoidTopProducts: ['decaf-drink-01'],
+                maxProducts: 3
+            },
+            ALCOHOL: {
+                triggerCode: 'ALCOHOL', signal: 'alcohol', label: 'แอลกอฮอล์',
+                preferredProducts: ['sleep-journal-01', 'decaf-drink-01', 'supplement-mag-01', 'earplug-01'],
+                avoidTopProducts: ['blue-glasses-01'],
+                maxProducts: 3
+            },
+            NO_TRIGGER_SELECTED: {
+                triggerCode: 'NO_TRIGGER_SELECTED', signal: 'no_trigger_selected', label: 'ไม่ได้เลือก Trigger',
+                preferredProducts: ['sleep-journal-01', 'pillow-01', 'smartwatch-01', 'eye-mask-01'],
+                avoidTopProducts: ['blue-glasses-01', 'decaf-drink-01', 'supplement-mag-01', 'magnesium-01'],
+                maxProducts: 3
+            }
+        });
+
+        const SWP_AI_AFFILIATE_COPY_BANK_V11 = Object.freeze({
+            caffeine: [
+                'คาเฟอีนไม่ได้ทำให้ทุกคนนอนไม่หลับเหมือนกัน แต่ถ้าดื่มช่วงบ่ายหรือเย็นแล้วหลับยาก ควรเริ่มสังเกตเวลาที่ดื่มมากกว่าปริมาณอย่างเดียว',
+                'ถ้าร่างกายเหนื่อยแต่สมองยังตื่น คาเฟอีนอาจเป็นหนึ่งในตัวแปรที่ทำให้ระบบประสาทลดระดับช้าลง',
+                'แนวทางที่ทำได้จริงคือค่อย ๆ ขยับเวลาคาเฟอีนให้เร็วขึ้น แล้วแทนช่วงเย็นด้วย routine ที่ไม่กระตุ้นร่างกาย'
+            ],
+            stress: [
+                'ความเครียดทำให้ร่างกายเหมือนยังเปิดโหมดทำงาน แม้ปิดไฟนอนแล้ว จุดสำคัญคือช่วยให้สมองค่อย ๆ ลดรอบก่อนถึงเตียง',
+                'ถ้าคิดเยอะก่อนนอน การมี ritual สั้น ๆ ที่ทำซ้ำทุกคืนจะช่วยให้ร่างกายจำว่า ช่วงนี้คือเวลาพัก ได้ดีขึ้น',
+                'อย่าพยายามบังคับตัวเองให้หลับทันที ให้เริ่มจากลดสิ่งกระตุ้น ลดความคิดค้าง และสร้างบรรยากาศที่นิ่งขึ้น'
+            ],
+            exercise: [
+                'การออกกำลังกายเป็นผลดีต่อการนอนในภาพรวม แต่ถ้าออกหนักใกล้เวลานอน ร่างกายอาจยังตื่นเกินกว่าจะหลับลึกได้ทันที',
+                'ถ้าออกกำลังกายช่วงเย็นหรือค่ำ ให้เพิ่มช่วง cooldown 5–10 นาที เพื่อช่วยให้ชีพจร กล้ามเนื้อ และระบบประสาทค่อย ๆ ลดระดับลง',
+                'ลองสังเกตว่า วันที่ออกกำลังกายหนักเกินไปหรือช้าเกินไป คุณหลับง่ายขึ้นหรือยากขึ้น เพราะแต่ละคนตอบสนองไม่เหมือนกัน'
+            ],
+            screen: [
+                'หน้าจอก่อนนอนไม่ได้รบกวนแค่แสง แต่รวมถึงคอนเทนต์ที่ทำให้สมองยังคิดต่อ เช่น ข่าว งาน แชท หรือคลิปที่กระตุ้นอารมณ์',
+                'ถ้ายังเลิกใช้จอก่อนนอนไม่ได้ ให้เริ่มจากลดแสง ลดเวลา และเปลี่ยนแสงรอบตัวให้เข้าสู่โหมดพักมากขึ้น',
+                'เป้าหมายไม่ใช่ห้ามใช้มือถือแบบสุดโต่ง แต่คือทำให้ช่วงก่อนนอนไม่กลายเป็นช่วงที่สมองตื่นที่สุดของวัน'
+            ],
+            environment: [
+                'ห้องนอนที่ดีไม่จำเป็นต้องแพง แต่ควรลดสิ่งรบกวนหลักให้ได้ก่อน ได้แก่ แสง เสียง อุณหภูมิ และความสบายของร่างกาย',
+                'ถ้าตื่นกลางดึกบ่อย ลองตรวจปัจจัยรอบตัวก่อน เช่น ห้องร้อนเกินไป แสงลอดเข้ามา หรือเสียงรบกวนที่ทำให้หลับไม่ต่อเนื่อง',
+                'สภาพแวดล้อมที่เหมาะสมช่วยให้ร่างกายไม่ต้องสู้กับสิ่งรบกวนระหว่างนอน'
+            ],
+            alcohol: [
+                'แอลกอฮอล์อาจทำให้รู้สึกง่วงในช่วงแรก แต่คุณภาพการนอนช่วงหลังอาจถูกรบกวน ทำให้ตื่นกลางดึกหรือรู้สึกฟื้นตัวไม่เต็ม',
+                'ถ้าวันที่ดื่มแล้วตื่นมาไม่สดชื่น ให้บันทึก pattern ต่อเนื่อง เพราะผลของแอลกอฮอล์มักเห็นชัดเมื่อเทียบหลายคืน',
+                'คำแนะนำหลักไม่ใช่ซื้อสินค้าเพิ่มทันที แต่คือสังเกตผลกระทบ ลดความถี่/ปริมาณ และสร้าง routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพัก'
+            ],
+            no_trigger_selected: [
+                'คืนนี้คุณไม่ได้เลือก Trigger พฤติกรรมใดเป็นพิเศษ จึงควรใช้คำแนะนำแบบกลาง ๆ ก่อน ไม่ควรดันสินค้าที่แก้ปัญหาเฉพาะทางเกินข้อมูลที่มี',
+                'เมื่อยังไม่มี Trigger ชัดเจน จุดที่คุ้มที่สุดคือเก็บข้อมูลต่อและปรับพื้นฐาน เช่น เวลาเข้านอน ความสม่ำเสมอ และความสบายของห้องนอน',
+                'ระบบจะไม่สรุปว่าปัญหาเกิดจากคาเฟอีน ความเครียด หน้าจอ หรือแอลกอฮอล์ ถ้าผู้ใช้ไม่ได้เลือกหัวข้อนั้นจริง'
+            ]
+        });
+
+        function swpGetSelectedBehaviorTriggerCodesV11(log = {}) {
+            const f = log.factors || {};
+            const selected = [];
+            if (f.caffeine) selected.push('CAFFEINE');
+            if (f.stress || f.stressFactor) selected.push('STRESS');
+            if (f.exercise) selected.push('EXERCISE');
+            if (f.screen || f.screenTime) selected.push('SCREEN_USE');
+            if (f.room || f.roomIssue || f.environment) selected.push('BEDROOM_ENV');
+            if (f.alcohol) selected.push('ALCOHOL');
+            return selected;
+        }
+
+        function swpGetBehaviorSignalsV11(log = {}) {
+            return swpGetSelectedBehaviorTriggerCodesV11(log).map(code => SWP_AFFILIATE_TRIGGER_MASTER_V11[code]?.signal).filter(Boolean);
+        }
+
+        function swpGetAffiliateCopyV11(signal, seed = 0) {
+            const list = SWP_AI_AFFILIATE_COPY_BANK_V11[signal] || [];
+            if (!list.length) return '';
+            return list[Math.abs(Number(seed) || 0) % list.length];
+        }
+
+        // Override only the signal extraction used by Affiliate/AI logic; keeps log data shape unchanged.
+        function getSleepSignalsv9613h(log = {}) {
+            const f = log.factors || {};
+            const signals = [];
+            if ((log.duration || 0) < 6) signals.push('short_sleep');
+            if ((log.duration || 0) >= 7 && (log.duration || 0) <= 9) signals.push('good_duration');
+            if ((log.quality || 0) <= 5) signals.push('low_quality');
+            if ((log.cycles || 0) < 5) signals.push('low_cycles');
+            if ((log.pct || 0) < 85) signals.push('low_success');
+            if (f.screen || f.screenTime) signals.push('screen');
+            if (f.stress || f.stressFactor) signals.push('stress');
+            if (f.room || f.roomIssue || f.environment) signals.push('environment', 'room');
+            if (f.caffeine) signals.push('caffeine');
+            if (f.alcohol) signals.push('alcohol');
+            if (f.exercise) signals.push('exercise');
+            if (!swpGetSelectedBehaviorTriggerCodesV11(log).length) signals.push('no_trigger_selected');
+            if (!signals.length) signals.push('maintenance');
+            return Array.from(new Set(signals));
+        }
+
+        // Override only product ranking; does not mutate db/Profile/PIN/Logs/Sync.
+        function scoreProductForLogv9613h(product, log = {}) {
+            const signals = getSleepSignalsv9613h(log);
+            const behaviorCodes = swpGetSelectedBehaviorTriggerCodesV11(log);
+            const noBehaviorTrigger = behaviorCodes.length === 0;
+            const tags = product.matchTags || [];
+            let score = Number(product.priority || 50);
+
+            // Base metric match: still useful when user did not pick any of the 6 behavior triggers.
+            signals.forEach(s => { if (tags.includes(s)) score += 12; });
+            if (product.highlight) score += 2;
+
+            const activeMaps = noBehaviorTrigger ? [SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED] : behaviorCodes.map(code => SWP_TRIGGER_PRODUCT_MAP_V11[code]).filter(Boolean);
+            activeMaps.forEach(map => {
+                (map.preferredProducts || []).forEach((pid, index) => {
+                    if (pid === product.id) score += Math.max(8, 42 - index * 7);
+                });
+                if ((map.avoidTopProducts || []).includes(product.id)) score -= 80;
+            });
+
+            // Guardrails: do not push trigger-specific products when the trigger is absent.
+            if (!signals.includes('screen') && product.id === 'blue-glasses-01') score -= 95;
+            if (!signals.includes('caffeine') && product.id === 'decaf-drink-01') score -= 42;
+            if (!signals.includes('alcohol') && product.id === 'supplement-mag-01') score -= 18;
+            if (!signals.includes('exercise') && ['magnesium-01', 'cooling-pad-01'].includes(product.id)) score -= 18;
+            if (!signals.includes('environment') && ['eye-mask-01', 'earplug-01', 'humidifier-01', 'cooling-pad-01'].includes(product.id)) score -= 20;
+
+            // If no 6-trigger selected, prioritize neutral/habit/data products and avoid over-specific selling.
+            if (noBehaviorTrigger) {
+                if (SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts.includes(product.id)) score += 35;
+                if (SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.avoidTopProducts.includes(product.id)) score -= 65;
+            }
+
+            return Math.max(0, Math.round(score));
+        }
+
+        function getRankedAffiliateProductsv9613h(log = null, limit = 3) {
+            const latest = log || (db.logs && db.logs.length ? db.logs[db.logs.length - 1] : null);
+            const selectedCodes = latest ? swpGetSelectedBehaviorTriggerCodesV11(latest) : [];
+            const hasNoBehaviorTrigger = latest && selectedCodes.length === 0;
+            const scored = AFFILIATE_CATALOG
+                .map(p => ({ ...p, matchScore: latest ? scoreProductForLogv9613h(p, latest) : Number(p.priority || 50) }))
+                .sort((a, b) => b.matchScore - a.matchScore);
+
+            if (hasNoBehaviorTrigger) {
+                const neutralIds = SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts;
+                const neutralFirst = neutralIds
+                    .map(id => scored.find(p => p.id === id))
+                    .filter(Boolean);
+                const filled = [...neutralFirst, ...scored.filter(p => !neutralIds.includes(p.id))];
+                if (limit === 3) return getTieredPricingSelectionv9615h(filled, latest, limit);
+                return filled.slice(0, limit);
+            }
+
+            if (limit === 3) return getTieredPricingSelectionv9615h(scored, latest, limit);
+            return scored.slice(0, limit);
+        }
+
+        function buildProductReasonv9614h(product, signals) {
+            const hasNoTrigger = signals.includes('no_trigger_selected');
+            if (hasNoTrigger) {
+                if (product.id === 'sleep-journal-01') return 'เหมาะที่สุดเมื่อยังไม่มี Trigger ชัดเจน เพราะช่วยเก็บ pattern เพิ่มก่อนสรุปว่าปัญหามาจากอะไร';
+                if (product.id === 'pillow-01') return 'เหมาะเป็นตัวช่วยพื้นฐานด้านความสบายของร่างกาย โดยไม่ฟันธงว่าเกิดจากคาเฟอีน ความเครียด หน้าจอ หรือแอลกอฮอล์';
+                if (product.id === 'smartwatch-01') return 'เหมาะเมื่ออยากสร้าง routine และติดตามแนวโน้ม แต่ยังควรใช้ร่วมกับการบันทึกข้อมูลต่อเนื่อง';
+                return 'เป็นคำแนะนำกลาง ๆ เพราะคืนนี้ยังไม่ได้เลือก Trigger พฤติกรรมเฉพาะเจาะจง';
+            }
+            if (product.id === 'blue-glasses-01') return signals.includes('screen') ? 'เหมาะเพราะมีการใช้หน้าจอก่อนนอน ควรลดแสงและลดคอนเทนต์กระตุ้นสมอง' : 'ยังไม่ใช่ตัวหลักคืนนี้ เพราะไม่ได้ระบุการใช้หน้าจอ';
+            if (['eye-mask-01', 'earplug-01', 'humidifier-01', 'cooling-pad-01', 'pillow-01'].includes(product.id)) return (signals.includes('environment') || signals.includes('room')) ? 'เหมาะเพราะมีปัจจัยห้องนอน ควรแก้แสง เสียง อุณหภูมิ หรือความสบายของหมอนก่อนซื้อของกลุ่มอื่น' : 'เหมาะเป็นตัวเสริมเรื่องความสบายของห้องนอน แต่คืนนี้ยังไม่มี trigger ห้องนอนชัดเจน';
+            if (['herbal-tea-01', 'weighted-blanket-01', 'breath-trainer-01', 'magnesium-01'].includes(product.id)) return signals.includes('stress') ? 'เหมาะเพราะมีสัญญาณความเครียด ควรช่วยให้ร่างกายเปลี่ยนจากโหมดคิดงานเป็นโหมดพัก' : 'เหมาะเป็นตัวช่วย routine ผ่อนคลาย เมื่ออยากทำก่อนนอนให้สม่ำเสมอขึ้น';
+            if (product.id === 'supplement-mag-01') return (signals.includes('low_cycles') || signals.includes('low_quality') || signals.includes('alcohol')) ? 'เหมาะเมื่อรอบการนอน/คุณภาพตกหรือมีแอลกอฮอล์ ควรใช้เป็นตัวเสริมหลังปรับพฤติกรรมพื้นฐานแล้ว' : 'เหมาะเป็นตัวเสริม ไม่ใช่สิ่งแรกที่ต้องพึ่งถ้า pattern ยังดี';
+            if (product.id === 'decaf-drink-01') return signals.includes('caffeine') ? 'เหมาะเพราะมีคาเฟอีน ควรใช้แทนเครื่องดื่มเดิมช่วงเย็น' : 'เหมาะกับคนอยากมีเครื่องดื่มก่อนนอนแบบไม่รบกวนการหลับ';
+            return product.why || 'สัมพันธ์กับ pattern การนอนล่าสุดของคุณ';
+        }
+
+        // Keep card rendering public-facing; preserve existing CSS/classes and click tracking.
+        function renderAffiliateProducts(targetIds = ['smartwatch-01', 'pillow-01', 'blue-glasses-01']) {
+            const container = document.getElementById('affiliateContainer');
+            if (!container) return;
+
+            const ids = Array.isArray(targetIds) && targetIds.length ? targetIds : SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts;
+            const catalogById = new Map(AFFILIATE_CATALOG.map(p => [p.id, p]));
+            const renderList = ids.map(id => catalogById.get(id)).filter(Boolean);
+
+            if (!renderList.length) {
+                container.innerHTML = `<div class="swp-user-logic-note">ยังไม่มีสินค้าแนะนำเฉพาะเจาะจงในรอบนี้ ลองบันทึกข้อมูลเพิ่มอีก 1–3 วัน เพื่อให้ระบบเห็น pattern ชัดขึ้น</div>`;
+                return;
+            }
+
+            container.innerHTML = renderList.map((p) => `
+                <div class="affiliate-card-premium ${p.highlight ? 'is-highlight' : ''}">
+                    ${p.badge ? `<span class="absolute top-2 right-2 text-[8px] px-2 py-0.5 rounded-full font-bold bg-cyan-500/15 border border-cyan-400/20 text-cyan-200 tracking-wider uppercase shadow-[0_0_12px_rgba(6,182,212,.16)]">${p.badge}</span>` : ''}
+                    <div class="flex items-center gap-3 mb-3 pr-16 relative z-10">
+                        ${renderProductIconv961h(p, 'card')}
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-[12px] font-bold text-white leading-snug line-clamp-2">${p.name}</h4>
+                            <p class="text-[10px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">${p.desc}</p>
+                            <div class="swp-affiliate-fit-label">${getPublicAffiliateFitLabelv9626h(p)}</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-2 relative z-10">
+                        <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" onclick="trackProductClickv96g('${p.id}', 'shopee')" class="affiliate-action-btn text-center py-2.5 bg-orange-600/25 hover:bg-orange-600 text-orange-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-orange-500/10">
+                            <i class="fas fa-shopping-bag mr-1"></i> SHOPEE
+                        </a>
+                        <a href="${p.tiktokUrl}" target="_blank" rel="noopener noreferrer" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="affiliate-action-btn text-center py-2.5 bg-pink-600/25 hover:bg-pink-600 text-pink-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-pink-500/10">
+                            <i class="fab fa-tiktok mr-1"></i> TIKTOK
+                        </a>
+                    </div>
+                    <button onclick="trackProductClickv96g('${p.id}', 'detail'); openAffiliateDetail('${p.id}')" class="swp-affiliate-cta transition text-center mt-3 block w-full relative z-10">
+                        ดูคุณสมบัติ + ราคาโปรพิเศษ <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Small diagnostic helper for Go Live QA. Read-only; no DB writes.
+        window.SleepWellProAffiliateMappingV11 = {
+            version: 'v1.1-static-go-live-candidate',
+            triggerMaster: SWP_AFFILIATE_TRIGGER_MASTER_V11,
+            triggerProductMap: SWP_TRIGGER_PRODUCT_MAP_V11,
+            getSelectedTriggerCodes: swpGetSelectedBehaviorTriggerCodesV11,
+            getSignals: getSleepSignalsv9613h,
+            getRecommendations: getRankedAffiliateProductsv9613h,
+            getCopy: swpGetAffiliateCopyV11,
+            qa: function(log) {
+                const sampleLog = log || { duration: 7, quality: 7, cycles: 5, pct: 90, factors: {} };
+                const signals = getSleepSignalsv9613h(sampleLog);
+                const products = getRankedAffiliateProductsv9613h(sampleLog, 3).map(p => ({ id: p.id, name: p.name, score: p.matchScore }));
+                return { signals, products };
+            }
+        };
+
+
         // Global Bootloader System Initialization
         window.onload = () => {
             if (handleRecoveryQueryv969h()) return;
