@@ -1312,7 +1312,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
 
 
         /* =========================================================
-           v9.7.6d SHARE REPORT CAPTURE PATCH
+           v9.7.6d SHARE REPORT CAPTURE PATCH v2
            Scope: Capture/visual-only. Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script / Affiliate Mapping.
            Goal: Keep only 2 main charts + summary insight + branding in exported report image.
            ========================================================= */
@@ -1321,10 +1321,10 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
             padding: 18px !important;
             border-radius: 24px !important;
         }
-        body.swp-capturing-report #captureArea > div:first-child {
-            display: none !important;
-        }
-        body.swp-capturing-report #captureArea > section:nth-of-type(2) {
+        /* Hide only the original KPI cards and history table during share capture.
+           Do not use nth-of-type here because the temporary Summary Insight is also a <section>. */
+        body.swp-capturing-report #captureArea .swp-share-hide-kpi,
+        body.swp-capturing-report #captureArea .swp-share-hide-history {
             display: none !important;
         }
         body.swp-capturing-report #captureArea section {
@@ -3754,7 +3754,7 @@ function saveCloudUrlv96g() {
         }
 
         /* =========================================================
-           v9.7.6d SHARE REPORT CAPTURE PATCH
+           v9.7.6d SHARE REPORT CAPTURE PATCH v2
            Scope: Capture-only. Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script / Affiliate Mapping.
            Export view keeps: Summary Insight + 2 main charts + branding.
            Export view hides: KPI cards, history table, delete/scroll/action UI.
@@ -3841,6 +3841,15 @@ function saveCloudUrlv96g() {
             const oldSummary = document.getElementById('swpShareSummaryInsight');
             if (oldSummary) oldSummary.remove();
             captureArea.insertAdjacentHTML('afterbegin', swpBuildShareReportInsightv976d(filteredLogs, startVal, endVal));
+
+            // Share Report Capture v9.7.6d-2:
+            // Mark only non-share sections. This is visual/capture-only and does not mutate Core data.
+            // After summary insert, captureArea children are:
+            // 0 summary insight, 1 KPI cards, 2 sleep+quality chart, 3 history table, 4 calorie+success chart, 5 footer.
+            const captureChildren = Array.from(captureArea.children);
+            if (captureChildren[1]) captureChildren[1].classList.add('swp-share-hide-kpi');
+            if (captureChildren[3]) captureChildren[3].classList.add('swp-share-hide-history');
+
             document.body.classList.add('swp-capturing-report');
             document.getElementById('reportFooter').classList.remove('hidden');
             document.getElementById('mainChartTitle').innerText = `รายงานผลการนอนเชิงสถิติ (${startVal} ถึง ${endVal})`;
@@ -3852,6 +3861,9 @@ function saveCloudUrlv96g() {
             if (oldSummary) oldSummary.remove();
             const footer = document.getElementById('reportFooter');
             if (footer) footer.classList.add('hidden');
+            document.querySelectorAll('.swp-share-hide-kpi, .swp-share-hide-history').forEach(el => {
+                el.classList.remove('swp-share-hide-kpi', 'swp-share-hide-history');
+            });
             const chartTitle = document.getElementById('mainChartTitle');
             if (chartTitle) chartTitle.innerText = 'คุณภาพการนอนเทียบชั่วโมง';
             renderDashboard();
