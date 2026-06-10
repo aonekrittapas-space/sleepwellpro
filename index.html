@@ -1312,7 +1312,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
 
 
         /* =========================================================
-           v9.7.6d SHARE REPORT CAPTURE PATCH v2
+           v9.7.6d SHARE REPORT CAPTURE PATCH
            Scope: Capture/visual-only. Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script / Affiliate Mapping.
            Goal: Keep only 2 main charts + summary insight + branding in exported report image.
            ========================================================= */
@@ -1321,10 +1321,10 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
             padding: 18px !important;
             border-radius: 24px !important;
         }
-        /* Hide only the original KPI cards and history table during share capture.
-           Do not use nth-of-type here because the temporary Summary Insight is also a <section>. */
-        body.swp-capturing-report #captureArea .swp-share-hide-kpi,
-        body.swp-capturing-report #captureArea .swp-share-hide-history {
+        body.swp-capturing-report #captureArea > div:first-child {
+            display: none !important;
+        }
+        body.swp-capturing-report #captureArea > section:nth-of-type(2) {
             display: none !important;
         }
         body.swp-capturing-report #captureArea section {
@@ -1940,7 +1940,430 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
         }
 
         // Multi-Platform Affiliate E-Commerce Product Catalog Structured Matrix (v9.6c Original Content)
-        const AFFILIATE_CATALOG = [{"id": "smartwatch-01", "name": "Banala Lite อุปกรณ์ช่วยนอนหลับ", "tier": "T1 Core Sleep Fix", "icon": "🎧", "iconImg": "./assets/product-icons/banala-lite.png", "badge": "AI RECOMMENDED", "desc": "คลื่นเสียงช่วยผ่อนคลายและสร้าง routine ก่อนนอน เหมาะกับคนหลับยาก/ตื่นกลางคืนบ่อย", "shopeeUrl": "https://s.shopee.co.th/9pbFaeKHLB", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2KhBjKyYt-pM4yJ/", "price": "คลิกดูราคาล่าสุด • 1,500–3,000 บาท", "highlight": true, "matchTags": ["short_sleep", "low_quality", "stress", "irregular"], "priority": 95, "why": "เหมาะเป็นตัวช่วยหลักเมื่อมีปัญหาหลับยากหรือตื่นกลางคืนบ่อย และต้องการ routine ก่อนนอนที่ทำซ้ำได้ง่าย", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2500}, {"id": "pillow-01", "name": "หมอนหนุน Clover ช่วยหลับสบาย", "tier": "T1 Core Sleep Fix", "icon": "🛌", "iconImg": "./assets/product-icons/clover-pillow.png", "badge": "BEST SELLER", "desc": "ช่วยซัพพอร์ตคอ บ่า ไหล่ ลดการรบกวนท่านอน เหมาะกับคนตื่นแล้วปวดคอ/หลับไม่ต่อเนื่อง", "shopeeUrl": "https://s.shopee.co.th/10zr4VY1P3", "tiktokUrl": "https://vt.tiktok.com/ZS9Yf57YPmnDN-5YjVO/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["low_quality", "short_sleep", "recovery", "neck_support"], "priority": 90, "why": "เหมาะเป็นตัวช่วยเสริมด้านความสบายของร่างกาย ช่วยลดสิ่งรบกวนจากท่านอนและหมอนที่ไม่พอดี", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 790}, {"id": "blue-glasses-01", "name": "แว่นกรองแสง LUSEEN รุ่น AG2244", "tier": "T1 Core Sleep Fix", "icon": "👓", "iconImg": "./assets/product-icons/luseen-ag2244.png", "badge": "SCREEN DEFENDER", "desc": "ลดภาระแสงหน้าจอก่อนนอน เหมาะกับคนใช้มือถือ/คอมช่วงกลางคืนและนอนหลับยาก", "shopeeUrl": "https://s.shopee.co.th/6VKndCzibZ", "tiktokUrl": "https://vt.tiktok.com/ZS9Yj1TuA2hwH-ijOZ1/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": false, "matchTags": ["screen", "short_sleep", "low_quality", "circadian"], "priority": 88, "why": "เหมาะเป็นตัวช่วยเสริมเมื่อมีพฤติกรรมใช้หน้าจอก่อนนอน ลดปัจจัยที่ทำให้สมองตื่นตัวตอนกลางคืน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 590}, {"id": "herbal-tea-01", "name": "สเปรย์ MENTE Natural Calming and Refreshing", "tier": "T1 Core Sleep Fix", "icon": "🧴", "iconImg": "./assets/product-icons/mente-spray.png", "badge": "STRESS RELIEF", "desc": "กลิ่นผ่อนคลายก่อนนอน ช่วยทำ anchor ให้สมองเข้าสู่โหมดพัก เหมาะกับคนเครียด/คิดงานก่อนนอน", "shopeeUrl": "https://s.shopee.co.th/7fWkTpXzX7", "tiktokUrl": "https://vt.tiktok.com/ZS9Y2WXFuULAr-JyalG/", "price": "คลิกดูราคาล่าสุด • 100–400 บาท", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 86, "why": "เหมาะเป็นตัวช่วยเริ่มต้นสำหรับคืนที่เครียดหรือคิดงานก่อนนอน ช่วยสร้างสัญญาณผ่อนคลายแบบง่าย ๆ", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 290}, {"id": "supplement-mag-01", "name": "Biovitt NITE แคปซูลปรับสมดุลในการนอน", "tier": "T1 Core Sleep Fix", "icon": "💊", "iconImg": "./assets/product-icons/biovitt-nite.png", "badge": "DEEP SLEEP BOOSTER", "desc": "ตัวช่วยกลุ่มเสริมการพักผ่อน เหมาะกับคนวงจรหลับไม่ครบ/คุณภาพต่ำ/ตื่นไม่สดชื่น", "shopeeUrl": "https://s.shopee.co.th/3B4L9RTMiW", "tiktokUrl": "https://vt.tiktok.com/ZS9Yjefeqy6Lc-c6Oee/", "price": "คลิกดูราคาล่าสุด • 400–1,500 บาท", "highlight": true, "matchTags": ["low_cycles", "low_quality", "alcohol", "short_sleep"], "priority": 92, "why": "เหมาะเป็นตัวช่วยเสริมเมื่อคุณภาพการนอนต่ำหรือตื่นมาไม่สดชื่น และต้องการดูแลการพักผ่อนให้เป็นระบบขึ้น", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 490}, {"id": "magnesium-01", "name": "แมกนีเซียมก่อนนอน", "tier": "T2 Recovery Booster", "icon": "⚡", "iconImg": "./assets/product-icons/magnesium-sleep.png", "badge": "RECOVERY BOOST", "desc": "เหมาะกับคนตึงเครียด กล้ามเนื้อล้า หรือพักไม่สุด ช่วยวางแผน recovery routine ก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "recovery", "exercise", "low_quality"], "priority": 78, "why": "เหมาะเป็นสินค้ากลุ่ม recovery เมื่อผู้ใช้มีความเครียดหรือออกกำลังกายแล้วพักไม่ลึก", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 350}, {"id": "eye-mask-01", "name": "ผ้าปิดตานอนหลับลึก", "tier": "T2 Recovery Booster", "icon": "😴", "iconImg": "./assets/product-icons/sleep-mask.png", "badge": "DARK ROOM", "desc": "ลดแสงรบกวน เหมาะกับคนห้องสว่าง/นอนกลางวัน/ตื่นง่าย", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "irregular", "environment"], "priority": 76, "why": "แสงรบกวนทำให้ sleep continuity ต่ำ การลดแสงเป็น intervention ที่ต้นทุนต่ำและคุ้ม", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–300 บาท", "priceTierKey": "low", "approxPrice": 129}, {"id": "earplug-01", "name": "ที่อุดหูลดเสียงรบกวน", "tier": "T2 Recovery Booster", "icon": "🔇", "iconImg": "./assets/product-icons/sleep-earplug.png", "badge": "NOISE CONTROL", "desc": "เหมาะกับคนตื่นง่ายจากเสียง ห้องติดถนน หรือมีเสียงรบกวนตอนกลางคืน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "ต่ำกว่า 100–250 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["low_quality", "environment", "wake"], "priority": 74, "why": "เสียงรบกวนทำให้ micro-awakening เพิ่มขึ้น แม้ผู้ใช้อาจจำไม่ได้ว่าตื่น", "commercialTier": "Low-Ticket", "priceRange": "ต่ำกว่า 100–250 บาท", "priceTierKey": "low", "approxPrice": 89}, {"id": "humidifier-01", "name": "เครื่องเพิ่มความชื้น/ปรับอากาศห้องนอน", "tier": "T2 Recovery Booster", "icon": "💧", "iconImg": "./assets/product-icons/humidifier.png", "badge": "ROOM COMFORT", "desc": "เหมาะกับคนคอแห้ง ภูมิแพ้ หรือห้องแอร์แห้ง ทำให้สภาพห้องนอนสบายขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "recovery", "low_quality"], "priority": 72, "why": "คุณภาพอากาศและความสบายของห้องนอนส่งผลกับการหลับต่อเนื่อง", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1890}, {"id": "weighted-blanket-01", "name": "ผ้าห่มถ่วงน้ำหนัก/ผ้าห่มนุ่มหลับลึก", "tier": "T2 Recovery Booster", "icon": "🛏️", "iconImg": "./assets/product-icons/weighted-blanket.png", "badge": "CALM BODY", "desc": "เหมาะกับคนเครียด กระสับกระส่าย หรืออยากเพิ่มความรู้สึกปลอดภัยก่อนนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "low_quality", "wind_down"], "priority": 70, "why": "แรงกดเบา ๆ ช่วยสร้าง sensory cue ให้ร่างกายสงบลงก่อนนอน", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 2200}, {"id": "sleep-journal-01", "name": "สมุด Sleep Journal / Habit Tracker", "tier": "T3 Habit System", "icon": "📓", "iconImg": "./assets/product-icons/sleep-journal.png", "badge": "HABIT TRACKER", "desc": "เหมาะกับคนต้องการปรับพฤติกรรมจริงจัง ใช้จด trigger และหาความสัมพันธ์กับคุณภาพการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–300 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["irregular", "habit", "tracking"], "priority": 64, "why": "การเห็น pattern ของตัวเองช่วยให้ปรับพฤติกรรมได้แม่นกว่าเดา", "commercialTier": "Low-Ticket", "priceRange": "100–300 บาท", "priceTierKey": "low", "approxPrice": 159}, {"id": "sunrise-lamp-01", "name": "ไฟปลุกจำลองแสงเช้า", "tier": "T3 Habit System", "icon": "🌅", "iconImg": "./assets/product-icons/sunrise-lamp.png", "badge": "CIRCADIAN RESET", "desc": "เหมาะกับคนตื่นยาก นอนดึก หรืออยากปรับนาฬิกาชีวิตให้คงที่ขึ้น", "shopeeUrl": "#", "tiktokUrl": "#", "price": "1,500–3,000 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["circadian", "irregular", "short_sleep"], "priority": 68, "why": "แสงเช้าช่วยยึด rhythm ของร่างกาย ทำให้เวลานอนคืนถัดไปนิ่งขึ้น", "commercialTier": "High-Ticket", "priceRange": "1,500–3,000 บาท", "priceTierKey": "high", "approxPrice": 1790}, {"id": "breath-trainer-01", "name": "อุปกรณ์/การ์ดฝึกหายใจก่อนนอน", "tier": "T3 Habit System", "icon": "🫁", "iconImg": "./assets/product-icons/breath-trainer.png", "badge": "BREATH RESET", "desc": "เหมาะกับคนเครียด หัวใจเต้นแรง คิดเยอะก่อนนอน ใช้เป็น ritual 3-5 นาที", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["stress", "wind_down", "low_quality"], "priority": 66, "why": "การหายใจช้าลงช่วย shift จาก sympathetic ไป parasympathetic ก่อนนอน", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 199}, {"id": "cooling-pad-01", "name": "แผ่นรอง/ปลอกหมอนเย็น", "tier": "T3 Habit System", "icon": "❄️", "iconImg": "./assets/product-icons/cooling-pad.png", "badge": "COOL SLEEP", "desc": "เหมาะกับคนร้อนง่าย เหงื่อออกกลางคืน หรือห้องนอนอุณหภูมิสูง", "shopeeUrl": "#", "tiktokUrl": "#", "price": "400–1,500 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["environment", "low_quality", "wake"], "priority": 62, "why": "อุณหภูมิร่างกายที่ลดลงเป็นหนึ่งในสัญญาณสำคัญของการเข้าสู่การนอน", "commercialTier": "Mid-Ticket", "priceRange": "400–1,500 บาท", "priceTierKey": "mid", "approxPrice": 690}, {"id": "decaf-drink-01", "name": "เครื่องดื่มผ่อนคลายไม่มีคาเฟอีน", "tier": "T3 Habit System", "icon": "🍵", "iconImg": "./assets/product-icons/decaf-night-drink.png", "badge": "NO CAFFEINE", "desc": "เหมาะกับคนติดเครื่องดื่มช่วงเย็น แต่อยากเลี่ยงคาเฟอีนที่รบกวนการนอน", "shopeeUrl": "#", "tiktokUrl": "#", "price": "100–400 บาท • รอใส่ลิงก์ Affiliate", "highlight": false, "matchTags": ["caffeine", "wind_down", "habit"], "priority": 60, "why": "แทนพฤติกรรมเดิมด้วยเครื่องดื่มไม่มีคาเฟอีนช่วยลดแรงต้านในการปรับ routine", "commercialTier": "Low-Ticket", "priceRange": "100–400 บาท", "priceTierKey": "low", "approxPrice": 220}];
+        const AFFILIATE_CATALOG = [
+            {
+                        "id": "T1-001",
+                        "name": "ผ้าปิดตานอน 3D นุ่ม ไม่กดตา",
+                        "tier": "T1 Core Sleep Fix",
+                        "icon": "😴",
+                        "iconImg": "./assets/product-icons/sleep-mask.png",
+                        "badge": "DARK ROOM",
+                        "desc": "ลดแสงรบกวน เหมาะกับคนห้องสว่าง นอนกลางวัน หรือไวต่อแสง โดยไม่ต้องเปลี่ยนห้องนอนทันที",
+                        "shopeeUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 50–199 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "environment",
+                                    "screen",
+                                    "low_quality",
+                                    "irregular"
+                        ],
+                        "priority": 88,
+                        "why": "เหมาะกับ Trigger ห้องนอน/สภาพแวดล้อม เพราะช่วยลดแสงรบกวนและทำให้ห้องมืดขึ้น เป็นตัวช่วยพื้นฐานที่ไม่เสี่ยงสูง",
+                        "commercialTier": "Low-Ticket",
+                        "priceRange": "50–199 บาท",
+                        "priceTierKey": "low",
+                        "approxPrice": 129,
+                        "bestFor": "คนห้องสว่าง นอนกลางวัน หรือไวต่อแสง",
+                        "avoidIf": "ไม่ชอบมีผ้าสัมผัสหน้า/ตา หรือรู้สึกอึดอัดง่าย",
+                        "safetyNote": "ไม่ใช้คำว่าแก้นอนไม่หลับ ให้ใช้ว่าเป็นตัวช่วยลดแสงรบกวน"
+            },
+            {
+                        "id": "T1-002",
+                        "name": "แว่นกรองแสงสีฟ้า Luseen AG224 Blue Light Glasses",
+                        "tier": "T1 Core Sleep Fix",
+                        "icon": "👓",
+                        "iconImg": "./assets/product-icons/luseen-ag2244.png",
+                        "badge": "SCREEN DEFENDER",
+                        "desc": "ตัวช่วยเสริมสำหรับคนใช้มือถือหรือคอมก่อนนอน ควรใช้คู่กับการลดเวลาใช้จอและลดความสว่าง",
+                        "shopeeUrl": "https://s.shopee.co.th/8pjFW34mzj",
+                        "tiktokUrl": "https://vt.tiktok.com/ZS92KuJVSyk14-xRuBJ/",
+                        "price": "คลิกดูราคาล่าสุด • 99–690 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "screen",
+                                    "caffeine",
+                                    "low_quality",
+                                    "circadian"
+                        ],
+                        "priority": 86,
+                        "why": "เหมาะเมื่อมี Trigger โทรศัพท์/หน้าจอ เพราะช่วยลดภาระแสงจากหน้าจอ แต่ไม่ควรใช้แทนการลดเวลาใช้จอ",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "99–690 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 390,
+                        "bestFor": "คนที่ยังต้องใช้มือถือ คอม หรือแท็บเล็ตช่วงกลางคืน",
+                        "avoidIf": "ไม่ได้ใช้จอก่อนนอน หรือมีปัญหาสายตาที่ควรปรึกษาผู้เชี่ยวชาญ",
+                        "safetyNote": "ไม่เคลมรักษาโรคตา/รักษานอนไม่หลับ"
+            },
+            {
+                        "id": "T1-003",
+                        "name": "Deep Sleep Spray / Lavender Pillow Spray",
+                        "tier": "T1 Core Sleep Fix",
+                        "icon": "🧴",
+                        "iconImg": "./assets/product-icons/mente-spray.png",
+                        "badge": "WIND DOWN",
+                        "desc": "สเปรย์กลิ่นอ่อนสำหรับสร้าง ritual ก่อนนอน เหมาะกับคนเครียด คิดเยอะ หรืออยากให้ห้องมีบรรยากาศผ่อนคลาย",
+                        "shopeeUrl": "https://s.shopee.co.th/2BCLUWUKwV",
+                        "tiktokUrl": "https://vt.tiktok.com/ZS92KuuyGQAs2-i6bQF/",
+                        "price": "คลิกดูราคาล่าสุด • 120–490 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "environment",
+                                    "wind_down",
+                                    "low_quality"
+                        ],
+                        "priority": 78,
+                        "why": "เหมาะกับ Trigger ความเครียด เพราะใช้กลิ่นเป็นสัญญาณให้ร่างกายเข้าสู่ routine ก่อนนอน โดยไม่เคลมว่าแก้อาการนอนไม่หลับ",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "120–490 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 290,
+                        "bestFor": "คนที่อยากมีสัญญาณผ่อนคลายก่อนนอนแบบง่าย ๆ",
+                        "avoidIf": "แพ้น้ำหอม กลิ่นแรง หรือมีภูมิแพ้ที่ไวต่อกลิ่น",
+                        "safetyNote": "ระวังผู้แพ้น้ำหอม/ภูมิแพ้ทางเดินหายใจ"
+            },
+            {
+                        "id": "T1-004",
+                        "name": "Lunio Hypercool Ergonomic Pillow",
+                        "tier": "T1 Core Sleep Fix",
+                        "icon": "🛌",
+                        "iconImg": "./assets/product-icons/clover-pillow.png",
+                        "badge": "COMFORT FIX",
+                        "desc": "หมอน Ergonomic / Cooling Memory Foam สำหรับปรับความสบายของคอ บ่า ไหล่ และท่านอน",
+                        "shopeeUrl": "https://s.shopee.co.th/5q5dq9u8xG",
+                        "tiktokUrl": "https://vt.tiktok.com/ZS92K9emRpdSG-RPeQL/",
+                        "price": "คลิกดูราคาล่าสุด • 899–2,990 บาท",
+                        "highlight": true,
+                        "matchTags": [
+                                    "environment",
+                                    "exercise",
+                                    "stress",
+                                    "neck_support",
+                                    "recovery"
+                        ],
+                        "priority": 82,
+                        "why": "เหมาะกับ Trigger ห้องนอน/สภาพแวดล้อม เมื่อร่างกายไม่สบายหรือหมอนไม่รองรับ อาจทำให้คุณภาพการพักลดลง",
+                        "commercialTier": "High-Ticket",
+                        "priceRange": "899–2,990 บาท",
+                        "priceTierKey": "high",
+                        "approxPrice": 1590,
+                        "bestFor": "คนตื่นมาปวดคอ บ่า หรือรู้สึกว่าหมอนเดิมไม่รองรับ",
+                        "avoidIf": "ยังไม่แน่ใจความสูงหมอนที่เหมาะ หรือชอบหมอนนิ่มมากเป็นพิเศษ",
+                        "safetyNote": "ไม่เคลมรักษาโรคกระดูก/คอเสื่อม"
+            },
+            {
+                        "id": "T1-005",
+                        "name": "Silent EarPlugs ที่อุดหูนอนลดเสียงรบกวน",
+                        "tier": "T1 Core Sleep Fix",
+                        "icon": "🔇",
+                        "iconImg": "./assets/product-icons/earplugs.png",
+                        "badge": "NOISE CONTROL",
+                        "desc": "ที่อุดหูซิลิโคนสำหรับลดเสียงรบกวน เหมาะกับคนตื่นง่าย อยู่คอนโด ใกล้ถนน หรือมีเสียงรบกวนตอนกลางคืน",
+                        "shopeeUrl": "https://s.shopee.co.th/5fmDganMKZ",
+                        "tiktokUrl": "https://vt.tiktok.com/ZS92KHrSpyL8r-HHEHy/",
+                        "price": "คลิกดูราคาล่าสุด • 50–299 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "environment",
+                                    "alcohol",
+                                    "low_quality",
+                                    "wake"
+                        ],
+                        "priority": 84,
+                        "why": "เหมาะกับ Trigger ห้องนอน/สภาพแวดล้อม โดยเฉพาะกรณีเสียงรบกวนที่ทำให้หลับไม่ต่อเนื่อง",
+                        "commercialTier": "Low-Ticket",
+                        "priceRange": "50–299 บาท",
+                        "priceTierKey": "low",
+                        "approxPrice": 159,
+                        "bestFor": "คนที่ตื่นง่ายจากเสียงหรืออยู่ในพื้นที่เสียงรบกวน",
+                        "avoidIf": "มีหูอักเสบ เจ็บหู หรือไม่สบายเมื่อมีสิ่งอุดในหู",
+                        "safetyNote": "ไม่เคลมรักษากรน/หยุดหายใจ/โรคหู"
+            },
+            {
+                        "id": "T2-001",
+                        "name": "G'Nite Gummy / เคี้ยวก่อนนอน",
+                        "tier": "T2 Recovery Booster",
+                        "icon": "🍬",
+                        "iconImg": "./assets/product-icons/gnite-gummy.png",
+                        "badge": "VERIFY FIRST",
+                        "desc": "กัมมี่สำหรับทำ ritual ก่อนนอน กลุ่มอาหาร/เสริม ต้องตรวจส่วนผสม รีวิว และความเหมาะสมก่อนใช้",
+                        "shopeeUrl": "https://s.shopee.co.th/4ftgVW0EFB",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 99–490 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "caffeine",
+                                    "alcohol",
+                                    "wind_down"
+                        ],
+                        "priority": 70,
+                        "why": "เหมาะกับความเครียดหรือคนอยากมี routine ก่อนนอน แต่ควรแนะนำแบบตัวช่วยเสริม ไม่ใช่การรักษา",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "99–490 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 290,
+                        "bestFor": "คนอยากมี ritual ก่อนนอนและต้องการลดพฤติกรรมเครื่องดื่มกระตุ้นช่วงเย็น",
+                        "avoidIf": "แพ้ส่วนผสม ตั้งครรภ์ ให้นมบุตร มีโรคประจำตัว หรือใช้ยาอยู่",
+                        "safetyNote": "อาหารเสริม/ของกิน ต้องตรวจ อย. ส่วนผสม รีวิว และเลี่ยงคำว่าแก้นอนไม่หลับ"
+            },
+            {
+                        "id": "T2-002",
+                        "name": "Magnesium Bisglycinate Mag / แมกนีเซียมผ่อนคลาย",
+                        "tier": "T2 Recovery Booster",
+                        "icon": "⚡",
+                        "iconImg": "./assets/product-icons/magnesium.png",
+                        "badge": "SUPPLEMENT GUARD",
+                        "desc": "แมกนีเซียมกลุ่มอาหารเสริม ใช้เป็นตัวช่วยประกอบ routine/recovery อย่างระวัง ไม่ใช้แทนคำแนะนำแพทย์",
+                        "shopeeUrl": "https://s.shopee.co.th/7Ab1UYVZQ7",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 250–890 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "exercise",
+                                    "caffeine",
+                                    "recovery"
+                        ],
+                        "priority": 68,
+                        "why": "เหมาะกับ Trigger ความเครียดหรือออกกำลังกายเมื่อมีความตึงล้า แต่ต้องสื่อสารเป็นตัวช่วยเสริมและมีคำเตือน",
+                        "commercialTier": "Mid-Ticket",
+                        "priceRange": "250–890 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 590,
+                        "bestFor": "คนที่สนใจ support relaxation/recovery และยอมตรวจส่วนผสมก่อนใช้",
+                        "avoidIf": "โรคไต ใช้ยา ตั้งครรภ์ ให้นมบุตร เด็ก หรือมีโรคประจำตัวที่ควรปรึกษาผู้เชี่ยวชาญ",
+                        "safetyNote": "ไม่เคลมรักษานอนไม่หลับ ลดโรค หรือแก้ปวดโดยตรง"
+            },
+            {
+                        "id": "T2-003",
+                        "name": "MENTE Natural Calming and Refreshing Mouth Spray",
+                        "tier": "T2 Recovery Booster",
+                        "icon": "🌿",
+                        "iconImg": "./assets/product-icons/mente-mouth-spray.png",
+                        "badge": "FRESH ROUTINE",
+                        "desc": "สเปรย์ปากกลิ่นสดชื่นสำหรับ routine หลังมื้อเย็นหรือหลังสังสรรค์ ไม่ใช่ตัวช่วยรักษาการนอน",
+                        "shopeeUrl": "https://s.shopee.co.th/8fPpIUrQlA",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 99–390 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "alcohol",
+                                    "stress",
+                                    "wind_down"
+                        ],
+                        "priority": 60,
+                        "why": "เหมาะกับ Trigger แอลกอฮอล์ในมุม fresh routine หลังสังสรรค์ ไม่ควรสื่อสารว่าแก้ผลกระทบของแอลกอฮอล์ต่อการนอน",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "99–390 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 190,
+                        "bestFor": "คนที่อยากมี routine ทำความสดชื่นหลังมื้อเย็นหรือหลังสังสรรค์",
+                        "avoidIf": "แพ้ส่วนผสมในสเปรย์ปากหรือไวต่อกลิ่น",
+                        "safetyNote": "ไม่เคลมช่วยนอน ไม่เคลมแก้แอลกอฮอล์"
+            },
+            {
+                        "id": "T2-004",
+                        "name": "Biovitt NITE / ผลิตภัณฑ์เสริมอาหารก่อนนอน",
+                        "tier": "T2 Recovery Booster",
+                        "icon": "💊",
+                        "iconImg": "./assets/product-icons/biovitt-nite.png",
+                        "badge": "VERIFY FIRST",
+                        "desc": "ผลิตภัณฑ์เสริมอาหารกลุ่มก่อนนอน ต้องตรวจส่วนผสม รีวิว เลข อย. และใช้คำแนะนำอย่างระมัดระวัง",
+                        "shopeeUrl": "https://s.shopee.co.th/110O9s2WxI",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 200–690 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "caffeine",
+                                    "alcohol",
+                                    "low_quality"
+                        ],
+                        "priority": 64,
+                        "why": "สัมพันธ์กับ Trigger ความเครียด/คาเฟอีน/แอลกอฮอล์ในฐานะตัวช่วยเสริม แต่ควรดันหลังสินค้าพฤติกรรมหรือสภาพแวดล้อมก่อน",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "200–690 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 390,
+                        "bestFor": "คนที่ตั้งใจดูแล routine ก่อนนอนและยอมตรวจรายละเอียดสินค้าอย่างจริงจัง",
+                        "avoidIf": "ตั้งครรภ์ ให้นมบุตร โรคประจำตัว ใช้ยา หรือแพ้ส่วนผสม",
+                        "safetyNote": "rewrite claim อย่างระวัง ไม่ใช้คำว่ารักษาหรือแก้นอนไม่หลับ"
+            },
+            {
+                        "id": "T2-005",
+                        "name": "JOWSUA หมอนนวดไฟฟ้าไร้สาย 8 ลูกกลิ้ง / Massage Pillow",
+                        "tier": "T2 Recovery Booster",
+                        "icon": "💆",
+                        "iconImg": "./assets/product-icons/jowsua-massage-pillow.png",
+                        "badge": "RECOVERY",
+                        "desc": "หมอนนวดไฟฟ้าสำหรับคลายคอ บ่า ไหล่ หลังทำงานหรือออกกำลังกาย เหมาะกับ recovery routine",
+                        "shopeeUrl": "https://s.shopee.co.th/8ATYkP1hWA",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 790–2,500 บาท",
+                        "highlight": true,
+                        "matchTags": [
+                                    "exercise",
+                                    "stress",
+                                    "environment",
+                                    "recovery"
+                        ],
+                        "priority": 76,
+                        "why": "เหมาะกับ Trigger ออกกำลังกายและความเครียด เมื่อร่างกายยังตึงล้าและต้องการ cooldown/recovery ก่อนนอน",
+                        "commercialTier": "High-Ticket",
+                        "priceRange": "790–2,500 บาท",
+                        "priceTierKey": "high",
+                        "approxPrice": 1290,
+                        "bestFor": "คนที่บ่า ไหล่ หลังตึงจากงานหรือออกกำลังกาย",
+                        "avoidIf": "มีอาการเจ็บ ชา อักเสบ หรือโรคบริเวณคอ/หลังที่ควรพบแพทย์",
+                        "safetyNote": "ไม่ใช้กับอาการเจ็บ/ชาที่ควรพบแพทย์"
+            },
+            {
+                        "id": "T3-001",
+                        "name": "JOWSUA เครื่องนวดเท้า / Foot Massager NEW Model",
+                        "tier": "T3 Habit System",
+                        "icon": "🦶",
+                        "iconImg": "./assets/product-icons/jowsua-foot-massager.png",
+                        "badge": "HIGH TICKET",
+                        "desc": "เครื่องนวดเท้าไฟฟ้าสำหรับ recovery habit คนเท้าล้าหรือยืน/เดินนาน เป็นสินค้าราคาสูงต้องตรวจรีวิวก่อนดัน",
+                        "shopeeUrl": "https://s.shopee.co.th/6fel274xcJ",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 1,000–3,500 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "exercise",
+                                    "stress",
+                                    "recovery"
+                        ],
+                        "priority": 62,
+                        "why": "เหมาะกับ Trigger ออกกำลังกายเมื่อเท้าล้า แต่เป็น high ticket จึงควรแสดงเมื่อมี intent ชัด",
+                        "commercialTier": "High-Ticket",
+                        "priceRange": "1,000–3,500 บาท",
+                        "priceTierKey": "high",
+                        "approxPrice": 1990,
+                        "bestFor": "คนที่ยืน/เดิน/ออกกำลังกายแล้วเท้าล้าเป็นประจำ",
+                        "avoidIf": "มีโรคเท้า เบาหวาน ปลายประสาท หรืออาการปวดรุนแรงที่ควรปรึกษาแพทย์",
+                        "safetyNote": "high ticket + electric device ต้อง verify reviews"
+            },
+            {
+                        "id": "T3-002",
+                        "name": "Xiaomi Smart Band 9 Pro / Band 9",
+                        "tier": "T3 Habit System",
+                        "icon": "⌚",
+                        "iconImg": "./assets/product-icons/xiaomi-band-9-pro.png",
+                        "badge": "DATA HABIT",
+                        "desc": "สายรัดข้อมือสำหรับติดตาม pattern การนอน ออกกำลังกาย ความเครียด และพฤติกรรมระยะยาว ไม่ใช่เครื่องมือแพทย์",
+                        "shopeeUrl": "https://s.shopee.co.th/W47hmVZrv",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 900–3,000 บาท",
+                        "highlight": true,
+                        "matchTags": [
+                                    "exercise",
+                                    "screen",
+                                    "caffeine",
+                                    "alcohol",
+                                    "tracking",
+                                    "habit"
+                        ],
+                        "priority": 80,
+                        "why": "เหมาะกับผู้ใช้ที่อยากเห็น pattern ระยะยาวจากการนอน ออกกำลังกาย ความเครียด หน้าจอ คาเฟอีน และแอลกอฮอล์",
+                        "commercialTier": "High-Ticket",
+                        "priceRange": "900–3,000 บาท",
+                        "priceTierKey": "high",
+                        "approxPrice": 1890,
+                        "bestFor": "คนที่ต้องการติดตามแนวโน้มและสร้าง habit ด้วยข้อมูลจริง",
+                        "avoidIf": "ไม่ชอบใส่อุปกรณ์ติดข้อมือ หรือต้องการข้อมูลระดับเครื่องมือแพทย์",
+                        "safetyNote": "ไม่ใช่เครื่องมือแพทย์และไม่ควรใช้วินิจฉัยโรค"
+            },
+            {
+                        "id": "T3-003",
+                        "name": "Sleep Aid Patch / แพทช์ธรรมชาติเพื่อ routine ผ่อนคลาย",
+                        "tier": "T3 Habit System",
+                        "icon": "🌙",
+                        "iconImg": "./assets/product-icons/sleep-aid-patch.png",
+                        "badge": "CLAIM RISK",
+                        "desc": "แผ่นแปะกลุ่ม sleep aid มีความเสี่ยงด้านคำเคลม จึงควรใช้เฉพาะหลังตรวจรีวิว/ส่วนผสม และสื่อสารแบบระวังมาก",
+                        "shopeeUrl": "https://s.shopee.co.th/5ApyZXvPXw",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 99–490 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "caffeine",
+                                    "screen",
+                                    "alcohol",
+                                    "wind_down"
+                        ],
+                        "priority": 58,
+                        "why": "มีความสัมพันธ์กับ routine ผ่อนคลาย แต่ claim risk สูง จึงไม่ควรขึ้นเป็นอันดับแรกใน Soft Launch",
+                        "commercialTier": "Low-Mid Ticket",
+                        "priceRange": "99–490 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 190,
+                        "bestFor": "คนที่ตั้งใจลอง ritual แบบแผ่นแปะและตรวจส่วนผสมแล้ว",
+                        "avoidIf": "ผิวแพ้ง่าย แพ้กาว แพ้สมุนไพร ตั้งครรภ์ ให้นมบุตร หรือมีโรคประจำตัว",
+                        "safetyNote": "claim risk สูง ระวังแพ้กาว/สมุนไพร ห้ามเคลมรักษา insomnia"
+            },
+            {
+                        "id": "T3-004",
+                        "name": "ผ้าห่มถ่วงน้ำหนัก Premium Bamboo Cooling 1.0",
+                        "tier": "T3 Habit System",
+                        "icon": "🛏️",
+                        "iconImg": "./assets/product-icons/weighted-blanket.png",
+                        "badge": "CALM BODY",
+                        "desc": "ผ้าห่มถ่วงน้ำหนักสำหรับเพิ่ม comfort และ sensory cue ก่อนนอน เหมาะกับความเครียด แต่ต้องเลือกน้ำหนักเหมาะสม",
+                        "shopeeUrl": "https://s.shopee.co.th/AKY3Qqcaix",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 1,500–4,000 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "stress",
+                                    "environment",
+                                    "comfort",
+                                    "wind_down"
+                        ],
+                        "priority": 66,
+                        "why": "เหมาะกับ Trigger ความเครียดในฐานะ comfort product แต่เป็น high ticket และต้องใช้ถูกน้ำหนัก",
+                        "commercialTier": "High-Ticket",
+                        "priceRange": "1,500–4,000 บาท",
+                        "priceTierKey": "high",
+                        "approxPrice": 2500,
+                        "bestFor": "คนที่ต้องการความรู้สึกมั่นคง/กดทับเบา ๆ และเข้าใจวิธีเลือกน้ำหนัก",
+                        "avoidIf": "รู้สึกอึดอัดง่าย ร้อนง่าย มีปัญหาการหายใจ หรือไม่ชอบผ้าห่มหนัก",
+                        "safetyNote": "เลือกน้ำหนักเหมาะสม ระวังหายใจ/ร้อน/อึดอัด"
+            },
+            {
+                        "id": "T3-005",
+                        "name": "Morning Sleep Beside Pillow หมอนรองอเนกประสงค์",
+                        "tier": "T3 Habit System",
+                        "icon": "🧩",
+                        "iconImg": "./assets/product-icons/beside-pillow.png",
+                        "badge": "COMFORT HABIT",
+                        "desc": "หมอนรองอเนกประสงค์ Memory Foam สำหรับปรับท่านั่ง/ท่านอนก่อนพัก ช่วยเรื่อง comfort แต่ไม่ชวนใช้มือถือบนเตียงนานขึ้น",
+                        "shopeeUrl": "https://s.shopee.co.th/30lSdyAtGs",
+                        "tiktokUrl": "https://s.shopee.co.th/5q5dqh7LhE",
+                        "price": "คลิกดูราคาล่าสุด • 399–1,290 บาท",
+                        "highlight": false,
+                        "matchTags": [
+                                    "environment",
+                                    "screen",
+                                    "stress",
+                                    "comfort"
+                        ],
+                        "priority": 72,
+                        "why": "เหมาะกับสภาพแวดล้อมและท่าทางก่อนนอน โดยเฉพาะคนต้องการ comfort เพิ่ม แต่ต้องไม่ใช้เป็นข้ออ้างเล่นมือถือบนเตียงนานขึ้น",
+                        "commercialTier": "Mid-Ticket",
+                        "priceRange": "399–1,290 บาท",
+                        "priceTierKey": "mid",
+                        "approxPrice": 790,
+                        "bestFor": "คนที่ต้องการปรับท่าทาง/รองรับร่างกายช่วงพักผ่อนก่อนนอน",
+                        "avoidIf": "มีหมอนรองที่เหมาะอยู่แล้ว หรือมักใช้หมอนเป็นเหตุให้เล่นมือถือบนเตียงนานขึ้น",
+                        "safetyNote": "ไม่ชวนใช้มือถือยาวบนเตียง"
+            }
+];
 
 
 
@@ -3754,7 +4177,7 @@ function saveCloudUrlv96g() {
         }
 
         /* =========================================================
-           v9.7.6d SHARE REPORT CAPTURE PATCH v2
+           v9.7.6d SHARE REPORT CAPTURE PATCH
            Scope: Capture-only. Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script / Affiliate Mapping.
            Export view keeps: Summary Insight + 2 main charts + branding.
            Export view hides: KPI cards, history table, delete/scroll/action UI.
@@ -3841,15 +4264,6 @@ function saveCloudUrlv96g() {
             const oldSummary = document.getElementById('swpShareSummaryInsight');
             if (oldSummary) oldSummary.remove();
             captureArea.insertAdjacentHTML('afterbegin', swpBuildShareReportInsightv976d(filteredLogs, startVal, endVal));
-
-            // Share Report Capture v9.7.6d-2:
-            // Mark only non-share sections. This is visual/capture-only and does not mutate Core data.
-            // After summary insert, captureArea children are:
-            // 0 summary insight, 1 KPI cards, 2 sleep+quality chart, 3 history table, 4 calorie+success chart, 5 footer.
-            const captureChildren = Array.from(captureArea.children);
-            if (captureChildren[1]) captureChildren[1].classList.add('swp-share-hide-kpi');
-            if (captureChildren[3]) captureChildren[3].classList.add('swp-share-hide-history');
-
             document.body.classList.add('swp-capturing-report');
             document.getElementById('reportFooter').classList.remove('hidden');
             document.getElementById('mainChartTitle').innerText = `รายงานผลการนอนเชิงสถิติ (${startVal} ถึง ${endVal})`;
@@ -3861,9 +4275,6 @@ function saveCloudUrlv96g() {
             if (oldSummary) oldSummary.remove();
             const footer = document.getElementById('reportFooter');
             if (footer) footer.classList.add('hidden');
-            document.querySelectorAll('.swp-share-hide-kpi, .swp-share-hide-history').forEach(el => {
-                el.classList.remove('swp-share-hide-kpi', 'swp-share-hide-history');
-            });
             const chartTitle = document.getElementById('mainChartTitle');
             if (chartTitle) chartTitle.innerText = 'คุณภาพการนอนเทียบชั่วโมง';
             renderDashboard();
@@ -4270,234 +4681,354 @@ function saveCloudUrlv96g() {
         }
 
 
+
         /* =========================================================
-           Sleep Well Pro - Static Affiliate Mapping v1.1 Patch
-           Go Live Candidate / Soft Launch Safe Patch
+           Sleep Well Pro - Static Affiliate Mapping v1.2 Patch
+           Real Affiliate Links / Go Live Candidate
 
            Scope:
-           - Static Affiliate Trigger Mapping only
+           - Static Affiliate Product Catalog v1.2 with real links
+           - Trigger → Product Mapping v1.2
+           - AI Recommendation Copy Bank v1.2
            - Product ranking / recommendation guardrails only
-           - No Core Sync / Login / PIN / Profile / Logs / Apps Script changes
 
            Important:
-           - This patch does NOT write to Profile, PIN, Logs, or Cloud Sync schema
-           - This patch does NOT change Apps Script endpoint or sync payload
+           - This patch does NOT touch Core Sync
+           - This patch does NOT touch Login
+           - This patch does NOT touch PIN
+           - This patch does NOT touch Profile
+           - This patch does NOT touch Sleep Logs
+           - This patch does NOT touch Apps Script
+           - This patch preserves Share Report Capture Patch v2
            - This patch safely handles the case when user selects none of the 6 triggers
            ========================================================= */
 
-        const SWP_AFFILIATE_TRIGGER_MASTER_V11 = Object.freeze({
-            CAFFEINE: {
-                code: 'CAFFEINE', signal: 'caffeine', label: 'คาเฟอีน', shortLabel: 'คาเฟอีน',
-                sleepProblem: 'สมองยังตื่น หลับยาก หรือหลับไม่ลึก',
-                analysisAngle: 'คาเฟอีนอาจทำให้ระบบประสาทยังตื่นตัว โดยเฉพาะถ้าดื่มช่วงบ่ายหรือเย็น',
-                recommendationPrinciple: 'ลดคาเฟอีนช่วงบ่าย/เย็น และใช้ routine ที่ไม่กระตุ้นร่างกายแทน'
+        const SWP_AFFILIATE_TRIGGER_MASTER_V12 = Object.freeze({
+            "CAFFEINE": {
+                        "code": "CAFFEINE",
+                        "signal": "caffeine",
+                        "label": "คาเฟอีน",
+                        "shortLabel": "คาเฟอีน",
+                        "sleepProblem": "สมองยังตื่น หลับยาก หรือร่างกายลดรอบช้า",
+                        "analysisAngle": "คาเฟอีนอาจทำให้ระบบประสาทยังตื่นตัว โดยเฉพาะถ้าดื่มช่วงบ่ายหรือเย็น",
+                        "recommendationPrinciple": "เริ่มจากลดคาเฟอีนช่วงบ่าย/เย็น และใช้ routine ที่ไม่กระตุ้นร่างกายแทน"
             },
-            STRESS: {
-                code: 'STRESS', signal: 'stress', label: 'ความเครียด', shortLabel: 'เครียด/คิดเยอะ',
-                sleepProblem: 'คิดเยอะ หลับยาก ระบบประสาทยังไม่ผ่อน',
-                analysisAngle: 'ความเครียดทำให้ร่างกายยังอยู่ในโหมดทำงาน แม้จะถึงเวลานอนแล้ว',
-                recommendationPrinciple: 'สร้าง routine สั้น ๆ ก่อนนอน เพื่อลดความตื่นตัวของสมองและร่างกาย'
+            "STRESS": {
+                        "code": "STRESS",
+                        "signal": "stress",
+                        "label": "ความเครียด",
+                        "shortLabel": "เครียด/คิดเยอะ",
+                        "sleepProblem": "คิดเยอะ ระบบประสาทยัง active หรือกล้ามเนื้อตึง",
+                        "analysisAngle": "ความเครียดทำให้ร่างกายยังอยู่ในโหมดทำงาน แม้จะถึงเวลานอนแล้ว",
+                        "recommendationPrinciple": "สร้าง ritual ก่อนนอนที่ช่วยลดรอบสมองและร่างกาย โดยไม่บังคับตัวเองให้หลับทันที"
             },
-            EXERCISE: {
-                code: 'EXERCISE', signal: 'exercise', label: 'ออกกำลังกาย', shortLabel: 'ออกกำลังกาย',
-                sleepProblem: 'ร่างกายอาจยังตื่นหรือตึงล้า ถ้าออกหนักหรือใกล้เวลานอน',
-                analysisAngle: 'การออกกำลังกายเป็นผลดีต่อการนอนโดยรวม แต่ควรมีช่วง cooldown ถ้าออกช่วงเย็นหรือค่ำ',
-                recommendationPrinciple: 'เพิ่ม cooldown / ยืดเหยียดเบา ๆ และสังเกตเวลาการออกกำลังกายกับคุณภาพการนอน'
+            "EXERCISE": {
+                        "code": "EXERCISE",
+                        "signal": "exercise",
+                        "label": "ออกกำลังกาย",
+                        "shortLabel": "ออกกำลังกาย",
+                        "sleepProblem": "ร่างกายยังตื่น ตึงล้า หรือไม่มี cooldown",
+                        "analysisAngle": "ออกกำลังกายดีต่อการนอนโดยรวม แต่ถ้าหนักหรือใกล้นอนเกินไปอาจทำให้ร่างกายลดรอบช้า",
+                        "recommendationPrinciple": "เพิ่ม cooldown / recovery routine และดูความสัมพันธ์ระหว่างเวลาออกกำลังกายกับคุณภาพการนอน"
             },
-            SCREEN_USE: {
-                code: 'SCREEN_USE', signal: 'screen', label: 'โทรศัพท์/หน้าจอ', shortLabel: 'หน้าจอ',
-                sleepProblem: 'แสงและคอนเทนต์กระตุ้นสมองก่อนนอน',
-                analysisAngle: 'หน้าจอก่อนนอนรบกวนทั้งจากแสง ความสว่าง และคอนเทนต์ที่ทำให้สมองคิดต่อ',
-                recommendationPrinciple: 'ลดแสง ลดเวลาใช้จอ และเปลี่ยนบรรยากาศก่อนนอนให้เข้าสู่โหมดพัก'
+            "SCREEN_USE": {
+                        "code": "SCREEN_USE",
+                        "signal": "screen",
+                        "label": "โทรศัพท์/หน้าจอ",
+                        "shortLabel": "หน้าจอ",
+                        "sleepProblem": "แสงและคอนเทนต์กระตุ้นสมองก่อนนอน",
+                        "analysisAngle": "หน้าจอก่อนนอนไม่ได้รบกวนแค่แสง แต่รวมถึงคอนเทนต์ที่ทำให้สมองยังคิดต่อ",
+                        "recommendationPrinciple": "ลดแสง ลดเวลาใช้จอ และไม่ให้ช่วงก่อนนอนกลายเป็นช่วงที่สมองตื่นที่สุดของวัน"
             },
-            BEDROOM_ENV: {
-                code: 'BEDROOM_ENV', signal: 'environment', label: 'ห้องนอน/สภาพแวดล้อม', shortLabel: 'ห้องนอน',
-                sleepProblem: 'แสง เสียง อุณหภูมิ หรือความสบายของร่างกายรบกวนการนอน',
-                analysisAngle: 'สภาพแวดล้อมห้องนอนมีผลกับการหลับต่อเนื่อง โดยเฉพาะแสง เสียง อุณหภูมิ และหมอน',
-                recommendationPrinciple: 'แก้สิ่งรบกวนพื้นฐานก่อน เช่น แสง เสียง อุณหภูมิ และความสบายของหมอน/เตียง'
+            "BEDROOM_ENV": {
+                        "code": "BEDROOM_ENV",
+                        "signal": "environment",
+                        "label": "ห้องนอน/สภาพแวดล้อม",
+                        "shortLabel": "ห้องนอน",
+                        "sleepProblem": "แสง เสียง หมอน อุณหภูมิ หรือความสบายของร่างกายรบกวนการนอน",
+                        "analysisAngle": "สภาพแวดล้อมห้องนอนมีผลกับการหลับต่อเนื่อง โดยเฉพาะแสง เสียง และความสบายทางกาย",
+                        "recommendationPrinciple": "แก้สิ่งรบกวนพื้นฐานก่อน เช่น แสง เสียง และความสบายของหมอน/ท่านอน"
             },
-            ALCOHOL: {
-                code: 'ALCOHOL', signal: 'alcohol', label: 'แอลกอฮอล์', shortLabel: 'แอลกอฮอล์',
-                sleepProblem: 'หลับไม่ลึก ตื่นกลางดึก หรือฟื้นตัวไม่เต็ม',
-                analysisAngle: 'แอลกอฮอล์อาจทำให้รู้สึกง่วงช่วงแรก แต่รบกวนคุณภาพการนอนช่วงหลังได้',
-                recommendationPrinciple: 'สังเกตผลกระทบจากวันที่ดื่ม และใช้ routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพักธรรมชาติ'
+            "ALCOHOL": {
+                        "code": "ALCOHOL",
+                        "signal": "alcohol",
+                        "label": "แอลกอฮอล์",
+                        "shortLabel": "แอลกอฮอล์",
+                        "sleepProblem": "หลับไม่ลึก ตื่นกลางดึก หรือฟื้นตัวไม่เต็ม",
+                        "analysisAngle": "แอลกอฮอล์อาจทำให้ง่วงช่วงแรก แต่รบกวนคุณภาพการนอนช่วงหลังได้",
+                        "recommendationPrinciple": "สังเกต pattern วันที่ดื่ม และใช้ routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพักตามธรรมชาติ"
             }
-        });
+});
 
-        const SWP_TRIGGER_PRODUCT_MAP_V11 = Object.freeze({
-            CAFFEINE: {
-                triggerCode: 'CAFFEINE', signal: 'caffeine', label: 'คาเฟอีน',
-                preferredProducts: ['decaf-drink-01', 'sleep-journal-01', 'herbal-tea-01', 'magnesium-01'],
-                avoidTopProducts: ['blue-glasses-01', 'sunrise-lamp-01'],
-                maxProducts: 3
+        const SWP_TRIGGER_PRODUCT_MAP_V12 = Object.freeze({
+            "CAFFEINE": {
+                        "triggerCode": "CAFFEINE",
+                        "signal": "caffeine",
+                        "label": "คาเฟอีน",
+                        "preferredProducts": [
+                                    "T2-001",
+                                    "T2-002",
+                                    "T2-004",
+                                    "T3-002",
+                                    "T3-003"
+                        ],
+                        "avoidTopProducts": [
+                                    "T1-002",
+                                    "T2-003",
+                                    "T3-001"
+                        ],
+                        "maxProducts": 3
             },
-            STRESS: {
-                triggerCode: 'STRESS', signal: 'stress', label: 'ความเครียด',
-                preferredProducts: ['herbal-tea-01', 'breath-trainer-01', 'weighted-blanket-01', 'smartwatch-01', 'magnesium-01'],
-                avoidTopProducts: [],
-                maxProducts: 3
+            "STRESS": {
+                        "triggerCode": "STRESS",
+                        "signal": "stress",
+                        "label": "ความเครียด",
+                        "preferredProducts": [
+                                    "T1-003",
+                                    "T2-001",
+                                    "T2-002",
+                                    "T2-004",
+                                    "T3-004",
+                                    "T3-005",
+                                    "T3-003"
+                        ],
+                        "avoidTopProducts": [
+                                    "T2-003"
+                        ],
+                        "maxProducts": 3
             },
-            EXERCISE: {
-                triggerCode: 'EXERCISE', signal: 'exercise', label: 'ออกกำลังกาย',
-                preferredProducts: ['magnesium-01', 'cooling-pad-01', 'pillow-01', 'sleep-journal-01', 'supplement-mag-01'],
-                avoidTopProducts: ['blue-glasses-01', 'decaf-drink-01'],
-                maxProducts: 3
+            "EXERCISE": {
+                        "triggerCode": "EXERCISE",
+                        "signal": "exercise",
+                        "label": "ออกกำลังกาย",
+                        "preferredProducts": [
+                                    "T2-005",
+                                    "T3-001",
+                                    "T3-002",
+                                    "T2-002",
+                                    "T1-004"
+                        ],
+                        "avoidTopProducts": [
+                                    "T1-002",
+                                    "T2-003"
+                        ],
+                        "maxProducts": 3
             },
-            SCREEN_USE: {
-                triggerCode: 'SCREEN_USE', signal: 'screen', label: 'โทรศัพท์/หน้าจอ',
-                preferredProducts: ['blue-glasses-01', 'sunrise-lamp-01', 'sleep-journal-01', 'eye-mask-01', 'smartwatch-01'],
-                avoidTopProducts: [],
-                maxProducts: 3
+            "SCREEN_USE": {
+                        "triggerCode": "SCREEN_USE",
+                        "signal": "screen",
+                        "label": "โทรศัพท์/หน้าจอ",
+                        "preferredProducts": [
+                                    "T1-002",
+                                    "T3-002",
+                                    "T3-005",
+                                    "T1-003",
+                                    "T1-001"
+                        ],
+                        "avoidTopProducts": [
+                                    "T3-001",
+                                    "T2-003"
+                        ],
+                        "maxProducts": 3
             },
-            BEDROOM_ENV: {
-                triggerCode: 'BEDROOM_ENV', signal: 'environment', label: 'ห้องนอน/สภาพแวดล้อม',
-                preferredProducts: ['eye-mask-01', 'earplug-01', 'pillow-01', 'cooling-pad-01', 'humidifier-01'],
-                avoidTopProducts: ['decaf-drink-01'],
-                maxProducts: 3
+            "BEDROOM_ENV": {
+                        "triggerCode": "BEDROOM_ENV",
+                        "signal": "environment",
+                        "label": "ห้องนอน/สภาพแวดล้อม",
+                        "preferredProducts": [
+                                    "T1-001",
+                                    "T1-005",
+                                    "T1-004",
+                                    "T3-005",
+                                    "T3-004"
+                        ],
+                        "avoidTopProducts": [
+                                    "T2-001",
+                                    "T2-002",
+                                    "T2-004"
+                        ],
+                        "maxProducts": 3
             },
-            ALCOHOL: {
-                triggerCode: 'ALCOHOL', signal: 'alcohol', label: 'แอลกอฮอล์',
-                preferredProducts: ['sleep-journal-01', 'decaf-drink-01', 'supplement-mag-01', 'earplug-01'],
-                avoidTopProducts: ['blue-glasses-01'],
-                maxProducts: 3
+            "ALCOHOL": {
+                        "triggerCode": "ALCOHOL",
+                        "signal": "alcohol",
+                        "label": "แอลกอฮอล์",
+                        "preferredProducts": [
+                                    "T3-002",
+                                    "T2-003",
+                                    "T2-004",
+                                    "T2-001",
+                                    "T3-003"
+                        ],
+                        "avoidTopProducts": [
+                                    "T1-002",
+                                    "T3-001"
+                        ],
+                        "maxProducts": 3
             },
-            NO_TRIGGER_SELECTED: {
-                triggerCode: 'NO_TRIGGER_SELECTED', signal: 'no_trigger_selected', label: 'ไม่ได้เลือก Trigger',
-                preferredProducts: ['sleep-journal-01', 'pillow-01', 'smartwatch-01', 'eye-mask-01'],
-                avoidTopProducts: ['blue-glasses-01', 'decaf-drink-01', 'supplement-mag-01', 'magnesium-01'],
-                maxProducts: 3
+            "NO_TRIGGER_SELECTED": {
+                        "triggerCode": "NO_TRIGGER_SELECTED",
+                        "signal": "no_trigger_selected",
+                        "label": "ไม่ได้เลือก Trigger",
+                        "preferredProducts": [
+                                    "T3-002",
+                                    "T1-001",
+                                    "T1-004",
+                                    "T3-005"
+                        ],
+                        "avoidTopProducts": [
+                                    "T1-002",
+                                    "T2-001",
+                                    "T2-002",
+                                    "T2-003",
+                                    "T2-004",
+                                    "T3-001",
+                                    "T3-003",
+                                    "T3-004"
+                        ],
+                        "maxProducts": 3
             }
-        });
+});
 
-        const SWP_AI_AFFILIATE_COPY_BANK_V11 = Object.freeze({
-            caffeine: [
-                'คาเฟอีนไม่ได้ทำให้ทุกคนนอนไม่หลับเหมือนกัน แต่ถ้าดื่มช่วงบ่ายหรือเย็นแล้วหลับยาก ควรเริ่มสังเกตเวลาที่ดื่มมากกว่าปริมาณอย่างเดียว',
-                'ถ้าร่างกายเหนื่อยแต่สมองยังตื่น คาเฟอีนอาจเป็นหนึ่งในตัวแปรที่ทำให้ระบบประสาทลดระดับช้าลง',
-                'แนวทางที่ทำได้จริงคือค่อย ๆ ขยับเวลาคาเฟอีนให้เร็วขึ้น แล้วแทนช่วงเย็นด้วย routine ที่ไม่กระตุ้นร่างกาย'
+        const SWP_AI_AFFILIATE_COPY_BANK_V12 = Object.freeze({
+            "caffeine": [
+                        "คาเฟอีนไม่ได้ทำให้ทุกคนนอนไม่หลับเหมือนกัน แต่ถ้าดื่มช่วงบ่ายหรือเย็นแล้วหลับยาก ควรเริ่มสังเกตเวลาและ pattern ที่เกิดซ้ำ",
+                        "ถ้าร่างกายเหนื่อยแต่สมองยังตื่น คาเฟอีนอาจเป็นหนึ่งในตัวแปรที่ทำให้ระบบประสาทลดระดับช้าลง",
+                        "จุดเริ่มที่ทำได้จริงคือขยับเวลาคาเฟอีนให้เร็วขึ้น แล้วแทนช่วงเย็นด้วย routine ที่ไม่กระตุ้นร่างกาย"
             ],
-            stress: [
-                'ความเครียดทำให้ร่างกายเหมือนยังเปิดโหมดทำงาน แม้ปิดไฟนอนแล้ว จุดสำคัญคือช่วยให้สมองค่อย ๆ ลดรอบก่อนถึงเตียง',
-                'ถ้าคิดเยอะก่อนนอน การมี ritual สั้น ๆ ที่ทำซ้ำทุกคืนจะช่วยให้ร่างกายจำว่า ช่วงนี้คือเวลาพัก ได้ดีขึ้น',
-                'อย่าพยายามบังคับตัวเองให้หลับทันที ให้เริ่มจากลดสิ่งกระตุ้น ลดความคิดค้าง และสร้างบรรยากาศที่นิ่งขึ้น'
+            "stress": [
+                        "ความเครียดทำให้ร่างกายเหมือนยังเปิดโหมดทำงาน แม้ปิดไฟนอนแล้ว จุดสำคัญคือช่วยให้สมองค่อย ๆ ลดรอบก่อนถึงเตียง",
+                        "ถ้าคิดเยอะก่อนนอน การมี ritual สั้น ๆ ที่ทำซ้ำทุกคืนจะช่วยให้ร่างกายจำว่าช่วงนี้คือเวลาพักได้ดีขึ้น",
+                        "อย่าพยายามบังคับตัวเองให้หลับทันที ให้เริ่มจากลดสิ่งกระตุ้น ลดความคิดค้าง และสร้างบรรยากาศที่นิ่งขึ้น"
             ],
-            exercise: [
-                'การออกกำลังกายเป็นผลดีต่อการนอนในภาพรวม แต่ถ้าออกหนักใกล้เวลานอน ร่างกายอาจยังตื่นเกินกว่าจะหลับลึกได้ทันที',
-                'ถ้าออกกำลังกายช่วงเย็นหรือค่ำ ให้เพิ่มช่วง cooldown 5–10 นาที เพื่อช่วยให้ชีพจร กล้ามเนื้อ และระบบประสาทค่อย ๆ ลดระดับลง',
-                'ลองสังเกตว่า วันที่ออกกำลังกายหนักเกินไปหรือช้าเกินไป คุณหลับง่ายขึ้นหรือยากขึ้น เพราะแต่ละคนตอบสนองไม่เหมือนกัน'
+            "exercise": [
+                        "การออกกำลังกายเป็นผลดีต่อการนอนในภาพรวม แต่ถ้าออกหนักใกล้เวลานอน ร่างกายอาจยังตื่นเกินกว่าจะหลับลึกได้ทันที",
+                        "ถ้าออกกำลังกายช่วงเย็นหรือค่ำ ให้เพิ่มช่วง cooldown 5–10 นาที เพื่อช่วยให้ชีพจร กล้ามเนื้อ และระบบประสาทค่อย ๆ ลดระดับลง",
+                        "ลองสังเกตว่าวันที่ออกกำลังกายหนักเกินไปหรือช้าเกินไป คุณหลับง่ายขึ้นหรือยากขึ้น เพราะแต่ละคนตอบสนองไม่เหมือนกัน"
             ],
-            screen: [
-                'หน้าจอก่อนนอนไม่ได้รบกวนแค่แสง แต่รวมถึงคอนเทนต์ที่ทำให้สมองยังคิดต่อ เช่น ข่าว งาน แชท หรือคลิปที่กระตุ้นอารมณ์',
-                'ถ้ายังเลิกใช้จอก่อนนอนไม่ได้ ให้เริ่มจากลดแสง ลดเวลา และเปลี่ยนแสงรอบตัวให้เข้าสู่โหมดพักมากขึ้น',
-                'เป้าหมายไม่ใช่ห้ามใช้มือถือแบบสุดโต่ง แต่คือทำให้ช่วงก่อนนอนไม่กลายเป็นช่วงที่สมองตื่นที่สุดของวัน'
+            "screen": [
+                        "หน้าจอก่อนนอนไม่ได้รบกวนแค่แสง แต่รวมถึงคอนเทนต์ที่ทำให้สมองยังคิดต่อ เช่น ข่าว งาน แชท หรือคลิปที่กระตุ้นอารมณ์",
+                        "ถ้ายังเลิกใช้จอก่อนนอนไม่ได้ ให้เริ่มจากลดแสง ลดเวลา และเปลี่ยนแสงรอบตัวให้เข้าสู่โหมดพักมากขึ้น",
+                        "เป้าหมายไม่ใช่ห้ามใช้มือถือแบบสุดโต่ง แต่คือทำให้ช่วงก่อนนอนไม่กลายเป็นช่วงที่สมองตื่นที่สุดของวัน"
             ],
-            environment: [
-                'ห้องนอนที่ดีไม่จำเป็นต้องแพง แต่ควรลดสิ่งรบกวนหลักให้ได้ก่อน ได้แก่ แสง เสียง อุณหภูมิ และความสบายของร่างกาย',
-                'ถ้าตื่นกลางดึกบ่อย ลองตรวจปัจจัยรอบตัวก่อน เช่น ห้องร้อนเกินไป แสงลอดเข้ามา หรือเสียงรบกวนที่ทำให้หลับไม่ต่อเนื่อง',
-                'สภาพแวดล้อมที่เหมาะสมช่วยให้ร่างกายไม่ต้องสู้กับสิ่งรบกวนระหว่างนอน'
+            "environment": [
+                        "ห้องนอนที่ดีไม่จำเป็นต้องแพง แต่ควรลดสิ่งรบกวนหลักให้ได้ก่อน ได้แก่ แสง เสียง และความสบายของร่างกาย",
+                        "ถ้าตื่นกลางดึกบ่อย ลองตรวจปัจจัยรอบตัวก่อน เช่น แสงลอดเข้ามา เสียงรบกวน หรือหมอนที่ไม่รองรับ",
+                        "สภาพแวดล้อมที่เหมาะสมช่วยให้ร่างกายไม่ต้องสู้กับสิ่งรบกวนระหว่างนอน"
             ],
-            alcohol: [
-                'แอลกอฮอล์อาจทำให้รู้สึกง่วงในช่วงแรก แต่คุณภาพการนอนช่วงหลังอาจถูกรบกวน ทำให้ตื่นกลางดึกหรือรู้สึกฟื้นตัวไม่เต็ม',
-                'ถ้าวันที่ดื่มแล้วตื่นมาไม่สดชื่น ให้บันทึก pattern ต่อเนื่อง เพราะผลของแอลกอฮอล์มักเห็นชัดเมื่อเทียบหลายคืน',
-                'คำแนะนำหลักไม่ใช่ซื้อสินค้าเพิ่มทันที แต่คือสังเกตผลกระทบ ลดความถี่/ปริมาณ และสร้าง routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพัก'
+            "alcohol": [
+                        "แอลกอฮอล์อาจทำให้รู้สึกง่วงในช่วงแรก แต่คุณภาพการนอนช่วงหลังอาจถูกรบกวน ทำให้ตื่นกลางดึกหรือรู้สึกฟื้นตัวไม่เต็ม",
+                        "ถ้าวันที่ดื่มแล้วตื่นมาไม่สดชื่น ให้บันทึก pattern ต่อเนื่อง เพราะผลของแอลกอฮอล์มักเห็นชัดเมื่อเทียบหลายคืน",
+                        "คำแนะนำหลักไม่ใช่ซื้อสินค้าเพิ่มทันที แต่คือสังเกตผลกระทบ ลดความถี่/ปริมาณ และสร้าง routine ที่ช่วยให้ร่างกายกลับสู่จังหวะพัก"
             ],
-            no_trigger_selected: [
-                'คืนนี้คุณไม่ได้เลือก Trigger พฤติกรรมใดเป็นพิเศษ จึงควรใช้คำแนะนำแบบกลาง ๆ ก่อน ไม่ควรดันสินค้าที่แก้ปัญหาเฉพาะทางเกินข้อมูลที่มี',
-                'เมื่อยังไม่มี Trigger ชัดเจน จุดที่คุ้มที่สุดคือเก็บข้อมูลต่อและปรับพื้นฐาน เช่น เวลาเข้านอน ความสม่ำเสมอ และความสบายของห้องนอน',
-                'ระบบจะไม่สรุปว่าปัญหาเกิดจากคาเฟอีน ความเครียด หน้าจอ หรือแอลกอฮอล์ ถ้าผู้ใช้ไม่ได้เลือกหัวข้อนั้นจริง'
+            "no_trigger_selected": [
+                        "คืนนี้คุณไม่ได้เลือก Trigger พฤติกรรมใดเป็นพิเศษ จึงควรใช้คำแนะนำแบบกลาง ๆ ก่อน ไม่ควรดันสินค้าที่แก้ปัญหาเฉพาะทางเกินข้อมูลที่มี",
+                        "เมื่อยังไม่มี Trigger ชัดเจน จุดที่คุ้มที่สุดคือเก็บข้อมูลต่ออีก 1–3 วัน และเริ่มจากตัวช่วยพื้นฐานที่เสี่ยงต่ำ",
+                        "ระบบจะไม่เดาว่าปัญหามาจากคาเฟอีน หน้าจอ หรือแอลกอฮอล์ ถ้าคุณไม่ได้เลือกหัวข้อนั้นจริง"
             ]
-        });
+});
 
-        function swpGetSelectedBehaviorTriggerCodesV11(log = {}) {
+        function swpGetSelectedBehaviorTriggerCodesV12(log = {}) {
             const f = log.factors || {};
-            const selected = [];
-            if (f.caffeine) selected.push('CAFFEINE');
-            if (f.stress || f.stressFactor) selected.push('STRESS');
-            if (f.exercise) selected.push('EXERCISE');
-            if (f.screen || f.screenTime) selected.push('SCREEN_USE');
-            if (f.room || f.roomIssue || f.environment) selected.push('BEDROOM_ENV');
-            if (f.alcohol) selected.push('ALCOHOL');
-            return selected;
+            const codes = [];
+            if (f.caffeine || f.caffeineFactor) codes.push('CAFFEINE');
+            if (f.stress || f.stressFactor) codes.push('STRESS');
+            if (f.exercise || f.exerciseFactor) codes.push('EXERCISE');
+            if (f.screen || f.screenTime || f.phone || f.device) codes.push('SCREEN_USE');
+            if (f.environment || f.room || f.roomEnv || f.noise || f.light || f.temperature) codes.push('BEDROOM_ENV');
+            if (f.alcohol || f.alcoholFactor) codes.push('ALCOHOL');
+            return [...new Set(codes)];
         }
 
-        function swpGetBehaviorSignalsV11(log = {}) {
-            return swpGetSelectedBehaviorTriggerCodesV11(log).map(code => SWP_AFFILIATE_TRIGGER_MASTER_V11[code]?.signal).filter(Boolean);
+        function swpGetBehaviorSignalsV12(log = {}) {
+            return swpGetSelectedBehaviorTriggerCodesV12(log)
+                .map(code => SWP_AFFILIATE_TRIGGER_MASTER_V12[code]?.signal)
+                .filter(Boolean);
         }
 
-        function swpGetAffiliateCopyV11(signal, seed = 0) {
-            const list = SWP_AI_AFFILIATE_COPY_BANK_V11[signal] || [];
-            if (!list.length) return '';
-            return list[Math.abs(Number(seed) || 0) % list.length];
+        function swpGetAffiliateCopyV12(signal, seed = 0) {
+            const key = String(signal || '').trim().toLowerCase();
+            const list = SWP_AI_AFFILIATE_COPY_BANK_V12[key];
+            if (!list || !list.length) return '';
+            const index = Math.abs(Number(seed) || 0) % list.length;
+            return list[index];
         }
 
-        // Override only the signal extraction used by Affiliate/AI logic; keeps log data shape unchanged.
+        // Override old signal extractor safely. Read-only; no DB/schema writes.
         function getSleepSignalsv9613h(log = {}) {
-            const f = log.factors || {};
             const signals = [];
+            const f = log.factors || {};
             if ((log.duration || 0) < 6) signals.push('short_sleep');
             if ((log.duration || 0) >= 7 && (log.duration || 0) <= 9) signals.push('good_duration');
             if ((log.quality || 0) <= 5) signals.push('low_quality');
             if ((log.cycles || 0) < 5) signals.push('low_cycles');
             if ((log.pct || 0) < 85) signals.push('low_success');
-            if (f.screen || f.screenTime) signals.push('screen');
+            if (f.caffeine || f.caffeineFactor) signals.push('caffeine');
             if (f.stress || f.stressFactor) signals.push('stress');
-            if (f.room || f.roomIssue || f.environment) signals.push('environment', 'room');
-            if (f.caffeine) signals.push('caffeine');
-            if (f.alcohol) signals.push('alcohol');
-            if (f.exercise) signals.push('exercise');
-            if (!swpGetSelectedBehaviorTriggerCodesV11(log).length) signals.push('no_trigger_selected');
-            if (!signals.length) signals.push('maintenance');
-            return Array.from(new Set(signals));
+            if (f.exercise || f.exerciseFactor) signals.push('exercise');
+            if (f.screen || f.screenTime || f.phone || f.device) signals.push('screen');
+            if (f.environment || f.room || f.roomEnv || f.noise || f.light || f.temperature) signals.push('environment');
+            if (f.alcohol || f.alcoholFactor) signals.push('alcohol');
+            if (!['caffeine','stress','exercise','screen','environment','alcohol'].some(s => signals.includes(s))) signals.push('no_trigger_selected');
+            return [...new Set(signals)];
         }
 
-        // Override only product ranking; does not mutate db/Profile/PIN/Logs/Sync.
         function scoreProductForLogv9613h(product, log = {}) {
             const signals = getSleepSignalsv9613h(log);
-            const behaviorCodes = swpGetSelectedBehaviorTriggerCodesV11(log);
-            const noBehaviorTrigger = behaviorCodes.length === 0;
-            const tags = product.matchTags || [];
+            const behaviorSignals = ['caffeine','stress','exercise','screen','environment','alcohol'];
+            const noBehaviorTrigger = !signals.some(s => behaviorSignals.includes(s));
             let score = Number(product.priority || 50);
 
-            // Base metric match: still useful when user did not pick any of the 6 behavior triggers.
-            signals.forEach(s => { if (tags.includes(s)) score += 12; });
-            if (product.highlight) score += 2;
+            // Base sleep severity signals
+            if (signals.includes('short_sleep')) score += 8;
+            if (signals.includes('low_quality')) score += 10;
+            if (signals.includes('low_cycles')) score += 7;
+            if (signals.includes('low_success')) score += 5;
+            if (signals.includes('good_duration')) score += 2;
 
-            const activeMaps = noBehaviorTrigger ? [SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED] : behaviorCodes.map(code => SWP_TRIGGER_PRODUCT_MAP_V11[code]).filter(Boolean);
+            const activeMaps = Object.values(SWP_TRIGGER_PRODUCT_MAP_V12).filter(map => signals.includes(map.signal));
             activeMaps.forEach(map => {
                 (map.preferredProducts || []).forEach((pid, index) => {
-                    if (pid === product.id) score += Math.max(8, 42 - index * 7);
+                    if (pid === product.id) score += Math.max(10, 46 - index * 7);
                 });
-                if ((map.avoidTopProducts || []).includes(product.id)) score -= 80;
+                if ((map.avoidTopProducts || []).includes(product.id)) score -= 90;
             });
 
-            // Guardrails: do not push trigger-specific products when the trigger is absent.
-            if (!signals.includes('screen') && product.id === 'blue-glasses-01') score -= 95;
-            if (!signals.includes('caffeine') && product.id === 'decaf-drink-01') score -= 42;
-            if (!signals.includes('alcohol') && product.id === 'supplement-mag-01') score -= 18;
-            if (!signals.includes('exercise') && ['magnesium-01', 'cooling-pad-01'].includes(product.id)) score -= 18;
-            if (!signals.includes('environment') && ['eye-mask-01', 'earplug-01', 'humidifier-01', 'cooling-pad-01'].includes(product.id)) score -= 20;
+            // Direct tag match bonus
+            (product.matchTags || []).forEach(tag => { if (signals.includes(tag)) score += 8; });
 
-            // If no 6-trigger selected, prioritize neutral/habit/data products and avoid over-specific selling.
+            // No-trigger guardrail: neutral/data/comfort products only.
             if (noBehaviorTrigger) {
-                if (SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts.includes(product.id)) score += 35;
-                if (SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.avoidTopProducts.includes(product.id)) score -= 65;
+                const neutralMap = SWP_TRIGGER_PRODUCT_MAP_V12.NO_TRIGGER_SELECTED;
+                if (neutralMap.preferredProducts.includes(product.id)) score += 42;
+                if (neutralMap.avoidTopProducts.includes(product.id)) score -= 90;
             }
+
+            // Specific guardrails to prevent misleading sales push.
+            if (!signals.includes('screen') && product.id === 'T1-002') score -= 100;
+            if (!signals.includes('environment') && ['T1-001','T1-005'].includes(product.id)) score -= 18;
+            if (!signals.includes('exercise') && ['T2-005','T3-001'].includes(product.id)) score -= 22;
+            if (!signals.includes('stress') && ['T2-001','T2-002','T2-004','T3-003','T3-004'].includes(product.id)) score -= 28;
+            if (!signals.includes('alcohol') && product.id === 'T2-003') score -= 60;
+
+            // Claim-risk products should never outrank low-risk basics unless strongly matched.
+            if (['T2-001','T2-002','T2-004','T3-003'].includes(product.id)) score -= 10;
+            if (product.id === 'T3-003') score -= 25;
 
             return Math.max(0, Math.round(score));
         }
 
         function getRankedAffiliateProductsv9613h(log = null, limit = 3) {
             const latest = log || (db.logs && db.logs.length ? db.logs[db.logs.length - 1] : null);
-            const selectedCodes = latest ? swpGetSelectedBehaviorTriggerCodesV11(latest) : [];
+            const selectedCodes = latest ? swpGetSelectedBehaviorTriggerCodesV12(latest) : [];
             const hasNoBehaviorTrigger = latest && selectedCodes.length === 0;
             const scored = AFFILIATE_CATALOG
                 .map(p => ({ ...p, matchScore: latest ? scoreProductForLogv9613h(p, latest) : Number(p.priority || 50) }))
                 .sort((a, b) => b.matchScore - a.matchScore);
 
             if (hasNoBehaviorTrigger) {
-                const neutralIds = SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts;
-                const neutralFirst = neutralIds
-                    .map(id => scored.find(p => p.id === id))
-                    .filter(Boolean);
+                const neutralIds = SWP_TRIGGER_PRODUCT_MAP_V12.NO_TRIGGER_SELECTED.preferredProducts;
+                const neutralFirst = neutralIds.map(id => scored.find(p => p.id === id)).filter(Boolean);
                 const filled = [...neutralFirst, ...scored.filter(p => !neutralIds.includes(p.id))];
                 if (limit === 3) return getTieredPricingSelectionv9615h(filled, latest, limit);
                 return filled.slice(0, limit);
@@ -4510,25 +5041,22 @@ function saveCloudUrlv96g() {
         function buildProductReasonv9614h(product, signals) {
             const hasNoTrigger = signals.includes('no_trigger_selected');
             if (hasNoTrigger) {
-                if (product.id === 'sleep-journal-01') return 'เหมาะที่สุดเมื่อยังไม่มี Trigger ชัดเจน เพราะช่วยเก็บ pattern เพิ่มก่อนสรุปว่าปัญหามาจากอะไร';
-                if (product.id === 'pillow-01') return 'เหมาะเป็นตัวช่วยพื้นฐานด้านความสบายของร่างกาย โดยไม่ฟันธงว่าเกิดจากคาเฟอีน ความเครียด หน้าจอ หรือแอลกอฮอล์';
-                if (product.id === 'smartwatch-01') return 'เหมาะเมื่ออยากสร้าง routine และติดตามแนวโน้ม แต่ยังควรใช้ร่วมกับการบันทึกข้อมูลต่อเนื่อง';
+                if (product.id === 'T3-002') return 'เหมาะเมื่อยังไม่มี Trigger ชัดเจน เพราะช่วยติดตาม pattern การนอนและพฤติกรรมต่อเนื่อง โดยไม่เดาว่าปัญหามาจากอะไร';
+                if (product.id === 'T1-001') return 'เหมาะเป็นตัวช่วยพื้นฐานด้านแสงรบกวน ใช้ได้โดยไม่ฟันธงว่าปัญหาเกิดจากคาเฟอีน ความเครียด หรือหน้าจอ';
+                if (product.id === 'T1-004') return 'เหมาะเป็นตัวช่วยด้านความสบายของร่างกายและท่านอน โดยไม่เกี่ยวกับการรักษาโรค';
+                if (product.id === 'T3-005') return 'เหมาะเป็น comfort habit กลาง ๆ แต่ไม่ควรใช้เป็นเหตุผลให้ใช้มือถือบนเตียงนานขึ้น';
                 return 'เป็นคำแนะนำกลาง ๆ เพราะคืนนี้ยังไม่ได้เลือก Trigger พฤติกรรมเฉพาะเจาะจง';
             }
-            if (product.id === 'blue-glasses-01') return signals.includes('screen') ? 'เหมาะเพราะมีการใช้หน้าจอก่อนนอน ควรลดแสงและลดคอนเทนต์กระตุ้นสมอง' : 'ยังไม่ใช่ตัวหลักคืนนี้ เพราะไม่ได้ระบุการใช้หน้าจอ';
-            if (['eye-mask-01', 'earplug-01', 'humidifier-01', 'cooling-pad-01', 'pillow-01'].includes(product.id)) return (signals.includes('environment') || signals.includes('room')) ? 'เหมาะเพราะมีปัจจัยห้องนอน ควรแก้แสง เสียง อุณหภูมิ หรือความสบายของหมอนก่อนซื้อของกลุ่มอื่น' : 'เหมาะเป็นตัวเสริมเรื่องความสบายของห้องนอน แต่คืนนี้ยังไม่มี trigger ห้องนอนชัดเจน';
-            if (['herbal-tea-01', 'weighted-blanket-01', 'breath-trainer-01', 'magnesium-01'].includes(product.id)) return signals.includes('stress') ? 'เหมาะเพราะมีสัญญาณความเครียด ควรช่วยให้ร่างกายเปลี่ยนจากโหมดคิดงานเป็นโหมดพัก' : 'เหมาะเป็นตัวช่วย routine ผ่อนคลาย เมื่ออยากทำก่อนนอนให้สม่ำเสมอขึ้น';
-            if (product.id === 'supplement-mag-01') return (signals.includes('low_cycles') || signals.includes('low_quality') || signals.includes('alcohol')) ? 'เหมาะเมื่อรอบการนอน/คุณภาพตกหรือมีแอลกอฮอล์ ควรใช้เป็นตัวเสริมหลังปรับพฤติกรรมพื้นฐานแล้ว' : 'เหมาะเป็นตัวเสริม ไม่ใช่สิ่งแรกที่ต้องพึ่งถ้า pattern ยังดี';
-            if (product.id === 'decaf-drink-01') return signals.includes('caffeine') ? 'เหมาะเพราะมีคาเฟอีน ควรใช้แทนเครื่องดื่มเดิมช่วงเย็น' : 'เหมาะกับคนอยากมีเครื่องดื่มก่อนนอนแบบไม่รบกวนการหลับ';
-            return product.why || 'สัมพันธ์กับ pattern การนอนล่าสุดของคุณ';
+            if (product.why) return product.why;
+            return 'สัมพันธ์กับ pattern การนอนล่าสุดของคุณ';
         }
 
-        // Keep card rendering public-facing; preserve existing CSS/classes and click tracking.
-        function renderAffiliateProducts(targetIds = ['smartwatch-01', 'pillow-01', 'blue-glasses-01']) {
+        function renderAffiliateProducts(targetIds = null) {
             const container = document.getElementById('affiliateContainer');
             if (!container) return;
 
-            const ids = Array.isArray(targetIds) && targetIds.length ? targetIds : SWP_TRIGGER_PRODUCT_MAP_V11.NO_TRIGGER_SELECTED.preferredProducts;
+            const fallbackIds = SWP_TRIGGER_PRODUCT_MAP_V12.NO_TRIGGER_SELECTED.preferredProducts;
+            const ids = Array.isArray(targetIds) && targetIds.length ? targetIds : fallbackIds;
             const catalogById = new Map(AFFILIATE_CATALOG.map(p => [p.id, p]));
             const renderList = ids.map(id => catalogById.get(id)).filter(Boolean);
 
@@ -4552,7 +5080,7 @@ function saveCloudUrlv96g() {
                         <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" onclick="trackProductClickv96g('${p.id}', 'shopee')" class="affiliate-action-btn text-center py-2.5 bg-orange-600/25 hover:bg-orange-600 text-orange-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-orange-500/10">
                             <i class="fas fa-shopping-bag mr-1"></i> SHOPEE
                         </a>
-                        <a href="${p.tiktokUrl}" target="_blank" rel="noopener noreferrer" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="affiliate-action-btn text-center py-2.5 bg-pink-600/25 hover:bg-pink-600 text-pink-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-pink-500/10">
+                        <a href="${p.tiktokUrl || p.shopeeUrl}" target="_blank" rel="noopener noreferrer" onclick="trackProductClickv96g('${p.id}', 'tiktok')" class="affiliate-action-btn text-center py-2.5 bg-pink-600/25 hover:bg-pink-600 text-pink-300 hover:text-white text-[10px] font-bold rounded-xl transition-all duration-200 border border-pink-500/10">
                             <i class="fab fa-tiktok mr-1"></i> TIKTOK
                         </a>
                     </div>
@@ -4563,22 +5091,57 @@ function saveCloudUrlv96g() {
             `).join('');
         }
 
-        // Small diagnostic helper for Go Live QA. Read-only; no DB writes.
-        window.SleepWellProAffiliateMappingV11 = {
-            version: 'v1.1-static-go-live-candidate',
-            triggerMaster: SWP_AFFILIATE_TRIGGER_MASTER_V11,
-            triggerProductMap: SWP_TRIGGER_PRODUCT_MAP_V11,
-            getSelectedTriggerCodes: swpGetSelectedBehaviorTriggerCodesV11,
+        function openAffiliateDetail(id) {
+            const product = AFFILIATE_CATALOG.find(p => p.id === id);
+            if (!product) return;
+            const modal = document.getElementById('prodModal');
+            document.getElementById('modalContent').innerHTML = `
+                ${renderProductIconv961h(product, 'modal')}
+                <h3 class="text-xl font-bold text-cyan-400 mb-2 text-center">${product.name}</h3>
+                <p class="text-slate-400 mb-4 text-xs leading-relaxed">${product.desc}</p>
+                <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl text-xs text-slate-300 space-y-2">
+                    <p class="font-bold text-cyan-200 mb-1">เหมาะกับใคร:</p>
+                    <p>✅ ${product.bestFor || 'คนที่ต้องการตัวช่วยปรับพฤติกรรมก่อนนอน'}</p>
+                    <p class="font-bold text-rose-200 pt-2">ควรเลี่ยง/ระวัง:</p>
+                    <p>⚠️ ${product.avoidIf || 'ตรวจรายละเอียดสินค้าและรีวิวจริงก่อนตัดสินใจ'}</p>
+                    <p class="pt-2 text-slate-400">เหตุผลที่แนะนำ: ${product.why || 'สัมพันธ์กับ pattern การนอนล่าสุด'}</p>
+                    <p class="pt-2 text-slate-500">หมายเหตุ: ${product.safetyNote || 'เป็นคำแนะนำเบื้องต้น ไม่ใช่คำแนะนำทางการแพทย์'}</p>
+                </div>
+                <p class="swp-modal-price-copy">ดูราคาโปรล่าสุดจากร้านค้า</p>
+            `;
+            document.getElementById('modalShopeeLink').href = product.shopeeUrl;
+            document.getElementById('modalShopeeLink').setAttribute('onclick', `trackProductClickv96g('${product.id}', 'shopee')`);
+            document.getElementById('modalTiktokLink').href = product.tiktokUrl || product.shopeeUrl;
+            document.getElementById('modalTiktokLink').setAttribute('onclick', `trackProductClickv96g('${product.id}', 'tiktok')`);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (!window.swpProductModalHistoryOpen) {
+                try {
+                    const baseUrl = window.location.href.split('#')[0];
+                    history.pushState({ swpModal: 'product', productId: product.id }, '', baseUrl + '#product-' + encodeURIComponent(product.id));
+                    window.swpProductModalHistoryOpen = true;
+                } catch (e) { console.warn('[Product Modal] history push failed', e); }
+            }
+        }
+
+        // Read-only diagnostic helper for Go Live QA.
+        window.SleepWellProAffiliateMappingV12 = {
+            version: 'v1.2-real-affiliate-links-go-live-candidate',
+            triggerMaster: SWP_AFFILIATE_TRIGGER_MASTER_V12,
+            triggerProductMap: SWP_TRIGGER_PRODUCT_MAP_V12,
+            copyBank: SWP_AI_AFFILIATE_COPY_BANK_V12,
+            getSelectedTriggerCodes: swpGetSelectedBehaviorTriggerCodesV12,
             getSignals: getSleepSignalsv9613h,
             getRecommendations: getRankedAffiliateProductsv9613h,
-            getCopy: swpGetAffiliateCopyV11,
+            getCopy: swpGetAffiliateCopyV12,
             qa: function(log) {
                 const sampleLog = log || { duration: 7, quality: 7, cycles: 5, pct: 90, factors: {} };
                 const signals = getSleepSignalsv9613h(sampleLog);
-                const products = getRankedAffiliateProductsv9613h(sampleLog, 3).map(p => ({ id: p.id, name: p.name, score: p.matchScore }));
+                const products = getRankedAffiliateProductsv9613h(sampleLog, 3).map(p => ({ id: p.id, name: p.name, score: p.matchScore, url: p.shopeeUrl }));
                 return { signals, products };
             }
         };
+        window.SleepWellProAffiliateMappingV11 = window.SleepWellProAffiliateMappingV12;
 
 
         // Global Bootloader System Initialization
