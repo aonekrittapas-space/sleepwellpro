@@ -1410,6 +1410,95 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
         }
 
 
+
+        /* =========================================================
+           v9.7.6d GO LIVE TRUST + DISCLOSURE PATCH
+           Scope: UI/copy-only + recommendation display consistency.
+           Does NOT touch Core Sync / Login / PIN / Profile / Logs / Apps Script / Affiliate URLs.
+           ========================================================= */
+        .swp-disclosure-note {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(34, 211, 238, .18);
+            background: rgba(6, 182, 212, .06);
+            color: #cbd5e1;
+            font-size: 10.5px;
+            line-height: 1.65;
+        }
+        .swp-disclosure-note strong,
+        .swp-disclosure-note b { color: #a5f3fc; }
+        .swp-disclosure-note.compact {
+            font-size: 10px;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, .52);
+            border-color: rgba(148, 163, 184, .14);
+        }
+        .swp-disclosure-details {
+            margin-top: 8px;
+            border-radius: 14px;
+            border: 1px solid rgba(148, 163, 184, .14);
+            background: rgba(15, 23, 42, .56);
+            overflow: hidden;
+        }
+        .swp-disclosure-details summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 9px 12px;
+            color: #67e8f9;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .02em;
+            user-select: none;
+        }
+        .swp-disclosure-details summary::-webkit-details-marker { display: none; }
+        .swp-disclosure-details summary::after {
+            content: 'อ่านเพิ่มเติม';
+            float: right;
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 9px;
+        }
+        .swp-disclosure-details[open] summary::after { content: 'ย่อข้อความ'; }
+        .swp-disclosure-details .swp-disclosure-full {
+            padding: 0 12px 12px;
+            color: #cbd5e1;
+            font-size: 10px;
+            line-height: 1.75;
+        }
+        .swp-footer-trust-note {
+            max-width: 760px;
+            margin: 0 auto 16px;
+            color: #94a3b8;
+            font-size: 10px;
+            line-height: 1.75;
+            letter-spacing: .02em;
+            opacity: .72;
+        }
+        .swp-footer-version-line {
+            color: #64748b;
+            font-size: 10px;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+        }
+        .swp-share-report-disclaimer {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(148, 163, 184, .14);
+            color: #94a3b8;
+            font-size: 9.5px;
+            line-height: 1.65;
+        }
+        @media (max-width: 640px) {
+            .swp-disclosure-note { font-size: 10px; line-height: 1.55; padding: 9px 10px; }
+            .swp-disclosure-details summary { font-size: 9.5px; padding: 8px 10px; }
+            .swp-disclosure-details .swp-disclosure-full { font-size: 9.5px; line-height: 1.65; padding: 0 10px 10px; }
+            .swp-footer-trust-note { font-size: 9.5px; line-height: 1.65; padding: 0 8px; }
+            .swp-footer-version-line { font-size: 9px; letter-spacing: .26em; line-height: 1.8; }
+            .swp-share-report-disclaimer { font-size: 8.8px; line-height: 1.55; }
+        }
+
+
 </style>
 </head>
 <body class="p-4 md:p-8">
@@ -1434,7 +1523,11 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                 </div>
                 <button type="submit" class="w-full py-3.5 mt-2 rounded-xl btn-cyan font-bold text-white tracking-wider text-xs uppercase shadow-lg shadow-cyan-950/20">ลงทะเบียนและเข้าใช้งานระบบอัจฉริยะ</button>
             </form>
-            <p class="text-[9px] text-slate-500 mt-4"><i class="fas fa-lock mr-1"></i> Privacy Secured: ข้อมูลของคุณจะถูกเก็บรักษาไว้ภายใต้มาตรฐานความปลอดภัยสูงสุด</p>
+            <p class="swp-disclosure-note compact"><i class="fas fa-lock mr-1 text-cyan-400"></i> ข้อมูลที่กรอกจะใช้เพื่อช่วยวิเคราะห์พฤติกรรมการนอนและสร้างคำแนะนำที่เหมาะกับคุณเท่านั้น</p>
+            <details class="swp-disclosure-details">
+                <summary><i class="fas fa-shield-halved mr-1"></i> หมายเหตุความเป็นส่วนตัว</summary>
+                <div class="swp-disclosure-full">Sleep Well Pro ใช้ข้อมูลที่คุณกรอกเพื่อช่วยบันทึก วิเคราะห์พฤติกรรมการนอน และสร้างคำแนะนำเบื้องต้นภายในระบบ ไม่ใช่การวินิจฉัยโรคหรือคำแนะนำทางการแพทย์</div>
+            </details>
             <div class="identity-lock-note"><i class="fas fa-id-card mr-1 text-cyan-400"></i> ใช้อีเมลนี้เป็นรหัสประจำตัวหลักสำหรับ Sync ข้อมูลทุกอุปกรณ์ โปรดใช้อีเมลเดียวกันทุกครั้งเมื่อเข้าใช้งานระบบ</div>
         </div>
     </div>
@@ -1665,6 +1758,7 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                     <div id="aiAnalysis" class="text-[12px] text-slate-300 leading-relaxed space-y-4">
                         <div class="opacity-30 italic">กำลังรอข้อมูลใหม่เพื่อประมวลผลวิเคราะห์สุขภาพเชิงลึก...</div>
                     </div>
+                    <p class="swp-disclosure-note compact"><i class="fas fa-triangle-exclamation mr-1 text-amber-300"></i> ผลวิเคราะห์นี้ไม่ใช่การวินิจฉัยหรือการรักษาทางการแพทย์ หากมีอาการรุนแรงหรือเรื้อรัง ควรปรึกษาแพทย์หรือผู้เชี่ยวชาญ</p>
                 </section>
 
                 <section class="affiliate-premium-section">
@@ -1672,15 +1766,20 @@ body.swp-real-mobile-header #mainAppContent .swp-version-badge {
                     <h3 class="text-xs font-bold text-slate-200 uppercase mb-3 tracking-widest text-center">คัดสรรกู๊ดส์ RECOMMENDED</h3>
                     <div class="affiliate-choice-guide">
                         เลือกตัวช่วยกับปัญหาการนอนของคุณจากด้านล่าง 👇
-                        <span class="mini-note">ระบบแนะนำตามข้อมูลล่าสุด เพื่อช่วยให้มีตัวเลือกที่ง่ายต่อการตัดสินใจ</span>
+                        <span class="mini-note">สินค้าที่แสดงถูกคัดเลือกให้สัมพันธ์กับข้อมูลการนอนของคุณ โปรดพิจารณาความจำเป็น งบประมาณ ส่วนผสม และความเหมาะสมก่อนตัดสินใจ</span>
                     </div>
+                    <details class="swp-disclosure-details">
+                        <summary><i class="fas fa-circle-info mr-1"></i> หมายเหตุการแนะนำสินค้า</summary>
+                        <div class="swp-disclosure-full">สินค้าที่แสดงในหน้านี้อาจมีลิงก์ Affiliate หากคุณซื้อผ่านลิงก์ดังกล่าว เจ้าของแอปอาจได้รับค่าคอมมิชชั่น โดยไม่มีค่าใช้จ่ายเพิ่มเติมสำหรับคุณ การแนะนำสินค้าอ้างอิงจากข้อมูลการนอนและ Trigger ที่ระบบวิเคราะห์ได้ โปรดพิจารณาความจำเป็น งบประมาณ ส่วนผสม เงื่อนไขการใช้งาน และความเหมาะสมส่วนบุคคลก่อนตัดสินใจทุกครั้ง</div>
+                    </details>
                     <div id="affiliateContainer" class="space-y-4">
                     </div>
                 </section>
             </div>
         </div>
-        <footer class="mt-12 py-8 border-t border-slate-800/50 text-center opacity-30 text-[10px] tracking-[0.6em]">
-            SLEEP WELL PRO SYSTEM • VERSION 9.7.2a • BY AONE KRITTAPAS
+        <footer class="mt-12 py-8 border-t border-slate-800/50 text-center">
+            <p class="swp-footer-trust-note">Sleep Well Pro ใช้เพื่อบันทึกและวิเคราะห์พฤติกรรมการนอนเบื้องต้นเท่านั้น ไม่ใช่การวินิจฉัยโรคหรือคำแนะนำทางการแพทย์</p>
+            <p class="swp-footer-version-line">SLEEP WELL PRO SYSTEM • VERSION 9.7.6d • BY AONE KRITTAPAS</p>
         </footer>
     </div>
 
@@ -3936,7 +4035,9 @@ function saveCloudUrlv96g() {
             const durationFormattedText = formatHoursAndMinutesv96h(d);
             const signals = getSleepSignalsv9613h(log);
             const ranked = getRankedAffiliateProductsv9613h(log, 5);
-            db.recommendationState = { lastSignals: signals, lastRecommendedIds: ranked.map(x=>x.id), lastUpdatedAt: Date.now() };
+            const displayedRecommendations = getRankedAffiliateProductsv9613h(log, 3);
+            const displayedRecommendationIds = displayedRecommendations.map(x => x.id);
+            db.recommendationState = { lastSignals: signals, lastRecommendedIds: displayedRecommendationIds, lastRankedIds: ranked.map(x=>x.id), lastUpdatedAt: Date.now() };
             const durationGood = d >= 7 && d <= 9;
             const qualityGood = q >= 7;
             const cycleGood = c >= 5 && c <= 6.5;
@@ -3973,7 +4074,7 @@ function saveCloudUrlv96g() {
             if (signals.includes('environment') || signals.includes('room')) html += `<div class="text-sky-200"><b>ห้องนอน:</b> ควรเช็ก 4 อย่าง: แสง เสียง อุณหภูมิ และหมอน/ที่นอน ถ้าห้องไม่พร้อม ต่อให้นอนนานก็อาจหลับไม่ลึก</div>`;
             if (signals.includes('caffeine')) html += `<div class="text-lime-200"><b>คาเฟอีน:</b> คืนนี้ควรงดกาแฟ/ชาเข้มหลังบ่ายสอง และใช้เครื่องดื่มไม่มีคาเฟอีนแทนเพื่อไม่ให้รบกวนเวลาหลับ</div>`;
             if (signals.includes('alcohol')) html += `<div class="text-rose-200"><b>แอลกอฮอล์:</b> อาจทำให้เหมือนหลับไว แต่คุณภาพการหลับมักตก คืนถัดไปควรงดซ้ำ ดื่มน้ำให้พอ และนอนให้ตรงเวลา</div>`;
-            html += `<div class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800"><b class="text-cyan-300">ตัวช่วยที่ระบบแนะนำ:</b><div class="mt-2 space-y-1">${ranked.slice(0,3).map((p,i)=>`<div class="text-[11px] text-slate-300">${i+1}. <b>${p.name}</b> — ${buildProductReasonv9614h(p, signals)}</div>`).join('')}</div><div class="swp-user-logic-note">ระบบเลือกแนะนำจากความเกี่ยวข้องกับปัญหาการนอน ความง่ายในการเริ่มใช้ และความคุ้มค่าต่อผู้ใช้</div></div>`;
+            html += `<div class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800"><b class="text-cyan-300">ตัวช่วยที่ระบบแนะนำ:</b><div class="mt-2 space-y-1">${displayedRecommendations.map((p,i)=>`<div class="text-[11px] text-slate-300">${i+1}. <b>${p.name}</b> — ${buildProductReasonv9614h(p, signals)}</div>`).join('')}</div><div class="swp-user-logic-note">ระบบเลือกแนะนำจากความเกี่ยวข้องกับปัญหาการนอน ความง่ายในการเริ่มใช้ และความคุ้มค่าต่อผู้ใช้</div></div>`;
             html += `<div><b class="text-rose-400"><i class="fas fa-heart-beat mr-1"></i> Action Plan คืนนี้:</b> ${riskLevel==='green'?'ทำเหมือนเดิมต่ออีก 3 คืนเพื่อยืนยันว่า pattern นี้เวิร์กจริง':'เลือกแก้ 1 trigger หลักก่อน แล้วดูคะแนนวันถัดไป ไม่ควรซื้อหรือเปลี่ยนหลายอย่างพร้อมกันจนวัดผลไม่ได้'}</div>`;
             html += `</div>`;
             container.innerHTML = html;
@@ -3982,7 +4083,12 @@ function saveCloudUrlv96g() {
 
         // [v9.6.15h] Product Matching Engine: chooses products by sleep signal + tier diversity
         function triggerConditionalAffiliate(log) {
-            const finalSelection = getRankedAffiliateProductsv9613h(log, 3).map(p => p.id);
+            const stateIds = db && db.recommendationState && Array.isArray(db.recommendationState.lastRecommendedIds)
+                ? db.recommendationState.lastRecommendedIds.slice(0, 3)
+                : [];
+            const finalSelection = stateIds.length
+                ? stateIds
+                : getRankedAffiliateProductsv9613h(log, 3).map(p => p.id);
             renderAffiliateProducts(finalSelection);
         }
 
@@ -4255,6 +4361,7 @@ function saveCloudUrlv96g() {
                     </div>
                     <p class="swp-share-summary-note">${insightText}</p>
                     ${bestLog ? `<p class="swp-share-summary-note mt-2 text-cyan-100">คืนที่คุณภาพดีที่สุดในช่วงนี้: ${bestLog.fullDate || bestLog.date || '-'} (${bestLog.quality}/10)${latestLog ? ` · ข้อมูลล่าสุด: ${latestLog.fullDate || latestLog.date || '-'}` : ''}</p>` : ''}
+                    <p class="swp-share-report-disclaimer">ผลวิเคราะห์นี้ไม่ใช่การวินิจฉัยหรือการรักษาทางการแพทย์ หากมีอาการรุนแรงหรือเรื้อรัง ควรปรึกษาแพทย์หรือผู้เชี่ยวชาญ</p>
                 </section>
             `;
         }
